@@ -1,13 +1,40 @@
-## Run project
+# Getting started
 
-- Rename `.env.example` file to `.env`inside your project root and fill the database information.
-  (windows wont let you do it, so you have to open your console cd your project root directory and run `mv .env.example .env` )
-- Open the console and cd your project root directory
-- Run `composer install` or ```php composer.phar install```
-- Run `php artisan key:generate` 
-- Run `php artisan migrate`
-- Run `php artisan db:seed` to run seeders, if any. 
-- Run `php artisan serve`
+## Installation
+
+Please check the official laravel installation guide for server requirements before you start. [Official Documentation](https://laravel.com/docs/7.x/installation#installation)
+
+Alternative installation is possible without local dependencies relying on [Docker](#docker). 
+
+Clone the repository
+
+    git clone git@github.com:gothinkster/laravel-realworld-example-app.git
+
+Switch to the repo folder
+
+    cd laravel-realworld-example-app
+
+Install all the dependencies using composer
+
+    composer install
+
+Copy the example env file and make the required configuration changes in the .env file
+
+    cp .env.example .env
+
+Generate a new application key
+
+    php artisan key:generate
+
+Run the database migrations (**Set the database connection in .env before migrating**)
+
+    php artisan migrate
+
+Start the local development server
+
+    php artisan serve
+
+You can now access the server at http://localhost:8000
 
 ## Vanguard - Advanced PHP Login and User Management
 
