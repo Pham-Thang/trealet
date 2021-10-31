@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Creating New Page - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Creating New Page</h1>
+<ul>
+<li><a href="#creating-new-page">Creating New Page</a>
+<ul>
+<li><a href="#page-route">Page Route</a></li>
+<li><a href="#controller">Creating The Controller</a></li>
+<li><a href="#fetching-users">Fetching Users From DB</a></li>
+<li><a href="#view">Page View</a></li>
+<li><a href="#sidebar">Sidebar Menu</a></li>
+</ul></li>
+</ul>
+<hr />
+<p><a name="creating-new-page"></a></p>
+<h2>Creating New Page</h2>
+<p>Chances are high that you would like to create your own pages inside the Vanguard application.
+This section will explain in details everything you need to do to add your own page into the system.</p>
+<p>The page we are going to add will be simple page that will display the list of all users with active sessions.</p>
+<p><a name="page-route"></a></p>
+<h3>Page Route</h3>
+<p>First thing we will have to do is to create new route for your page. We can do that by simply editing <code>/routes/web.php</code> file and adding the following code
+anywhere inside the file. I've added it on top.</p>
+<pre><code class="language-php">Route::get('active-users', function () {
+    return "Active users will be displayed here.";
+})-&gt;name('active-users');</code></pre>
+<p>To verify that this code is actually working, you should go to <code>yourwebsite.com/active-users</code> and you should see following text on your screen: </p>
+<pre><code class="language-html">Active users will be displayed here.</code></pre>
+<p>This means that your route is now working properly, so we can proceed and create new controller that will handle the actual request, instead of
+using this <a href="http://php.net/manual/en/class.closure.php">closure</a>, as we did in our example above.</p>
+<p>One more thing, as you can see, we assigned a name to this route. This is very handy feature since we can now reference our route by name, and in case that we want to change the url to something else in the future,
+will will be able to change it only inside our <code>routes/web.php</code> file, and everything will work without any broken links.</p>
+<blockquote>
+<p><strong>Note!</strong> You can find more about routes inside <a href="https://laravel.com/docs/5.3/routing">Laravel's documentation</a>.</p>
+</blockquote>
+<p><a name="controller"></a></p>
+<h3>Creating The Controller</h3>
+<p>Creating new controller in Laravel is pretty easy. If you are familiar with the terminal, you can navigate to Vanguard's root folder and type the following command</p>
+<pre><code class="language-cli">php artisan make:controller Web/ActiveUsersController</code></pre>
+<p>After you execute this command, new controller will be automatically created for you and placed inside <code>app/Http/Controllers/Web</code> folder. The file will be named <code>ActiveUsersController.php</code>.
+You can also create the controller by manually creating new controller file inside <code>app/Http/Controllers/Web</code> directory, if you are using the controller for Web application,
+or inside <code>app/Http/Controllers/Api</code> directory if controller will be used for the API.</p>
+<p>Now lets define our constructor and create new <code>index</code> method inside that controller. Controller will now look like following</p>
+<pre><code class="language-php">namespace Vanguard\Http\Controllers\Web;
+
+use Vanguard\Http\Controllers\Controller;
+
+class ActiveUsersController extends Controller
+{
+    public function __construct()
+    {
+        // Allow access to authenticated users only.
+        $this-&gt;middleware('auth');
+
+        // Allow access to users with 'users.manage' permission.
+        $this-&gt;middleware('permission:users.manage');
+    }
+
+    public function index()
+    {
+        return "Hello from ActiveUsersController";
+    }
+}</code></pre>
+<p>Since we now have the controller that will be responsible for our active users, we are free to update the route we created in previous chapter to actually point to this <code>index</code> method
+we just created, instead of using closure:</p>
+<pre><code class="language-php">// /routes/web.php
+
+Route::get('active-users', 'ActiveUsersController@index')-&gt;name('active-users');
+//...</code></pre>
+<p>You can probably see the pattern here. If we translate the route above into a sentence, it basically says something like this:</p>
+<blockquote>
+<blockquote>
+<p>When someone try to access <code>yourdomain.com/active-users</code>, execute code that is located inside <code>index</code> method from <code>ActiveUsersController</code>.</p>
+</blockquote>
+</blockquote>
+<p>Now, if you access <code>yourdomain.com/active-users</code> from your browser, you will see the following response</p>
+<pre><code class="language-html">Hello from ActiveUsersController</code></pre>
+<p>Of course, since we added those two checks inside controller's constructor, you will have to be logged in and you must have <code>users.manage</code> permission to access this page.</p>
+<blockquote>
+<p><strong>Note!</strong> You can find more about controllers inside <a href="https://laravel.com/docs/5.4/controllers">Laravel's documentation</a>.</p>
+</blockquote>
+<p><a name="fetching-users"></a></p>
+<h3>Fetching Users From DB</h3>
+<p>It's time to write the actual query that will fetch all users with active sessions available inside <code>sessions</code> database table. It is a simple join query, and <a href="https://laravel.com/docs/5.4/eloquent">Eloquent</a> makes it even easier.</p>
+<p>We will modify our controller to look like following:</p>
+<pre><code class="language-php">namespace Vanguard\Http\Controllers\Web;
+
+use Vanguard\Http\Controllers\Controller;
+use Vanguard\User;
+
+class ActiveUsersController extends Controller
+{
+    public function index()
+    {
+        // Fetch users from database
+        $users = User::join('sessions', 'users.id', '=', 'sessions.user_id')
+            -&gt;select('users.*')
+            -&gt;distinct()
+            -&gt;get();
+
+        // Uncomment the following line if you want to see the info you get from the database
+        // dd($users);
+
+        // Load appropriate view for displaying the users
+        // Note: compact('users') is the same as ['users' =&gt; $users] 
+        return view('user.active-users', compact('users'));   
+    }
+}</code></pre>
+<p>As you can see, our join query is really simple. At the and of the index method, we will render our <a href="https://laravel.com/docs/5.4/views">view</a>, which we are going to create now.</p>
+<p><a name="view"></a></p>
+<h3>Page View</h3>
+<p>In Laravel, all views are located inside <code>resources/views</code> folder. You can create unlimited number of sub-folders there, and group your views however you like it.
+One great thing is that you can use <strong>dot</strong> notation when you want to render that view. That means that instead of <code>/</code> you can use &quot;.&quot; when you want to reference your view from a controller.</p>
+<p>In our controller code, we are referencing our view like <code>user.active-users</code> which means that we will create new file called <code>active-users.blade.php</code> inside <code>resources/views/user</code> folder.
+As mentioned, you can put your view anywhere inside the <code>resources/views</code> folder, but for what we are building, it looks like <code>user</code> folder is the best place to put it.</p>
+<blockquote>
+<p><strong>Note!</strong> Laravel uses <strong>Blade</strong> templating language which has it's own tags and ways of building the templates. It is really simple, and you can learn more about it <a href="https://laravel.com/docs/5.4/blade">here</a>.</p>
+</blockquote>
+<p>Here is the source code of our view file:</p>
+<pre><code class="language-php">@extends('layouts.app')
+
+@section('page-title', 'Active Users')
+@section('page-heading', 'Active Users')
+
+@section('breadcrumbs')
+    &lt;li class="breadcrumb-item active"&gt;
+        Active Users
+    &lt;/li&gt;
+@stop
+
+@section('content')
+
+    @include('partials.messages')
+
+    @foreach($users as $user)
+        &lt;div class="user media d-flex align-items-center"&gt;
+            &lt;div&gt;
+                &lt;a href="#"&gt;
+                    &lt;img width="64" height="64"
+                        class="media-object mr-3 rounded-circle img-thumbnail img-responsive"
+                        src="{{ $user-&gt;present()-&gt;avatar }}"&gt;
+                &lt;/a&gt;
+            &lt;/div&gt;
+            &lt;div class="d-flex justify-content-center flex-column"&gt;
+                &lt;h5 class="mb-0"&gt;{{ $user-&gt;present()-&gt;name }}&lt;/h5&gt;
+                &lt;small class="text-muted"&gt;{{ $user-&gt;email }}&lt;/small&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    @endforeach
+@stop
+
+@section('styles')
+    &lt;style&gt;
+        .user.media {
+            float: left;
+            border: 1px solid #dfdfdf;
+            background-color: #fff;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+    &lt;/style&gt;
+@stop</code></pre>
+<p>Let's explain what is happening here:</p>
+<p><code>@extends('layouts.app')</code> - means that this file is extending default layout called <strong>app</strong>, which is located inside <code>resources/views/layouts</code> folder.</p>
+<p><code>@section('page-title', 'Active Users')</code> - page title. Check <code>&lt;title&gt;&lt;/title&gt;</code> element inside app layout to see where it will be printed out.</p>
+<p><code>@section('page-heading', 'Active Users')</code> - page heading. Text to be rendered inside the header.</p>
+<p><code>@section('breadcrumbs') ... @stop</code> - page specific breadcrumbs.</p>
+<p><code>@section('content') ... @stop</code> - The actual content section. Everything that is inside those two tags (<code>@section('content')</code> and <code>@stop</code>) will be echoed out on the same place where <code>@yield('content')</code> is located inside app layout.
+Inside this section we are just looping through the passed array of users and printing them out. We are using <a href="http://getbootstrap.com/components/#media">bootstrap media object</a> just to make things a bit prettier. You can also click on user's avatar
+and it will take you to the user profile page.</p>
+<p><code>@section('styles') ... @stop</code> - Anything that is located inside this section will be automatically placed inside the header (check app layout and search for <code>@yield('styles')</code>) of the page.
+We are placing this css here just to make things easier and have everything in one file, but when you are building something, you will probably put the css inside <code>public/assets/css/app.css</code> file, since that's where Vanguard custom css is located.</p>
+<p>If we open the page now, it will look like following:</p>
+<p><img src="assets/img/active-users.png" alt="Vanguard New Page Example - Active Users" /></p>
+<p><a name="sidebar"></a></p>
+<h3>Sidebar Menu</h3>
+<p>As you can see, we are able to access this page, but only by manually typing the url inside the browser's address bar. Lets add new link inside the sidebar menu that will point to our newly created page.</p>
+<p>All we have to do is to edit <code>resources/views/partials/sidebar.blade.php</code> view file and add our link wherever we want it to appear. Since this section is accessible only for users with <code>users.manage</code> permission, it makes sense
+to put this new link right after &quot;Users&quot; link, between <code>@permission('users.manage')</code> and it's <code>@endpermission</code> tag:</p>
+<pre><code class="language-php">//...
+
+@permission('users.manage')
+    &lt;li class="nav-item"&gt;
+        &lt;a class="nav-link {{ Request::is('user*') ? 'active' : ''  }}" href="{{ route('user.list') }}"&gt;
+            &lt;i class="fas fa-users"&gt;&lt;/i&gt;
+            &lt;span&gt;@lang('app.users')&lt;/span&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+
+    &lt;li class="nav-item"&gt;
+        &lt;a href="{{ route('active-users') }}" class="nav-link {{ Request::is('active-users') ? 'active' : ''  }}"&gt;
+            &lt;i class="fas fa-users"&gt;&lt;/i&gt;
+            Active Users
+        &lt;/a&gt;
+    &lt;/li&gt;
+@endpermission
+
+//...</code></pre>
+<p>If you refresh the page now, you will see the newly created sidebar menu item.</p>
+<p><img src="assets/img/active-users-sidebar.png" alt="Vanguard New Page Example - Sidebar Menu" /></p>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

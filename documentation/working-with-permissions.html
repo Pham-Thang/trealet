@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Working with Vanguard Permissions - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Working with Vanguard Permissions</h1>
+<ul>
+<li><a href="#working-with-vanguard-permissions">Working with Vanguard Permissions</a>
+<ul>
+<li><a href="#creating-permissions">Creating Permissions</a></li>
+<li><a href="#updating-view-template">Updating View Template</a></li>
+<li><a href="#applying-the-permissions">Applying the Permissions</a></li>
+</ul></li>
+</ul>
+<hr />
+<p><a name="working-with-vanguard-permissions"></a></p>
+<h2>Working with Vanguard Permissions</h2>
+<p>Vanguard comes with some default permissions but, if some of them does not fit your needs, they can be easily modify them. Adding new permissions is a breeze too.</p>
+<p>In this example we will add 3 more different permissions: <strong>View User</strong>, <strong>Edit User</strong> and <strong>Remove User</strong>. Those permissions will allow us to have some users be able to access the users section, but some of them won't be able to do anything else than to edit user or view their profiles.</p>
+<p><a name="creating-permissions"></a></p>
+<h3>Creating Permissions</h3>
+<p>All permissions can be created through the UI, like it is explained in <a href="roles-and-permissions.html#permissions-manage">roles and permissions section</a>.</p>
+<p>Created permissions for this example have have following details:</p>
+<table>
+<thead>
+<tr>
+<th>Display Name</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>View User</td>
+<td>user.view</td>
+</tr>
+<tr>
+<td>Edit User</td>
+<td>user.edit</td>
+</tr>
+<tr>
+<td>Remove User</td>
+<td>user.remove</td>
+</tr>
+</tbody>
+</table>
+<p><a name="updating-view-template"></a></p>
+<h3>Updating View Template</h3>
+<p>Now, since we have those permissions created, we need to update the view that is used for displaying users list. The HTML used for displaying the list of users is located inside <code>resources/views/user/list.blade.php</code> view file. </p>
+<p>Our goal is to display buttons for editing, viewing or removing some user only if currently logged in user has the appropriate permission. In order to display something based on user's permissions, we just have to surround that HTML with following <a href="https://laravel.com/docs/5.4/blade">Blade</a> directives:</p>
+<pre><code class="language-php">@permission('user.view')
+    // Anything here will be displayed only
+    // if currently logged in user has "user.view" permission
+@endpermission</code></pre>
+<p>So, to apply this to our use-case, we will surround those buttons like following:</p>
+<pre><code class="language-php">@permission('user.view')
+    &lt;a href="{{ route('user.show', $user-&gt;id) }}" 
+       class="btn btn-success btn-circle"
+       title="View User" data-toggle="tooltip" data-placement="top"&gt;
+       &lt;i class="glyphicon glyphicon-eye-open"&gt;&lt;/i&gt;
+    &lt;/a&gt;
+@endpermission
+
+// Do the same for all 3 buttons</code></pre>
+<p>Since view is now updated, if you access the <code>yourdomain.com/user</code> URL, you won't see those buttons for viewing, editing and removing users. But, as you probably already guessed, you are still able to edit some user by directly accessing the following URL <code>yourdomain.com/user/USER_ID/edit</code>. That's because the process is not completed yet, and you have to update your routes or controller.</p>
+<p><a name="applying-the-permissions"></a></p>
+<h3>Applying the Permissions</h3>
+<p>Removing the buttons from users list is not actually protecting the application. If users type specific URL directly in browser's address bar, they will be able to access the desired page. In order to protect this, we have to apply permission <a href="https://laravel.com/docs/5.4/middleware">middleware</a>. </p>
+<p>This can be done in two ways. We can update the controller and add middleware directly inside the controllers constructor, or we can update <code>routes/web.php</code> file and apply middleware to specific route.</p>
+<h4>Updating UsersController</h4>
+<p>One way to protect our pages and make them available only for users with specific permissions, is to add middleware directly to controller's constructor. For our example, we have to edit <code>app/Http/Controllers/Web/UsersController.php</code> controller and add the following code inside its <code>__construct</code> method:</p>
+<pre><code class="language-php">$this-&gt;middleware('permission:user.view', ['only' =&gt; 'view']);
+
+$editMethods = [
+    'edit', 'updateDetails', 'updateAvatar', 'updateAvatarExternal',
+    'updateSocialNetworks', 'updateLoginDetails', 'enableTwoFactorAuth',
+    'disableTwoFactorAuth'
+];
+
+$this-&gt;middleware('permission:user.edit', ['only' =&gt; $editMethods]);
+
+$this-&gt;middleware('permission:user.remove', ['only' =&gt; 'delete']);</code></pre>
+<p>After applying middleware to controller's methods (<strong>only</strong> option provided as second argument means that permission middleware should only be applied to specified methods inside the controller), Vanguard will throw <code>403 Forbidden</code> exceptions whenever someone try to access the protected URL, and it will make that part of the system available only for users with appropriate permissions.</p>
+<h4>Updating Routes</h4>
+<p>Updating routes is another way to apply middleware to specific resource (resource &lt;=&gt; URL). Applying permission to specific routes is fortunately maybe even easier than applying them inside the controller. For example, if we want to apply a <strong>user.view</strong> permission to it's route, all we have to do is to update it as following:</p>
+<pre><code class="language-php">Route::get('user/{user}/show', [
+    'as' =&gt; 'user.show',
+    'uses' =&gt; 'UsersController@view',
+    'middleware' =&gt; ['permission:user.view']
+]);</code></pre>
+<p>And that's it, just by adding that <code>middleware</code> option to route options array, it will protect the route and make it unavailable to users without <strong>user.view</strong> permission. </p>
+<p>By following this example, you can now update all routes and set desired permissions.</p>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

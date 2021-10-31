@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adding Social Auth Provider - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Adding Social Auth Provider</h1>
+<ul>
+<li><a href="#adding-social-auth-provider">Adding Social Auth Provider</a>
+<ul>
+<li><a href="#configuration-file">The Configuration File</a></li>
+<li><a href="#login-page">Login Page</a></li>
+<li><a href="#github-keys">GitHub Keys</a></li>
+</ul></li>
+</ul>
+<hr />
+<p><a name="adding-social-auth-provider"></a></p>
+<h2>Adding Social Auth Provider</h2>
+<p>Since Vanguard utilizes <a href="https://github.com/laravel/socialite">Socialite</a> package for social authentication, it's easy to add any social authentication provider that is supported by Socialite. </p>
+<p>So, let's proceed and add GitHub authentication driver.</p>
+<p><a name="configuration-file"></a></p>
+<h3>The Configuration File</h3>
+<p>First thing we need to do is to edit <code>config/auth.php</code> configuration file and add <code>github</code> into social providers array, like following:</p>
+<pre><code class="language-php">'social' =&gt; [
+    'providers' =&gt; ['facebook', 'twitter', 'google', 'github']
+],</code></pre>
+<p><a name="login-page"></a></p>
+<h3>Login Page</h3>
+<p>Next step is to modify the login page and add GitHub button. The view file we need to modify is <code>resources/views/auth/social/buttons.blade.php</code>. We will add the following code at the end of the list: </p>
+<pre><code class="language-php">@if (in_array('github', $socialProviders))
+    &lt;div class="col-{{ $colSize }} d-flex align-items-center justify-content-center"&gt;
+        &lt;a href="{{ url('auth/github/login') }}" style="color: #24292e;"&gt;
+            &lt;i class="fab fa-github fa-2x"&gt;&lt;/i&gt;
+        &lt;/a&gt;
+    &lt;/div&gt;
+@endif</code></pre>
+<p>It will make our login form look like this</p>
+<p><img src="assets/img/social-auth-login-form.png" alt="Vanguard Social Auth - Login Form" /></p>
+<p>One thing that I don't like here is that, if you have 4 social auth providers like I do now, you are not able to see the actual text inside those buttons. Fortunately there is an easy fix for this, and all you need to do is to update the <code>$colSize</code> variable at the top of <code>buttons.blade.php</code> file to look like following:</p>
+<pre><code class="language-php"> $colSize = 6;</code></pre>
+<p>By default it is automatically calculating how much width each social button should take by looking at the number of social providers available, but for our purposes we can simply hard-code it to <code>6</code> and make it have two buttons per row. After making this modification, the form looks like following</p>
+<p><img src="assets/img/social-auth-login-form-4-buttons.png" alt="Vanguard Social Auth - Login Form" /></p>
+<p><a name="github-keys"></a></p>
+<h3>GitHub Keys</h3>
+<p>After modifying our login page, we can now proceed and create <a href="https://github.com/settings/developers">GitHub oAuth application</a>. Creating the application is simple, and you need to provide your application name, website URL as well as callback URL which will be used by Vanguard. </p>
+<p>The callback url should look like </p>
+<pre><code>http://yourdomain.com/auth/github/callback</code></pre>
+<p>Or, if you haven't removed <code>public</code> from your <a href="installation.html#application-url">app url</a>, then it should be present in your callback url too</p>
+<pre><code> http://yourdomain.com/public/auth/github/callback</code></pre>
+<p>After you create the GitHub application, you should grab your <code>Client ID</code> and <code>Client Secret</code> and create the following variables inside your <code>.env</code> file:</p>
+<pre><code>GITHUB_CLIENT_ID=&lt;your_client_id_here&gt;
+GITHUB_CLIENT_SECRET=&lt;your_client_secret_here&gt;
+GITHUB_CALLBACK_URI=&lt;your_callback_uri_from_above&gt;</code></pre>
+<p><a name="socialite-configuration"></a></p>
+<h3>Socialite Configuration</h3>
+<p>Last peace of the puzzle is to let socialite know your GitHub keys and callback uri. To do so, just add the following code into your <code>config/services.php</code> configuration file</p>
+<pre><code class="language-php">'github' =&gt; [
+    'client_id' =&gt; env('GITHUB_CLIENT_ID'),
+    'client_secret' =&gt; env('GITHUB_CLIENT_SECRET'),
+    'redirect' =&gt; env('GITHUB_CALLBACK_URI'),
+],</code></pre>
+<p>And that's it, you can now go to the login page, click that GitHub button we have created and login with your GitHub account.</p>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Configuration - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Configuration</h1>
+<ul>
+<li><a href="#configuration">Configuration</a>
+<ul>
+<li><a href="#social-authentication">Social Authentication</a></li>
+<li><a href="#two-factor-auth">Two-Factor Authentication (2FA)</a></li>
+<li><a href="#recaptcha">Google reCAPTCHA</a></li>
+<li><a href="#email-configuration">Email Configuration</a></li>
+<li><a href="#session-configuration">Session Configuration</a></li>
+<li><a href="#https">HTTPS</a></li>
+<li><a href="#date-time-format">Date/Time Format</a></li>
+<li><a href="#json-api">Enable JSON API</a></li>
+</ul></li>
+</ul>
+<hr />
+<p><a name="configuration"></a></p>
+<h2>Configuration</h2>
+<p>This section contains some important configuration options that are specific to Vanguard application. Since Vanguard is using Laravel PHP framework, full configuration options for some framework specific stuff can be found inside <a href="https://laravel.com/docs/5.3/configuration">Laravel documentation</a>.</p>
+<p><a name="social-authentication"></a></p>
+<h3>Social Authentication</h3>
+<p>If you want to allow social authentication for your users, you will have to define which social providers you want to allow. List of social providers is declared inside <code>config/auth.php</code> file.  Vanguard supports <strong>Facebook</strong>, <strong>Twitter</strong> and <strong>Google+</strong> by default.</p>
+<p>The following code is an example of allowing all three default supported providers for Vanguard application:</p>
+<pre><code class="language-php">'social' =&gt; [
+    'providers' =&gt; ['facebook', 'twitter', 'google']
+],</code></pre>
+<p>If you want to disable some social provider, just remove it from that providers array and you are good to go. Also, if you don't want social authentication on your website, just <strong>empty</strong> that providers array, as following:</p>
+<pre><code class="language-php">'social' =&gt; [
+    'providers' =&gt; []
+],</code></pre>
+<h4>Facebook</h4>
+<p><a href="https://developers.facebook.com/docs/apps/register">Here</a> is an detailed explanation of how you can create an Facebook application and acquire application id and secret key, required for social authentication. During the application creation and configuration, make sure that you have entered correct application domain on application's settings page.</p>
+<p>After you create an application, you can find your App Id and App Secret keys on your application's Dashboard. Those keys should be copied to <code>.env</code> configuration file available inside Vanguard's root directory, as following:</p>
+<pre><code class="language-php">FACEBOOK_CLIENT_ID=your_application_id_from_facebook
+FACEBOOK_CLIENT_SECRET=your_application_secret_from_facebook
+FACEBOOK_CALLBACK_URI=http://YOUR_DOMAIN/auth/facebook/callback</code></pre>
+<blockquote>
+<p><strong>Note!</strong> The <code>.env</code> file will be available inside your root folder <strong>after</strong> successful installation, so make sure that you have already installed the application before you start the configuration process.</p>
+</blockquote>
+<p><strong>Note on Callback URL</strong></p>
+<p>Since all social providers require callback url, if you haven't removed <code>public</code> from your application url, make sure that you provide the correct callback url that also contains
+<code>public</code> segment. So, for example, your Facebook callback will look like this</p>
+<pre><code class="language-php">http://YOUR_DOMAIN/public/auth/facebook/callback</code></pre>
+<h4>Twitter</h4>
+<p>In order to create Twitter application, and get the required Application Id and Secret key, go to <a href="https://apps.twitter.com/">Twitter Application Management</a> and click <strong>Create New App</strong> button at the top right corner.
+When app creation form is opened, fill all required fields and click <strong>Create your Twitter Application</strong> button at the bottom of the page.</p>
+<blockquote>
+<p><strong>Note!</strong> Your <strong>Callback URL</strong> is <code>http://YOUR_DOMAIN/auth/twitter/callback</code>.</p>
+</blockquote>
+<p>After application is created, go to <strong>Keys and Access Tokens</strong> tab, grab your Consumer Key and Consumer Secret and paste them into your <code>.env</code> file as following:</p>
+<pre><code class="language-php">TWITTER_CLIENT_ID=your_consumer_key
+TWITTER_CLIENT_SECRET=your_consumer_secret
+TWITTER_CALLBACK_URI=http://YOUR_DOMAIN/auth/twitter/callback</code></pre>
+<h4>Google+</h4>
+<p>In order to utilise Google+ Authentication, first you need to create new Google Project/Application. To do that, go to <a href="https://console.developers.google.com/project">https://console.developers.google.com/project</a>, click <strong>Create project</strong> button at top left corner and enter your Project name.</p>
+<p>After you have created your project, you now have to enable Google+ API and get the credentials that will be used for authentication. Go to <a href="https://console.developers.google.com/apis/library">https://console.developers.google.com/apis/library</a>, select your project from dropdown available on top right header and click on Google+ API link inside the list of available Google APIs.</p>
+<p><img src="assets/img/g_plus_api.png" alt="Vanguard Social Authentication - Google APIs" /></p>
+<p>After opening the Google+ API page, click <strong>Enable API</strong> button in order to enable the API.</p>
+<p><img src="assets/img/g_plus_api_enable.png" alt="Vanguard Social Authentication - Enable Google+ API" /></p>
+<p>After enabling the API, the only remaining step is to get the credentials you need. Just click on <strong>Go to Credentials</strong> button, fill the displayed credentials form as following and click <strong>What credentials do I need?</strong> button:</p>
+<p><img src="assets/img/g_plus_api_credentials1.png" alt="Vanguard Social Authentication - Getting Credentials" /></p>
+<p>After entering in the required application Name, make sure that you enter <code>http://YOUR_DOMAIN</code> in <strong>Authorized JavaScript origins</strong> section, and <code>http://YOUR_DOMAIN/auth/google/callback</code> in <strong>Authorized redirect URIs</strong> section. </p>
+<p>After you fill those fields, click <strong>Create client ID</strong> button, provide your product name as required, and get your Client Id and Client Secret keys.</p>
+<p>When you have those keys, the only thing left for you to do is to paste them into your <code>.env</code> file as following:</p>
+<pre><code class="language-php">GOOGLE_CLIENT_ID=your_client_id
+GOOGLE_CLIENT_SECRET=your_client_secret
+GOOGLE_CALLBACK_URI=http://YOUR_DOMAIN/auth/google/callback</code></pre>
+<p><a name="two-factor-auth"></a></p>
+<h3>Two-Factor Authentication (2FA)</h3>
+<p>Vanguard utilises <a href="https://www.authy.com/">Authy</a>, reliable third-party service, to allow Two-Factor Authentication for users. </p>
+<p>All you need to do is to login to your <a href="https://dashboard.authy.com/signin">Authy Dashboard</a> (or create an Authy account if you are not already registered) and create New Application. After creating the application, you will be able to get your Api Key from your application's Dashboard. When you have your API Key, you should paste it to your <code>.env</code> file as following:</p>
+<pre><code class="language-php">AUTHY_KEY=your_authy_api_key</code></pre>
+<p>And that's it, you are now able to Enable/Disable Two-Factor authentication anytime you want from your <a href="settings/authentication.html#two-factor-token">Auth and Registration</a> settings page.</p>
+<p><a name="recaptcha"></a></p>
+<h3>Google reCAPTCHA</h3>
+<p>Google's reCAPTCHA is available for Vanguard's user registration form. Enabling reCAPTCHA is, fortunately, an easy thing to do. Just go to <a href="https://www.google.com/recaptcha/intro/index.html">reCaptcha Website</a>, get your <em>Site Key</em> and <em>Secret Key</em> and paste them into your <code>.env</code> file as following:</p>
+<pre><code class="language-php">RECAPTCHA_SECRETKEY=your_recaptcha_secret_key
+RECAPTCHA_SITEKEY=your_recaptcha_site_key</code></pre>
+<p>That's all you need to do. Now you are able to enable or disable reCAPTCHA on your registration page from  <a href="settings.html#auth">Auth and Registration</a> settings page.</p>
+<p><a name="email-configuration"></a></p>
+<h3>Email Configuration</h3>
+<p>By default, Vanguard will be configured to use native PHP mail driver for sending emails. However, you can configure it to use <code>SMTP</code>,  <code>Sendmail</code>,  <code>Mailgun</code>, <code>Mandrill</code>, <code>Amazon SES</code> or <code>Log</code> driver (good for development purposes).</p>
+<p>Here we will cover only SMTP configuration, and if you are interested in other options mentioned above, you can find all details of how to enable them inside <a href="https://laravel.com/docs/5.3/mail#introduction">Laravel Documentation</a>.</p>
+<h4>SMTP</h4>
+<p>In order to switch to SMTP driver, instead of native PHP mail, just open your <code>.env</code> file and define your mail environment variables as following:</p>
+<pre><code class="language-php">MAIL_DRIVER=smtp
+MAIL_HOST=your_smtp_host
+MAIL_PORT=your_smtp_port
+MAIL_USERNAME=your_smtp_username
+MAIL_PASSWORD=your_smtp_password
+MAIL_ENCRYPTION=your_smtp_encryption</code></pre>
+<blockquote>
+<p><strong>Note!</strong> If your SMTP server does not have encryption, just set it to <code>null</code>, or set it to blank like this: <code>MAIL_ENCRYPTION=</code>.</p>
+</blockquote>
+<h4>Additional Mail Configuration</h4>
+<p>One thing that you would want to configure for your application is your &quot;From&quot; email address and &quot;From&quot; name. You can do that by editing <code>config/mail.php</code> file and updating <code>from</code> array to fit your needs.</p>
+<p><a name="session-configuration"></a></p>
+<h3>Session Configuration</h3>
+<p>Vanguard support multiple session drivers like <code>File</code>, <code>Cookie</code>, <code>Database</code>, <code>APC</code>, <code>Memcached</code>, <code>Redis</code> and <code>Array</code> (used for testing purposes only).  </p>
+<blockquote>
+<p><strong>Note!</strong> Default session driver is <strong>Database</strong>, since it is the only driver that support user session management. If you change database driver to any other driver than session, Active Sessions Management feature will be <strong>disabled</strong>.</p>
+</blockquote>
+<p>Changing session driver is as easy as updating your <code>SESSION_DRIVER</code> variable inside <code>.env</code> file and changing it's value to one of above drivers (all lowercase). </p>
+<p>For example, if you want to switch to <code>File</code> session driver, you will update your <code>.env</code> file like following:</p>
+<pre><code class="language-php">SESSION_DRIVER=file</code></pre>
+<p>That's it, you don't have to change anything inside your codebase. Everything will be working as usual, except you won't be able to track user sessions.</p>
+<p>More session configuration options are available inside <code>config/session.php</code> configuration file. Feel free to check that file and configure things such as session lifetime, session cookie name etc.</p>
+<p><a name="https"></a></p>
+<h3>HTTPS</h3>
+<p>If you want to force all the pages to be accessed via HTTPS, the recommended way to do so is via your web server configuration. Either if you are using Apache or nginx, or some other web server, you can easily configure them to redirect all traffic to HTTPS.</p>
+<p>However, if you are not sure how to do that or your server configuration does not allow you so, you can simply add <code>FORCE_SSL</code> variable to your <code>.env</code> file and set it to <code>true</code>. It will force all links to be served via HTTPS.
+So, inside your <code>.env</code> file, it should look like following:</p>
+<pre><code class="language-php">//... 
+FORCE_SSL=true</code></pre>
+<p><a name="date-time-format"></a></p>
+<h3>Date/Time Format</h3>
+<p>Date and date-time format can be configured inside the <code>config/app.php</code> file. By editing <code>date_format</code> and <code>date_time_format</code> configuration parameters there you are able to configure
+how it will be formatted across the application.</p>
+<p><a name="json-api"></a></p>
+<h3>JSON API</h3>
+<p>Built in JSON API is disabled by default, and if you want to enable it, just add new <code>.env</code> variable like following:</p>
+<pre><code class="language-php">//... 
+EXPOSE_API=true</code></pre>
+<p>After that your api will be located at <code>yourcomain.com/api</code> and you can start using it. The API documentation
+is available <a href="/api">here</a>.</p>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

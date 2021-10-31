@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Roles And Permissions - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Roles And Permissions</h1>
+<ul>
+<li><a href="#roles-and-permissions">Roles And Permissions</a>
+<ul>
+<li><a href="#roles-available">Available System Roles</a></li>
+<li><a href="#roles-manage">Managing Roles</a></li>
+<li><a href="#permissions">System Permissions</a></li>
+<li><a href="#permissions-manage">Managing Permissions</a></li>
+</ul></li>
+</ul>
+<hr />
+<p><a name="roles-and-permissions"></a></p>
+<h2>Roles and Permissions</h2>
+<p>Vanguard comes with advanced roles and permissions mechanism which allows you to easily manage your available roles and permissions via Web UI. System is created to allow users to have <strong>only one</strong> role, and to allow different permissions for each role.</p>
+<p><a name="roles-available"></a></p>
+<h3>Available System Roles</h3>
+<p>On roles section of the website administrators (or other users with appropriate permissions) can see and manage available system roles, as well as add unlimited number of new roles. Page with default system roles (<strong>Admin</strong> and <strong>User</strong>) is provided below.</p>
+<p><img src="assets/img/roles-list.png" alt="Vanguard - Roles" /></p>
+<p><a name="roles-manage"></a></p>
+<h3>Managing Roles</h3>
+<p>As it was already mentioned, users with appropriate permissions can add unlimited number of roles, and use them to customise the application. More on that can be found in <a href="working-with-permissions.html">working with permissions</a> section.</p>
+<p>Form for adding new role, and editing existing roles, is provided below.</p>
+<p><img src="assets/img/roles-add.png" alt="Vanguard - Roles" /></p>
+<p>Every role has <strong>name</strong>, that is used as key inside the source code of application. Display name is used inside the UI to better explain who is this role referring to.</p>
+<p><a name="permissions"></a></p>
+<h3>System Permissions</h3>
+<p>Permissions represent some concrete actions that specific role can perform. For example, one of default permissions is <code>users.manage</code>, and every user with role which has this permission can manage system users. </p>
+<p>This means that, for example, you can create new system role called <code>Manager</code>, and allow managers to only edit system users, without them being able to update system settings etc.</p>
+<blockquote>
+<p><strong>Note!</strong> Default system permissions cannot be deleted from UI. Custom created permissions can be deleted without any problem.</p>
+</blockquote>
+<p><a name="permissions-manage"></a></p>
+<h3>Managing Permissions</h3>
+<p>List of available permissions, including available system roles and their permissions, is provided below.</p>
+<p><img src="assets/img/permissions-list.png" alt="Vanguard - Permissions" /></p>
+<p>If we want, for example, to allow system users with role <code>User</code> to be able to View System Activity Log, all we have to do is to check the corresponding checkbox for that role, and click <strong>Save Permissions</strong> button at the bottom of the page. After that all users will be able to see Activity Log in sidebar menu as well as to access the activity log for all system users.</p>
+<p>Vanguard support unlimited number of permissions, and they can be added via form provided below.</p>
+<p><img src="assets/img/permissions-add.png" alt="Vanguard - Permissions" /></p>
+<p>Permission <strong>name</strong> is used as key/constant inside the source code to check if user has permissions to perform some action (more on that inside <a href="registration-form.html">custom registration form example</a>), and <strong>display name</strong> is used inside the UI, to better explain what the permission is used for.</p>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

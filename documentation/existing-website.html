@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using Vanguard for Existing Website - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Using Vanguard for Existing Website</h1>
+<ul>
+<li><a href="#intro">Introduction</a></li>
+<li><a href="#structure">Website Structure</a></li>
+<li><a href="#protecting-website">Protecting The Website</a></li>
+<li><a href="#redirect-to-custom-page">Redirecting to Custom Page After Login</a></li>
+<li><a href="#auth-only">Displaying Content For Authenticated Users Only</a></li>
+<li><a href="#role-specific">Displaying Content Based On User Role</a></li>
+<li><a href="#permission-specific">Displaying Content Based On User Permissions</a></li>
+</ul>
+<hr />
+<p><a name="intro"></a></p>
+<h2>Introduction</h2>
+<p>If you already have an existing PHP application, and you want to add user login and registration features, this section will show you how to accomplish that with Vanguard.</p>
+<p>If can, it is highly recommended to move your application to Laravel framework and incorporate it inside Vanguard application. This will give you a ton of great features and abilities, and make your website more organised and maintainable.</p>
+<p>For the purpose of this example, we will create a very simple one-page website that we will protect using Vanguard. We will first protect the whole page and make it be available for authenticated users only. After that, we will make that webpage display some content only for authenticated users, and if user is a guest then he won't be able to see that content.
+For the purpose of this example, we will create a very simple one-page website that we will protect using Vanguard. We will first protect the whole page and make it be available for authenticated users only. After that, we will make that webpage display some content only for authenticated users, and if user is a guest then he won't be able to see that content.</p>
+<p><a name="structure"></a></p>
+<h2>Website Structure</h2>
+<p>The HTML for example page is given below:</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Website&lt;/title&gt;
+
+    &lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class="container"&gt;
+    &lt;h1&gt;My Simple Website&lt;/h1&gt;
+
+    &lt;br&gt;
+
+    &lt;div class="well"&gt;
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur debitis distinctio dolore
+        eligendi enim fugit ipsa nemo odio odit quam quibusdam sapiente, voluptatum? Asperiores quis, rerum? Aperiam
+        iusto nostrum repellat?
+    &lt;/div&gt;
+
+    &lt;h4&gt;Random List&lt;/h4&gt;
+    &lt;ul class="list-group"&gt;
+        &lt;li class="list-group-item"&gt;Cras justo odio&lt;/li&gt;
+        &lt;li class="list-group-item"&gt;Dapibus ac facilisis in&lt;/li&gt;
+        &lt;li class="list-group-item"&gt;Morbi leo risus&lt;/li&gt;
+        &lt;li class="list-group-item"&gt;Porta ac consectetur ac&lt;/li&gt;
+        &lt;li class="list-group-item"&gt;Vestibulum at eros&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>And, this page currently looking like this:</p>
+<p><img src="assets/img/examples/simple-website.png" alt="Vanguard - Simple Website Example" /></p>
+<p><a name="protecting-website"></a></p>
+<h2>Protecting The Website</h2>
+<p>In order to protect the website and allow access to authenticated users only, all you have to do is to add following code snippet <strong>at the top of webpage</strong> you want to protect:</p>
+<pre><code class="language-php">&lt;?php
+
+// This should be equal to: PATH_TO_VANGUARD_FOLDER/extra/auth.php
+require_once __DIR__ . '/../extra/auth.php';
+
+// Here we just check if user is not 
+// logged in, and in that case we redirect
+// the user to vanguard login page.
+if (! Auth::check()) {
+    redirectTo('login');
+}
+
+?&gt;</code></pre>
+<blockquote>
+<p><strong>Note!</strong> Make sure that you don't have any blank space before open <code>&lt;?php</code> tag, not even a space!</p>
+</blockquote>
+<p>If your Vanguard installation is inside some subfolder, just make sure that you call <code>redirectTo</code> method with correct parameter. For example, if you have installed Vanguard inside <code>vanguard</code> folder that is in your server's root, your <code>redirectTo</code> function call should look like this:</p>
+<pre><code class="language-php">//...
+    redirectTo('vanguard/login');
+//...</code></pre>
+<p><a name="redirect-to-custom-page"></a></p>
+<h2>Redirecting to Custom Page After Login</h2>
+<p>In case you want to redirect users to some custom page after successful authentication, this can be easily achieved with Vanguard as following:</p>
+<pre><code class="language-php">//This can be url to any page, it doesn't matter
+//if it is on your existing website or not
+$to = "http://www.google.com";
+
+if (! Auth::check()) {
+    redirectTo('login?to=' . $to);
+} </code></pre>
+<p>There are many cases where you want to return user to current page after they successfully log in via Vanguard. Fortunately, previous example does exactly what you need, and the only thing you need to change is redirect page. Here is an example:</p>
+<pre><code class="language-php">//Move this to some helper function if you need it more than once
+ $currentUrl = (empty($_SERVER["HTTPS"]) ? "http://" : "https://") . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+
+ if (! Auth::check()) {
+     redirectTo('login?to=' . $currentUrl);
+ } </code></pre>
+<p><a name="auth-only"></a></p>
+<h2>Displaying Content For Authenticated Users Only</h2>
+<p>What if you want to still display a page to guest users, but hide some content from them and make it visible to authenticated users only? Luckily, Vanguard makes such task pretty easy.</p>
+<p>First, lets modify the content of the website as following:</p>
+<pre><code class="language-php">&lt;?php require_once __DIR__ . '/../extra/auth.php'; ?&gt;
+&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Website&lt;/title&gt;
+
+    &lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class="container"&gt;
+    &lt;h1&gt;
+        My Simple Website
+        &lt;?php if (Auth::check()): ?&gt;
+            &lt;a href="logout" class="btn btn-default pull-right"&gt;Logout&lt;/a&gt;
+        &lt;?php else: ?&gt;
+            &lt;a href="logout" class="btn btn-primary pull-right"&gt;Login&lt;/a&gt;
+        &lt;?php endif; ?&gt;
+    &lt;/h1&gt;
+
+    &lt;br&gt;
+
+    &lt;div class="well"&gt;
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur debitis distinctio dolore
+        eligendi enim fugit ipsa nemo odio odit quam quibusdam sapiente, voluptatum? Asperiores quis, rerum? Aperiam
+        iusto nostrum repellat?
+    &lt;/div&gt;
+
+    &lt;?php if (Auth::check()): ?&gt;
+        &lt;h4&gt;Random List&lt;/h4&gt;
+        &lt;ul class="list-group"&gt;
+            &lt;li class="list-group-item"&gt;Cras justo odio&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;Dapibus ac facilisis in&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;Morbi leo risus&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;Porta ac consectetur ac&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;Vestibulum at eros&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;?php endif; ?&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>Now, if we access the website as non-authenticated (guest) user, the page will look like following</p>
+<p><img src="assets/img/examples/simple-website-guest.png" alt="Vanguard - Simple Website Example Guest" /></p>
+<p>So, as you can see, it works like this:</p>
+<pre><code class="language-php">&lt;?php if (Auth::check()): ?&gt;
+   // content here will be displayed only if user is authenticated
+&lt;?php else: ?&gt;
+   // content here will be displayed only for guest users
+&lt;?php endif; ?&gt;</code></pre>
+<p>This means that, on webiste above, we did the following:</p>
+<ol>
+<li>If user is logged in, then we will display logout button. Otherwise, we will display Login button.</li>
+<li>We will display Random List element only if user is logged in.</li>
+</ol>
+<p><a name="role-specific"></a></p>
+<h2>Displaying Content Based On User Role</h2>
+<p>From outside (and from inside) of Vanguard application, currently logged in user can be fetched using Auth <a href="https://laravel.com/docs/master/facades">Facade</a>, like following:</p>
+<pre><code class="language-php">$user = Auth::user();</code></pre>
+<p>Now, by calling <code>echo $user-&gt;first_name;</code>  it will print the value inside <code>first_name</code> database column for that specific user. So, as you can imagine, it work for all db columns, not only for <code>first_name</code>. If you are interested to learn more about models in Laravel, check the <a href="https://laravel.com/docs/master/eloquent">documentation</a>.</p>
+<p>If we want to check if user has some role, it can be done like this:</p>
+<pre><code class="language-php">$user-&gt;hasRole('Admin');</code></pre>
+<p>The parameter used for <code>hasRole</code> function is role <code>name</code>.  Check <a href="roles-and-permissions.html">roles and permissions</a> section for more details about what is <code>name</code> attribute and how you can create/manage roles in Vanguard.</p>
+<p>So, since we now know how to check if user has specific role, rendering some content or doing some action based on user's role is almost the same as we did for authenticated/non-authenticated users.</p>
+<p>The modified website example will display Random List section only if currently logged in user has <strong>Admin</strong> role:</p>
+<pre><code class="language-php">//...
+
+    &lt;?php if (Auth::user()-&gt;hasRole('Admin')): ?&gt;
+        &lt;h4&gt;Random List&lt;/h4&gt;
+        &lt;ul class="list-group"&gt;
+            &lt;li class="list-group-item"&gt;Cras justo odio&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;Dapibus ac facilisis in&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;Morbi leo risus&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;Porta ac consectetur ac&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;Vestibulum at eros&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;?php endif; ?&gt;
+
+//...</code></pre>
+<p><a name="permission-specific"></a></p>
+<h2>Displaying Content Based On User Permissions</h2>
+<p>If we want to check if some user has some permission, we can simply do that by calling <code>hasPermission</code> method on some user instance, with <a href="roles-and-permissions.html#permissions">permission name</a> as parameter, like following:</p>
+<pre><code class="language-php">//This function call will return TRUE if 
+//user has specified permission, and false otherwise
+$user-&gt;hasPermission('users.manage')</code></pre>
+<p>Now, if we want to display Random List content from our example website to user with <code>see_random_list</code> permission, we can do it like following:</p>
+<pre><code class="language-php">//...
+
+    &lt;?php if (Auth::user()-&gt;hasPermission('see_random_list')): ?&gt;
+        &lt;h4&gt;Random List&lt;/h4&gt;
+        &lt;ul class="list-group"&gt;
+            &lt;li class="list-group-item"&gt;Cras justo odio&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;Dapibus ac facilisis in&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;Morbi leo risus&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;Porta ac consectetur ac&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;Vestibulum at eros&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;?php endif; ?&gt;
+
+//...</code></pre>
+<p>Of course, since <code>see_random_list</code> permission does not exist, we will have to create it first, as it is explained inside <a href="roles-and-permissions.html">roles and permissions</a> section,  and set the <code>name</code> attribute to <code>see_random_list</code> (for Display Name we can use anything we want, ex: See Random List). When such permission is created, we can assign it to any role we want.</p>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

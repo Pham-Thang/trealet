@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Settings</h1>
+<ul>
+<li><a href="#settings">Settings</a>
+<ul>
+<li><a href="#general">General Settings</a></li>
+<li><a href="#auth">Authentication Settings</a></li>
+<li><a href="#auth">Registration Settings</a></li>
+<li><a href="#notifications">Notifications Settings</a></li>
+</ul></li>
+</ul>
+<hr />
+<p><a name="settings"></a></p>
+<h2>Settings</h2>
+<p>Vanguard provides simple but powerful interface for managing global application settings.  It allows administrators (or any other users with appropriate permission) to easily enable/disable registration, Two-Factor Authentication, Authentication Throttling and more.</p>
+<p><a name="general"></a></p>
+<h3>General Settings</h3>
+<p>General settings section is used for updating the application name. Once application name has been updated, it will change inside entire system, so you don't have to edit any code at all.</p>
+<p><img src="assets/img/settings-general.png" alt="Vanguard - General Settings" /></p>
+<p><a name="auth"></a></p>
+<h3>Authentication Settings</h3>
+<p>Authentication settings section contains everything that will allow easy authentication configuration. </p>
+<p><img src="assets/img/settings-auth.png" alt="Vanguard - Authentication Settings" /></p>
+<h4>General Auth Settings</h4>
+<ul>
+<li>
+<p><strong>Allow &quot;Remember Me&quot;?</strong> - used to enable/disable the checkbox for remembering the user, that is available on login page. If this option is set to OFF, users will be automatically logged out once their session expire. </p>
+</li>
+<li>
+<p><strong>Forgot Password</strong> - used for enabling/disabling reset password feature. If it is set to OFF, users won't be able to reset their password if they forget it.</p>
+</li>
+<li><strong>Reset Token Lifetime</strong>  - integer variable that represent lifetime of password reset token (in <strong>minutes</strong>).</li>
+</ul>
+<h4>Authentication Throttling</h4>
+<p>Authentication Throttling is security feature that will prevent brute force attacks. If it is enabled and user enter wrong password for specific number of times (check &quot;Maximum Number of Attempts&quot; option below), his account will be locked for predefined period of time.</p>
+<p>Available options are:</p>
+<ul>
+<li>
+<p><strong>Throttle Authentication</strong> - used to enable/disable authentication throttling</p>
+</li>
+<li>
+<p><strong>Maximum Number of Attempts</strong> - maximum number of times that user can enter wrong credentials before his account is locked for some period of time</p>
+</li>
+<li><strong>Lockout Time</strong> - number of <strong>minutes</strong> that represent for how long user account will be locked. For example, if this parameter is set to 2 and Maximum Number of Attempts parameter from above is set to 5, this means that after some user enter wrong credentials for <strong>5</strong> times, his account will be locked down for <strong>2</strong> minutes.</li>
+</ul>
+<h4>Two-Factor Authentication (2FA)</h4>
+<p>If this option is enabled, users will be able to enable/disable 2FA using <a href="https://www.authy.com/">Authy</a> secure service if they want to from their Profile page. In order to enable 2FA, check <a href="configuration.html#two-factor-auth">configuration section</a> to see how to get required API key.</p>
+<h3>Registration Settings</h3>
+<p>Registration settings is used to quickly configure registration process, or to disable it completely. Page with self-explanatory options is provided below.</p>
+<p><img src="assets/img/settings-registration.png" alt="Vanguard - Registration Settings" /></p>
+<p><a name="notifications"></a></p>
+<h3>Notifications Settings</h3>
+<p>Notifications settings contains option for enabling or disabling email notifications when new user signs up. If it is set to YES, all users with Amin role will receive an notification when new user signs up.</p>
+<p><img src="assets/img/settings-notifications.png" alt="Vanguard - Notifications Settings" /></p>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

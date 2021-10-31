@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Installing an Existing Plugin - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Installing an Existing Plugin</h1>
+<p>Vanguard plugins can be distributed on multiple ways, either via composer or
+as a ZIP archive. </p>
+<p><strong>NOTE!</strong> Use only plugins from the trusted sources. Plugins have access to
+all application files as well as your database and some malicious plugins can
+take all the data and the files from your application.</p>
+<h3>Installing a Plugin via Composer</h3>
+<p>You can install Vanguard plugins via composer, just like any other composer package.
+Each plugin can have different necessary steps that you should perform during the
+installation, so make sure that you have followed the plugin installation guide.</p>
+<p>After the successful installation you just need to register the plugin inside
+the <code>VanguardServiceProvider</code> and you are good to. </p>
+<p>Keep in mind though that you won't be able to edit the plugin files in this case
+since they will be inside the <code>/vendor</code> folder. If you want to be able to edit the
+plugin files, you will need to install it inside the <code>/plugins</code> folder, like it is
+described below.</p>
+<h3>Installing a Plugin Manually</h3>
+<p>Let's say that we have a plugin named <code>Foo</code> that you have purchased from a trusted
+source and it was sent to you as a ZIP archive.</p>
+<p>To install this plugin manually, you need to perform the following steps:</p>
+<p>1) Extract the plugin zip archive to the <code>/plugins</code> folder located inside the
+Vanguard's root folder.</p>
+<p>2) Update the <code>repositories</code> section in your <strong>main</strong> composer.json file by
+adding one more item as the following:</p>
+<pre><code class="language-json">{
+    "type": "path",
+    "url": "./plugins/Foo"
+}</code></pre>
+<p>3) Add the following line to the <code>require</code> section in your <strong>main</strong> composer.json file:</p>
+<pre><code class="language-json">"vanguardapp/foo": "*"</code></pre>
+<p>In our case, the full name of the package is <code>vanguardapp/foo</code>, but some real
+package will probably have a different name, so make sure that you find the
+name of the package/plugin by checking the <code>name</code> property in plugin's <code>composer.json</code>
+file (in our case the path to plugin's composer.json file
+is <code>/plugins/Foo/composer.json</code>).</p>
+<p>4) Follow the plugin installation guide and run all the commands required for
+the plugin to be installed properly.</p>
+<p>After the successful installation you just need to register the plugin inside
+the <code>VanguardServiceProvider</code> and you are good to.</p>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

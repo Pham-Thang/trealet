@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adding custom fields to registration form - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Adding custom fields to registration form</h1>
+<ul>
+<li><a href="#intro">Introduction</a></li>
+<li><a href="#database">Adding Missing Database Fields</a></li>
+<li><a href="#controller">Updating Controller Form Rendering Method</a></li>
+<li><a href="#form-html">Updating Form HTML</a></li>
+<li><a href="#model">Updating User Model</a></li>
+<li><a href="#validation">Adding Validation</a></li>
+<li><a href="#controller-store">Updating Controller to Accept New Form Fields</a></li>
+</ul>
+<hr />
+<p><a name="intro"></a></p>
+<h2>Introduction</h2>
+<p>Registration form customisation is something that probably no one can avoid if it comes to Vanguard customisation. If you are familiar with <a href="https://laravel.com/">Laravel</a> then adding another field into registration form will be an easy task for you.</p>
+<p>However,  for those who doesn't have a clue how Laravel is working, this will be challenging tutorial.</p>
+<p>Lets say that we want to add two new fields into the registration form: <strong>Nick Name</strong> and <strong>Country</strong>.
+Also, we will make Nick Name to be required and minimum 3 characters long.</p>
+<p>This is probably the most difficult scenario, so if you understand how this one is working, then you can add any other field into that form.</p>
+<p><a name="database"></a></p>
+<h2>Adding Missing Database Fields</h2>
+<p>Since <strong>Nick Name</strong> does not exist into our database schema, we will have to add it. There are many ways to add this field into users table, and we will cover two of them.</p>
+<h3>Laravel's Migrations (recommended)</h3>
+<p>Creating <a href="https://laravel.com/docs/5.4/migrations">migrations</a> for your database schema is the best way to create and modify your database schema. Also, since migrations are basically PHP files, those files will be stored on your Version Control System (Git, Mercurial, etc.) so any of your coworkers will have access to database schema that is being used for your project, and, the best thing about it, is that you will be able to see full history of changes for any of your database tables.</p>
+<p>So, for our tutorial, we will create new database migrations by typing the following command into our terminal:</p>
+<pre><code class="language-php">php artisan make:migration add_nick_name_field_to_users_table</code></pre>
+<p>After this command is executed, new file will be created into our <code>database/migrations</code> folder. Since we want to alter the existing <code>users</code> table, the  newly created migration class will look like following:</p>
+<pre><code class="language-php">use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddNickNameFieldToUsersTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table-&gt;string('nick', 20);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table-&gt;dropColumn('nick');
+        });
+    }
+}
+</code></pre>
+<p>When it is executed, this migration will add new column into <code>users</code> database table called <code>nick</code>, and it will be type of <code>VARCHAR(20)</code>. If you want to learn more about Laravel Migrations, check the <a href="https://laravel.com/docs/5.3/migrations#modifying-columns">documentation</a>.</p>
+<p>Now, since our migration is ready, we can execute it by typing the following command into our terminal:</p>
+<pre><code class="language-php">php artisan migrate</code></pre>
+<p>If you check the database using PHPMyAdmin (or some other similar app) you will see that our <code>nick</code> field is added to <code>users</code> database table. </p>
+<h3>Manually Add Missing Field</h3>
+<p>If for some reason you decide not to use the migrations for altering the database, you can manually add missing <code>nick</code> field using PHPMyAdmin or similar application. Just make it <code>varchar(20)</code> and we are good to go.</p>
+<blockquote>
+<p><strong>Note!</strong> This maybe looks easier for now, but what if you forgot to tell to your co-workers that you have added that new field? Or even if you tell them, each one of them will have to create it manually.</p>
+</blockquote>
+<p><a name="controller"></a></p>
+<h2>Updating Auth Controller</h2>
+<p>Since we are going to allow users to select their country on registration form, we have to fetch all available countries from the database, and to pass those countries to our registration <a href="https://laravel.com/docs/5.3/views">view</a>. </p>
+<p>In order to do that, we will have to edit <code>app/Http/Controllers/Web/Auth/AuthController.php</code> file and update it's <code>AuthController::getRegister</code> method as following:</p>
+<pre><code class="language-php">/**
+ * Show the application registration form.
+ *
+ * @param CountryRepository $countryRepository
+ * @return \Illuminate\Http\Response
+ */
+public function getRegister(CountryRepository $countryRepository)
+{
+    //...
+    $countries = $countryRepository-&gt;lists();
+    return view('auth.register', compact('socialProviders', 'countries'));
+}</code></pre>
+<p>Now, we have updated our controller method that is responsible for displaying the registration form and provided an array of countries to it in following format</p>
+<pre><code class="language-php">[
+    'country1_id' =&gt; 'country1_name',
+    'country2_id' =&gt; 'country2_name',
+    //...
+]</code></pre>
+<p>We are now ready to update the form HTML.</p>
+<p><a name="form-html"></a></p>
+<h2>Updating Form HTML</h2>
+<p>As you can see from previous code snippet, where we have updated <code>getRegister</code> method for our <code>AuthController</code>, there is some <code>view</code> function call that says <code>view('auth.register', ...</code>. This actually means that it Laravel will look for our view into <code>resources/views/auth/</code> directory, it will look for file called <code>register.blade.php</code>. That's the file we need to update.</p>
+<p>So, we will update <code>resources/views/auth/register.blade.php</code> file and add the following code snippet right after email input field:</p>
+<pre><code class="language-php">&lt;div class="form-group input-icon"&gt;
+   &lt;i class="fa fa-user"&gt;&lt;/i&gt;
+   &lt;input type="text" name="nick" id="nick" class="form-control" 
+           placeholder="Nick Name"  value="{{ old('nick') }}"&gt;
+&lt;/div&gt;
+
+&lt;div class="form-group"&gt;
+    {!! Form::select('country_id', $countries, old('country_id'), 
+            ['class' =&gt; 'form-control', 'id' =&gt; 'country_id']) !!}
+&lt;/div&gt;</code></pre>
+<p>This will render us the following registration form:</p>
+<p><img src="assets/img/examples/form-example.png" alt="Vanguard - Registration Field Example Form" /></p>
+<blockquote>
+<p><strong>Note!</strong> If you curious how <code>Form::select</code> works, check <a href="https://laravelcollective.com/docs/5.3/html">Laravel Collective</a> documentation.</p>
+</blockquote>
+<p><a name="validation"></a></p>
+<h2>Adding Validation</h2>
+<p>Since we have defined that Nick Name will be an required field with minimum length of 3 characters, we have to add one more validation rule inside <code>$rules</code> array available in <code>RegisterRequest::rules</code> method in <code>app/Http/Requests/Auth/RegisterRequest.php</code> file.</p>
+<p>So, right after <code>password</code> validation rules, add the following rule</p>
+<pre><code class="language-php">$rules = [
+    //...
+    'nick' =&gt; 'required|min:3'
+];</code></pre>
+<p>This validation rule will make our Nick Name field required his minimum length must be 3 characters.</p>
+<blockquote>
+<p><strong>Note!</strong> If you want to know more about Laravel validation and available validation rules, check the <a href="https://laravel.com/docs/5.3/validation">validation documentation</a>.</p>
+</blockquote>
+<p><a name="model"></a></p>
+<h2>Updating User Model</h2>
+<p>Since we have added new database field inside our users table, we have to update our users model and add that field to your <a href="https://laravel.com/docs/5.3/eloquent#mass-assignment">fillable attributes</a> array.</p>
+<p>So, just edit <code>app/User.php</code> and add field <code>nick</code> into <code>$fillable</code> array, right after <code>remember_token</code> field.</p>
+<p><a name="controller-store"></a></p>
+<h2>Updating Controller to Accept New Form Fields</h2>
+<p>And the last step is to actually tell to our <code>AuthController</code> that we want him to use two more fields which we have added to our registration form.</p>
+<p>To do that, just go to <code>AuthController</code> and inside <code>postRegister</code> method, replace </p>
+<pre><code class="language-php">$request-&gt;only('email', 'username', 'password')</code></pre>
+<p>with</p>
+<pre><code class="language-php">$request-&gt;only('email', 'username', 'password', 'country_id', 'nick')</code></pre>
+<p>And that's it, your registration form now have two more fields that are automatically validated and stored into the user's table after successful registration. :)</p>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Authentication &amp; Registration - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Authentication &amp; Registration</h1>
+<ul>
+<li><a href="#authentication-and-registration">Authentication &amp; Registration</a>
+<ul>
+<li><a href="#logging-in">Logging In</a></li>
+<li><a href="#two-factor-token">Two-Factor Token</a></li>
+<li><a href="#registration">Registration</a></li>
+<li><a href="#password-reset">Password Reset</a></li>
+</ul></li>
+</ul>
+<hr />
+<p><a name="authentication-and-registration"></a></p>
+<h2>Authentication &amp; Registration</h2>
+<p><a name="logging-in"></a></p>
+<h3>Logging In</h3>
+<p>After accessing any Vanguard-protected URL, user will automatically be redirected to the Login Page.  Users are able to log in by typing their username (or email) and password, or by using some of Social Authentication options (if enabled). Login form is displayed below:</p>
+<p><img src="assets/img/login.png" alt="Vanguard - Login Form" /></p>
+<p><a name="two-factor-token"></a></p>
+<h3>Two-Factor Token</h3>
+<p>If Two-Factor Authentication is enabled for specific user, after entering correct username/email and password combination, he will be redirected to Two-Factor Token page displayed below, to enter <a href="https://www.authy.com/">Authy</a> 2FA token. This means that user has to download secure <a href="https://www.authy.com/app/">Authy app</a> on his mobile phone and use the token value available upon application installation.</p>
+<p><img src="assets/img/2fa-token.png" alt="Vanguard - Two-Factor Authentication Form" /></p>
+<p>After entering the 2FA token, Vanguard will contact Authy servers to check the token value, and, <strong>only</strong> if token is correct, user will be logged in.</p>
+<p><a name="registration"></a></p>
+<h3>Registration</h3>
+<p>Since registration can be completely disabled inside <a href="settings.html#auth">application settings</a>, registration form is only accessible if registration is enabled.</p>
+<p>Users are able to access the registration form and create new account by clicking the <strong>Don't have an account?</strong> link on login page and filling up the registration form.</p>
+<p><img src="assets/img/registration.png" alt="Vanguard - Registration Form" /></p>
+<p>If it is enabled inside application settings, user also has to confirm that they are humans by passing Google reCAPTCHA test.</p>
+<p>After successful registration, depending on application settings, user has to confirm their email address if they want to log in for the first time. If email confirmation is disabled by system administrator, users will be able to login right after successful registration.</p>
+<p><a name="password-reset"></a></p>
+<h3>Password Reset</h3>
+<p>In case that some user forgot his password, he will be able to reset it from Forgot Password form available, after clicking <strong>I forgot my password</strong> link on login page.</p>
+<p><img src="assets/img/login-password-remind.png" alt="Vanguard - Link to Forgot Password Form" /></p>
+<p><img src="assets/img/password-remind.png" alt="Vanguard - Forgot Password Form" /></p>
+<blockquote>
+<p><strong>Note!</strong> Password reset page is accessible only if that option is enabled by system administrator.</p>
+</blockquote>
+<p>After filling in the email used for that account, user will receive an password reset email with a password reset link. That link will be available for a predefined period of time, which is, again, defined by system administrators inside application settings.</p>
+<p>When user click on received password reset link, password reset form will be displayed and it will allow them to enter their new password.</p>
+<p><img src="assets/img/password-reset.png" alt="Vanguard - Password Reset Form" /></p>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

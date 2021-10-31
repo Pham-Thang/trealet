@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customizing Stylesheets - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Customizing Stylesheets</h1>
+<ul>
+<li><a href="#intro">Introduction</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#using-laravel-mix">Using Laravel Mix</a></li>
+<li><a href="#changing-theme-colors">Changing Theme Colors</a></li>
+</ul>
+<hr />
+<p><a name="intro"></a></p>
+<h2>Introduction</h2>
+<p>Vanguard is based on <a href="http://getbootstrap.com/">Bootstrap 4</a> and it uses <a href="https://sass-lang.com/">SASS</a> pre-processor for generating application stylesheets. This means that the recommended way to modify the stylesheets is to modify the sass files located in <code>resources/assets/sass</code> folder and then to compile them down to a single css file. </p>
+<p>Of course, if you want, you can always create your own css file and include after the main application css file in <code>resources/assets/layouts/app.blade.php</code> layout file, but it is much easier to use sass for any styling you want to add or update.</p>
+<p><a name="requirements"></a></p>
+<h2>Requirements</h2>
+<p><a href="https://laravel.com/docs/5.6/mix">Laravel Mix</a>, which is the default way to compile assets for Laravel applications, requires <strong>Node.js</strong> and <strong>NPM</strong> to be installed on your development machine. More info on how to install it is available in <a href="https://laravel.com/docs/5.6/mix#installation">Mix's documentation</a>.</p>
+<p><a name="using-laravel-mix"></a></p>
+<h2>Using Laravel Mix</h2>
+<p>After you install Node.js and NPM, you need to run the following command from a Vanguard's root directory to install all required packages: </p>
+<pre><code>npm install</code></pre>
+<p>After the package installation is finished, you can run the following commands to compile (and minify) Vanguard styles:</p>
+<pre><code>// Run all Mix tasks...
+npm run dev
+
+// Run all Mix tasks and minify output...
+npm run production</code></pre>
+<p>By running the above commands you will automatically compile everything to plain CSS and put it in <code>public/assets/css/app.css</code> file. </p>
+<p>More info about other available Laravel Mix commands can be found in <a href="https://laravel.com/docs/5.6/mix#installation">Mix's documentation</a>.</p>
+<p><a name="changing-theme-colors"></a></p>
+<h2>Changing Theme Colors</h2>
+<p>As mentioned above, Vanguard's theme is based on Bootstrap 4, which means that you can easily override any SASS variables available inside the bootstrap itself like it's explained in <a href="https://getbootstrap.com/docs/4.0/getting-started/theming/">Bootstrap's documentation</a>.</p>
+<p>Vanguard overrides some of Bootstrap's variables in <code>resources/assets/sass/_variables.scss</code> file. So, for example, if you want to change the theme primary color from <code>#179970</code> to <code>#aa0000</code> all you need to do is to update the <code>$primary</code> variable in <code>_variables.scss</code> file like follows</p>
+<pre><code class="language-sass">$primary: #aa0000;</code></pre>
+<p>and then to run the following command</p>
+<pre><code>npm run dev
+
+// or, if you are building for production version of the site
+npm run prod</code></pre>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

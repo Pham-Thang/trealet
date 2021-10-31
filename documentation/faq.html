@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FAQ - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>FAQ</h1>
+<hr />
+<h4>HTTP 500 Error: Request cannot be processed. What should I do?</h4>
+<p>Make sure that you have <strong>PHP &gt;= 7.0</strong>, since that's minimum PHP version required to use Vanguard.</p>
+<h4>The requested URL <code>/install</code> was not found on this server. Am I missing some files?</h4>
+<p>Of course that all files are there and the reason why you don't see that &quot;install&quot; folder at all is because Vanguard, as Laravel application, does not work like that.</p>
+<p>All requests are routed through <code>index.php</code> file (it utilises <a href="http://martinfowler.com/eaaCatalog/frontController.html">front controller pattern</a>) and then routes are responsible for routing
+your request to appropriate controller and method.</p>
+<p>Now, the reason you get such message is probably because you most likely use Apache Web Server which does not have <code>mod_rewrite</code> installed and enabled.
+This means that you will have to enable Apache <code>mod_rewrite</code>, and you can do it by typing the following command into the terminal (after you login to your server via SSH):</p>
+<pre><code class="language-php">a2enmod rewrite</code></pre>
+<p>This command will enable Apache rewrite module. If you get some message like &quot;Module rewrite already enabled&quot;, this means that module is already enabled and you can proceed to next step, which is updating Apache configuration file.</p>
+<p>After you are sure that you have your module enabled, next thing to do is to make sure that you have added <code>allow from all</code> inside your Vanguard's Apache virtual host configuration, like following:</p>
+<pre><code class="language-xml">&lt;VirtualHost *:80&gt; 
+    DocumentRoot /var/www/vanguard/public 
+    ServerName mydomain.com 
+    &lt;Directory "/var/www/vanguard/public"&gt; 
+        allow from all &lt;!-- required --&gt;
+        Options FollowSymLinks 
+    &lt;/Directory&gt; 
+&lt;/VirtualHost&gt;</code></pre>
+<p>Of course, your VirtualHost configuration will probably be different, but you must allow Vanguard's <code>.htaccess</code> file to actually do some work by defining this <code>allow</code> rule.</p>
+<blockquote>
+<p><strong>Note!</strong> If you don't have SSH access to your server, or you are using cPanel (or any similar software) you should probably enable Apache rewrite module from there. If not, you will have to contact your support to do that for you.</p>
+</blockquote>
+<p><a name="redirect-page"></a></p>
+<h4>How to change redirect page after login?</h4>
+<p>Modifying redirect page after login is simple. Just check <code>handleUserWasAuthenticated</code> method available inside <code>app/Http/Controllers/Web/Auth/AuthController</code>
+and replace <code>return redirect()-&gt;intended();</code>  line with <strong>one</strong> of the following:</p>
+<pre><code class="language-php">// to redirect to custom url (can be any url)
+return redirect()-&gt;to("your url here");
+
+//or
+
+// to redirect to specific Vanguard route
+// with name that is already defined for that route
+return redirect()-&gt;route("route_name_here");</code></pre>
+<h4>Maximum execution time of 30 seconds exceeded. What should I do?</h4>
+<p>Apache on XAMPP (especially on Windows) is slower than Apache on most other platforms.
+This means that you should increase <code>max_execution_time</code> configuration parameter in <code>php.ini</code> from default
+value of <code>30</code> to any reasonably higher value (like <code>240</code> for example). After you do that, just restart Apache and everything should work without any problems.</p>
+<h4>How to modify session expiration parameters?</h4>
+<p>Check <a href="configuration.html#session-configuration">session configuration section</a>.</p>
+<h4>I cannot use the API to authenticate users. What should I do?</h4>
+<p>Make sure that you have enabled the API like it is described in <a href="configuration.html#json-api">JSON API configuration section</a>.</p>
+<h4>I'm getting &quot;Error 403 – Forbidden The request was a legal request, but the server is refusing to respond to it&quot;. How do I fix it?</h4>
+<p>If you are using Apache web server and you are getting this error, it might be related to the <code>Options -MultiViews</code> apache configuration parameter.
+In that case, I would recommend you to edit <code>public/.htaccess</code> file and uncomment the following code by removing <code>#</code> in front of it:</p>
+<pre><code>&lt;IfModule mod_negotiation.c&gt;
+    Options -MultiViews
+&lt;/IfModule&gt;</code></pre>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plugin Service Provider - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Plugin Service Provider</h1>
+<p>As mentioned in <a href="creating-a-plugin.html">creating a plugin section</a>, each plugin
+has one main class which basically serves
+as a <a href="https://laravel.com/docs/6.0/providers">service provider</a> for the plugin.
+Like any other service provider it has two default methods that you can use
+for registering plugin related stuff:  <strong>register</strong> and <strong>boot</strong>.</p>
+<p>Vanguard plugins have one more default method called <strong>sidebar</strong>, and it's
+purpose is to allow you to easily put the navigation items to Vanguard's
+sidebar navigation.</p>
+<h3>The Register Method</h3>
+<p>As per <a href="https://laravel.com/docs/6.0/providers#the-register-method">Laravel docs</a>,
+within the <code>register</code> method, you should only bind things into
+the <a href="https://laravel.com/docs/6.0/container">service container</a>. For example,
+this is a perfect place to bind some concrete repository classes to a specific
+interface.</p>
+<h3>The Boot Method</h3>
+<p>This method is called after all other service providers have been registered,
+meaning you have access to all other services that have been registered by
+the framework. Inside this method you will bind your plugin routes, register
+views, etc. </p>
+<h3>The Sidebar Method</h3>
+<p>If your plugin needs to add an item to the sidebar, this is the method where
+you will define how this sidebar item will look like and who should be able
+to see it.</p>
+<p>The method returns an instance of the <code>Vanguard\Support\Sidebar\Item</code> class
+and it's recommended to open the class definition itself and go through all
+the documented methods to see everything that this class can do. Here is an
+example on how to define a sidebar item for our &quot;Foo&quot; plugin created above:</p>
+<pre><code class="language-php">public function sidebar()
+{
+    return Item::create('Foo')
+        -&gt;icon('fas fa-bullhorn')
+        -&gt;route('foo.index')
+        -&gt;permissions('foo.manage')
+        -&gt;active('foo*');
+}</code></pre>
+<p>The <code>create</code> factory method from above accepts a string which is basically
+the title of the navigation item printed inside the sidebar.</p>
+<p>The <code>icon</code> method is actually FontAwesome icon class that should be used for
+the item.</p>
+<p>The <code>route</code> method is a named route to which this navigation item should
+point to. If you don't have a named route for this navigation item, or you
+simply want to point to some external URL, you can use the <code>href</code> method
+that accepts any string that will be used for a <code>href</code> attribute for a navigation link.</p>
+<p>The <code>permissions</code> method is where you define permissions required for viewing
+the sidebar item. It accepts either a single permission as a string, array of
+permissions or even a callback that you can use if you have some complex
+authorization logic. </p>
+<p>If a callback provided here returns <code>true</code> then currently authenticated user
+will be able to see the navigation item. Otherwise it won't be rendered. Here is an
+example:</p>
+<pre><code class="language-php">Item::create('Foo')
+    -&gt;permissions(function ($user) {
+        return $user-&gt;status === 'Foo';
+    })
+//...</code></pre>
+<p>The <code>active</code> method is where you define when this navigation item should be
+active according to the current URL path. In our case from above, this item
+will be active whenever there is an URL that <strong>starts with</strong> <code>foo</code>.</p>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

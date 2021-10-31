@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>User Profile</h1>
+<ul>
+<li><a href="#user-profile">User Profile</a>
+<ul>
+<li><a href="#details">Details</a></li>
+<li><a href="#avatar">Avatar</a></li>
+<li><a href="#auth">Authentication</a></li>
+</ul></li>
+</ul>
+<hr />
+<p><a name="user-profile"></a></p>
+<h2>User Profile</h2>
+<p>Every user of the system, no matter what his role is, is able to update his profile. Link to user's profile is available at the top right corner, like it is displayed below:</p>
+<p><img src="assets/img/link-user-profile.png" alt="Vanguard - Link to User Profile" /></p>
+<p><a name="details"></a></p>
+<h3>Details</h3>
+<p>On Profile Details page, users can update their basic informations like First Name, Last Name etc. Also, they are able to update they country from a list of available countries, or to update their birthday using easy bootstrap calendar plugin.</p>
+<p><img src="assets/img/profile-details.png" alt="Vanguard User Profile - Details" /></p>
+<p><a name="avatar"></a></p>
+<h3>Avatar</h3>
+<p>Every user is able to set his avatar photo. By clicking &quot;Change Photo&quot; button below his current avatar, he is able to remove current avatar by clicking <em>No Photo</em>, to upload avatar image or to use his <a href="https://en.gravatar.com/">Gravatar</a> (if there is no Gravatar account attached to his email address, default Gravatar image will be displayed).</p>
+<p><img src="assets/img/profile-avatar-modal.png" alt="Vanguard User Profile - Avatar Modal" /></p>
+<p>If use is authenticated with some social network (like Facebook, for example) he will be able to select avatars from social network he is authenticated with. In this case, the user was authenticated with Facebook, so he is able to select Facebook avatar and use it within the Vanguard application.</p>
+<h4>Uploading Avatar</h4>
+<p>Uploading avatar is ridiculously easy. After selecting <strong>Upload Avatar</strong> option on modal dialog from above, and selecting the avatar photo,  you are able to zoom the selected photo in and out, and move it around until you are happy with how it looks.
+After putting the image to desired position, and clicking the <strong>Save</strong> button, avatar will be automatically cropped and uploaded to the server, and user's avatar will be updated.</p>
+<p><img src="assets/img/profile-avatar-upload.png" alt="Vanguard User Profile - Avatar Upload" /></p>
+<p><a name="auth"></a></p>
+<h3>Authentication</h3>
+<p>On Authentications tab, under Profile section, every user is able to update his login details including email, username and password. If password field is empty when users click &quot;Update Details&quot; button, password will not be updated.</p>
+<p><img src="assets/img/profile-auth.png" alt="Vanguard User Profile - Authentication" /></p>
+<p>Users are also able to enable or disable Two-Factor Authentication (2FA) for their account (of course, if it is enabled globally by administrators). And, as it already mentioned in <a href="authentication.html#two-factor-token">authentication section</a>, in order to use two factor authentication, user has to install Authy application on his phone.</p>
+<p>To enable 2FA, user has to provide his Country Code and Cell Phone number, without country code prefix. For example, if your cell phone number is +12345678, and you are from USA, then your Country Code will be <code>1</code> and your Cell Phone Number will be <code>2345678</code>.</p>
+<p>If you are not sure what your country code is, list of all country codes can be found <a href="https://countrycode.org/">here</a>.</p>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

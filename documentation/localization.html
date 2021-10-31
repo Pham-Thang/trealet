@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Localization - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Localization</h1>
+<ul>
+<li><a href="#localization">Localization</a>
+<ul>
+<li><a href="#available-locales">Available Locales</a></li>
+<li><a href="#translating-vanguard">Translating Vanguard</a></li>
+<li><a href="#setting-application-locale">Setting Application Locale</a></li>
+</ul></li>
+</ul>
+<hr />
+<p><a name="localization"></a></p>
+<h2>Localization</h2>
+<p>Vanguard utilizes Laravel's default localization mechanism to allow you to translate it to any language you want. All translation files are located inside <code>resources/lang</code> folder. Within this directory there should be a subdirectory for each language supported by the application:</p>
+<pre><code class="language-php">/resources
+    /lang
+        /en
+            app.php
+        /es
+            app.php</code></pre>
+<p><a name="available-locales"></a></p>
+<h3>Available Locales</h3>
+<p>Out of the box, you can switch among following locales:</p>
+<ul>
+<li>- English</li>
+<li>- Serbian Latin</li>
+<li>- German</li>
+</ul>
+<p>More locales will be added in the future.</p>
+<p><a name="translating-vanguard"></a></p>
+<h3>Translating Vanguard</h3>
+<p>If you want to translate Vanguard application, all you need to do is to create subfolder inside <code>resources/lang</code> directory that match your locale, copy the files from existing locale (<code>en</code> for example), and translate them to your language.</p>
+<blockquote>
+<p><strong>Note!</strong> Vanguard specific files are <code>app.php</code> and <code>log.php</code>. All other files are Laravel's default localization files, and there is a big chance that someone has already translated those files for you. Check it <a href="https://github.com/caouecs/Laravel-lang">here</a>.</p>
+</blockquote>
+<p>For example, if we want to translate Vanguard to Russian, we will do the following:</p>
+<ol>
+<li>
+<p>Create new folder inside <code>resources/lang</code> called <code>ru</code>. </p>
+</li>
+<li>
+<p>Copy <code>app.php</code> and <code>log.php</code> files from <code>resources/lang/en</code> to your newly created <code>ru</code> folder.</p>
+</li>
+<li>
+<p>Translate all copied files to Russian.</p>
+</li>
+<li>Download Laravel's default translation files for Russian language from <a href="https://github.com/caouecs/Laravel-lang">here</a> and put them inside your newly created <code>ru</code> folder.</li>
+</ol>
+<p><a name="setting-application-locale"></a></p>
+<h3>Setting Application Locale</h3>
+<p>Now, when you have your translations ready, you just need to change the currently active language by defining <code>APP_LOCALE</code> environment variable inside your <code>.env</code> file.</p>
+<p>For example, if we want to set our language to Russian, we would set that variable as following:</p>
+<pre><code class="language-php">//...
+APP_LOCALE=ru
+//...</code></pre>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>

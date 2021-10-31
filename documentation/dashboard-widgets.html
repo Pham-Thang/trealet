@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Widgets - Vanguard - Advanced PHP Login and User Management</title>
+    <meta name="author" content="Milos Stojanovic">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/docs.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/vanguard-logo.png" alt="Vanguard" height="50">
+                </a>
+            </div>
+
+            <div class="sidebar-toggle pull-right">
+                <a href="javascript:;" id="sidebar-toggle" class="btn btn-default">☰</a>
+            </div>
+
+            <a class="btn btn-custom pull-right"
+               target="_blank"
+               href="http://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?ref=loshMiS">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="sidebar">
+            <ul>
+<li>Setup
+<ul>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="configuration.html">Configuration</a></li>
+<li><a href="localization.html">Localization</a></li>
+<li><a href="development-mode.html">Development Mode</a></li>
+<li><a href="upgrade-guide.html">Upgrade Guide</a></li>
+</ul></li>
+<li>
+<p>Usage</p>
+<ul>
+<li><a href="authentication.html">Authentication &amp; Registration</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="profile.html">User Profile</a></li>
+<li><a href="users.html">User Management</a></li>
+<li><a href="impersonating-users.html">Impersonating Users</a></li>
+<li><a href="sessions.html">Session Management</a></li>
+<li><a href="activity-log.html">Activity Log</a></li>
+<li><a href="roles-and-permissions.html">Roles and Permissions</a></li>
+<li><a href="settings.html">Settings</a></li>
+<li><a href="api/index.html">Developer API</a></li>
+</ul>
+</li>
+<li>
+<p>Cookbook</p>
+<ul>
+<li><a href="customizing-stylesheets.html">Customizing Stylesheets</a></li>
+<li><a href="working-with-permissions.html">Working with Vanguard Permissions</a></li>
+<li><a href="existing-website.html">Using Vanguard for Existing Website</a></li>
+<li><a href="registration-form.html">Extending Registration Form</a></li>
+<li><a href="new-page.html">Creating New Page</a></li>
+<li><a href="adding-social-auth-provider.html">Adding Social Auth Provider</a></li>
+</ul>
+</li>
+<li>
+<p>Plugins</p>
+<ul>
+<li><a href="what-are-plugins.html">What are plugins</a></li>
+<li><a href="creating-a-plugin.html">Creating a Plugin</a></li>
+<li><a href="removing-a-plugin.html">Removing a Plugin</a></li>
+<li><a href="activating-a-plugin.html">Activating a Plugin</a></li>
+<li><a href="plugin-service-provider.html">Plugin Service Provider</a></li>
+<li><a href="installing-existing-plugin.html">Installing an Existing Plugin</a></li>
+<li><a href="template-hooks.html">Template Hooks</a></li>
+<li><a href="dashboard-widgets.html">Dashboard Widgets</a></li>
+</ul>
+</li>
+<li>
+<p>Testing</p>
+<ul>
+<li><a href="testing.html">Vanguard Automated Tests</a></li>
+</ul>
+</li>
+<li>Need More Help?
+<ul>
+<li><a href="faq.html">FAQ</a></li>
+</ul></li>
+</ul>
+        </section>
+        <article>
+            <div class="alert alert-warning" id="online-docs-warning" style="display: none;">
+                <strong>Attention!</strong> It's recommended to always use the
+                <a target="_blank" href="https://docs.vanguardapp.io/">online documentation</a>
+                since it is the most up to date version and it may have some sections updated or added
+                in the meantime.
+            </div>
+            <h1>Dashboard Widgets</h1>
+<p>Vanguard's dashboard consists of a set of widgets that are being rendered in a
+predefined fashion. </p>
+<p>Dashboard widget is a class that extends the abstract <code>Vanguard\Plugins\Widget</code>
+class and provides one simple <code>render()</code> method that is responsible for rendering
+a widget.</p>
+<p>All widget classes will be resolved out of Laravel's
+<a href="https://laravel.com/docs/6.0/container">service container</a> so you can inject
+any dependencies you want through the constructor.</p>
+<h2>Creating a New Widget</h2>
+<p>The easiest way to understand how to create a widget is to look at the existing one.
+Default Vanguard widgets can be found in <code>app/Support/Plugins/Dashboard/Widgets</code>
+folder and below is an example of the widget responsible for displaying the total
+number of users available inside the system.</p>
+<pre><code class="language-php">&lt;?php
+
+namespace Vanguard\Support\Plugins\Dashboard\Widgets;
+
+use Vanguard\Plugins\Widget;
+use Vanguard\Repositories\User\UserRepository;
+
+class TotalUsers extends Widget
+{
+    /**
+     * {@inheritdoc}
+     */
+    public $width = '3';
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $permissions = 'users.manage';
+
+    /**
+     * @var UserRepository
+     */
+    private $users;
+
+    /**
+     * TotalUsers constructor.
+     * @param UserRepository $users
+     */
+    public function __construct(UserRepository $users)
+    {
+        $this-&gt;users = $users;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function render()
+    {
+        return view('plugins.dashboard.widgets.total-users', [
+            'count' =&gt; $this-&gt;users-&gt;count()
+        ]);
+    }
+}
+</code></pre>
+<h3>Widget Width</h3>
+<p>Each widget has a <code>$width</code> property that is actually a number
+between <strong>1</strong> and <strong>12</strong>. This is basically the equivalent to the
+<a href="https://getbootstrap.com/docs/4.3/layout/grid/">Bootstrap columns</a> so if you
+set the width to <code>4</code> it means that it will be transformed to a bootstrap
+class named <code>col-md-4</code>.</p>
+<p>In case if you want to provide your own layout classes, you should set
+the <code>$width</code> to <code>null</code> (which is also the default value) and you should
+provide the column classes on your own.</p>
+<h3>Widget permissions</h3>
+<p>You can define who can see a specific widget by defining the permissions required
+for that widget. There are 3 different ways to define the required widget
+permissions, depending on what exactly you need to check:</p>
+<p><strong>Single Permission</strong> - A currently authenticated user must have the defined
+permission to be able to see the widget on the dashboard:</p>
+<pre><code class="language-php">//...
+
+protected $permissions = 'users.manage';
+
+//...</code></pre>
+<p><strong>Multiple Permissions</strong> - A currently authenticated user must have all the
+permissions from the given list.</p>
+<pre><code class="language-php">//...
+
+protected $permissions = ['users.manage', 'foo.bar'];
+
+//...</code></pre>
+<p><strong>Closure Based Permission</strong> - If a closure returns <code>true</code> then Vanguard will
+consider that the current user has the permission to see the widget on the dashboard.</p>
+<p>In this case, you will need to define your permission inside the constructor.</p>
+<pre><code class="language-php">//...
+
+public function __construct()
+{
+    $this-&gt;permissions = function ($user) {
+        return $user-&gt;status === 'Foo';
+    };
+}
+
+//..</code></pre>
+<h2>Registering Widgets</h2>
+<p>To register a widget you need to add the full path to the widget class inside
+the array that is being returned from the <code>widgets()</code> method
+in <code>VanguardServiceProvider</code>. </p>
+<p>Here is an example (pay attention to the <code>use</code> line at the top of the file):</p>
+<pre><code class="language-php">use Vanguard\Support\Plugins\Dashboard\Widgets\TotalUsers;
+
+//...
+
+protected function widgets()
+{
+    return [
+        //...
+
+        TotalUsers::class,
+
+        //...
+    ];
+}</code></pre>
+<p>The widget position on the dashboard will depend on the index inside the array
+from above. For example, if you have two widgets, <code>WidgetA</code> and <code>WidgetB</code>, and
+your widgets array looks like inside the code snippet below, then <code>WidgetB</code> will
+be rendered before the <code>WidgetA</code>.</p>
+<pre><code class="language-php">//...
+
+protected function widgets()
+{
+    return [
+        //...
+
+        WidgetB::class,
+        WidgetA::class,
+
+        //...
+    ];
+}</code></pre>
+        </article>
+
+        <script src="assets/js/docs.min.js"></script>
+    </div>
+</body>
+</html>
