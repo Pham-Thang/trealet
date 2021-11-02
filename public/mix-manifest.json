@@ -1,5 +1,6 @@
 {
-    "/assets/css/app.css": "/assets/css/app.css?id=ca48911a217c57903c04",
-    "/assets/js/vendor.js": "/assets/js/vendor.js?id=1c830eb8f2c182a39a32",
-    "/assets/css/vendor.css": "/assets/css/vendor.css?id=ae05dc71c58144acc005"
+    "/js/app.js": "/js/app.js",
+    "/assets/css/app.css": "/assets/css/app.css",
+    "/assets/js/vendor.js": "/assets/js/vendor.js",
+    "/assets/css/vendor.css": "/assets/css/vendor.css"
 }
