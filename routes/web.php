@@ -52,6 +52,12 @@ Route::post('edit_trealet/{id}','EditTrealetController@update') -> name('edit_tr
 Route::post('check_pass_tr/{id}','TrealetsSearch@check_key') -> name('check_key_trealet_to_controller');
 
 /**
+ * Trealets/Maps
+ */
+Route::get('maps', 'MapsController@index')->name('maps');
+
+
+/**
  * Manage_member_group
  */
 Route::get('manage_member/{id}','ManageMemberController@index') -> name('manage_member');
