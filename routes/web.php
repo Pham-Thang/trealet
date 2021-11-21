@@ -36,6 +36,13 @@ Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProvider
  * Trealets
  */
 Route::get('trealet-plays', 'TrealetPlaysController@index')->name('trealet-plays');
+Route::get('step-quest/{path?}', [
+    'uses' => 'StepQuestController@index',
+    // 'as' => 'react',
+    'where' => ['path' => '.*']
+    ])->name('step-quest');
+// Route::view('/step-quest{path?}', 'trealets.step-quest');
+
 Route::get('trealet-play-details', 'TrealetPlayDetails@index')->name('trealet-play-details');
 Route::post('trealet-play-details/score', 'TrealetPlayDetails@score')->name('trealet-play-details-score');
 Route::get('my-trealets', 'MyTrealets@index')->name('my-trealets');

@@ -1,0 +1,18 @@
+.result{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    /* padding-top: 24px; */
+    padding-top: 110px;
+}
+.resuil_img_img{
+    border-radius: 10px;
+}
+.result-content p{
+ font-weight: 500;
+ font-size: 16px;
+}

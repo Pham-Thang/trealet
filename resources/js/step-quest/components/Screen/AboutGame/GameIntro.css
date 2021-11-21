@@ -1,0 +1,16 @@
+.title{
+    text-align: center;
+    text-align: center;
+}
+.introgames{
+    display: flex;
+    text-align: center;
+    background-color: #4791FC35;
+}
+.description{
+    font-size: 18px;
+    font-weight: 500;
+    width: 80%;
+    margin: auto;
+    text-align: justify;
+}
