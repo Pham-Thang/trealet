@@ -58,14 +58,23 @@ Route::get('show_edit_trealet/{id}','EditTrealetController@index') -> name('edit
 Route::post('edit_trealet/{id}','EditTrealetController@update') -> name('edit_trealet_to_controller');
 Route::post('check_pass_tr/{id}','TrealetsSearch@check_key') -> name('check_key_trealet_to_controller');
 
-/**
- * Trealets/Maps
- */
+
 Route::get('maps/{path?}', [
     'uses' => 'MapsController@index',
     // 'as' => 'react',
     'where' => ['path' => '.*']
     ])->name('maps');
+
+/**
+ *StepQuest
+ */
+
+Route::get('stepquest-edit', 'StepquestEditController@index')->name('streamline-edit');
+Route::get('stepquest-edit/tree-folder', 'StepquestEditController@treeFolder')->name('streamline-edit.tree-folder');
+Route::get('stepquest-edit/ungdung', 'StepquestEditController@ungdung')->name('streamline-edit.ungdung');
+Route::get('stepquest-edit/image', 'StepquestEditController@image')->name('streamline-edit.image');
+Route::post('stepquest-edit/upload', 'StepquestEditController@upload')->name('streamline-edit.upload');
+
 
 /**
  * Manage_member_group
