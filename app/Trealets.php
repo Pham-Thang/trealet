@@ -8,8 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Trealets extends Model
 {
     use HasFactory;
-	
-	protected $table = 'trealets';
-	protected $primaryKey = 'id';
-	public $incrementing = true;
+
+    const STEPQUEST_TYPE = 'stepquest';
+
+    protected $fillable = [
+        'json', 'user_id', 'title', 'type', 'published', 'state'
+    ];
+    protected $table = 'trealets';
+    protected $primaryKey = 'id';
+    public $incrementing = true;
+
+    public const UPDATED_AT = null;
 }

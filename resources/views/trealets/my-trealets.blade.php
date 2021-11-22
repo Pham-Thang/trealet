@@ -18,7 +18,7 @@
 				</div></div></div>
 
 		<div class="col-md-2"><div class="card widget"><div class="card-body">
-					New stepquest
+					<a href="stepquest-edit">New stepquest</a>
 				</div></div></div>
 
 		<div class="col-md-2"><div class="card widget"><div class="card-body">
@@ -30,7 +30,7 @@
 				</div></div></div>
 
 		<div class="col-md-2"><div class="card widget"><div class="card-body">
-					<a href="maps">New maps</a>
+					New maps
 				</div></div></div>
 	</div>
 	<hr>
