@@ -63,3 +63,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/countries', 'CountriesController@index');
 });
+
+Route::get('/trealets', 'TrealetsController@index');
+Route::get('/trealets/{id}', 'TrealetsController@show');

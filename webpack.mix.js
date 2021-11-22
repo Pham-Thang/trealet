@@ -1,7 +1,5 @@
 let mix = require('laravel-mix');
 
-require('laravel-mix-tailwind');
-require('laravel-mix-purgecss');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -33,19 +31,6 @@ mix.styles([
 ], 'public/assets/css/vendor.css');
 
 mix.sass('resources/sass/app.scss', 'public/assets/css');
-
-mix.js('resources/js/app.js', 'public/js')
-    .react()
-    .less("resources/less/app.less", "public/css", {
-        lessOptions: {
-            javascriptEnabled: true,
-            modifyVars: {
-                "primary-color": "#0BD37E",
-            },
-        },
-    });
-
-mix.browserSync('127.0.0.1:8000');
 
 if (mix.inProduction()) {
     mix.version();
