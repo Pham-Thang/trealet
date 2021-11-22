@@ -38,7 +38,7 @@
             <?php echo $__env->make('partials.sidebar.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
             <div class="content-page">
-                <main role="main" class="px-4">
+                <main role="main">
                     <?php echo $__env->yieldContent('content'); ?>
                 </main>
             </div>

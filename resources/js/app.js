@@ -17,5 +17,6 @@
 /**
   * Reactjs App
   */
- require('./react/App');
- 
+if (document.getElementById('app')) {
+  require('./maps/App');
+}

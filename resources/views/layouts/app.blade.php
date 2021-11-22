@@ -33,7 +33,7 @@
             @include('partials.sidebar.main')
 
             <div class="content-page">
-                <main role="main" class="px-4">
+                <main role="main">
                     @yield('content')
                 </main>
             </div>

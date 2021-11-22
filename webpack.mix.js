@@ -34,7 +34,7 @@ mix.styles([
 
 mix.sass('resources/sass/app.scss', 'public/assets/css');
 
-mix.js('resources/js/app.js', 'public/js')
+mix.js(['resources/js/app.js', 'resources/js/step-quest.js'], 'public/js')
     .react()
     .less("resources/less/app.less", "public/css", {
         lessOptions: {
