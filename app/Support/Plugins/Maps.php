@@ -4,7 +4,7 @@ namespace Vanguard\Support\Plugins;
 use Vanguard\Plugins\Plugin;
 use Vanguard\Support\Sidebar\Item;
 
-class StepQuest extends Plugin
+class Maps extends Plugin
 {
     public function maps()
     {

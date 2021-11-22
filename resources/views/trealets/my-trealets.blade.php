@@ -30,7 +30,7 @@
 				</div></div></div>
 
 		<div class="col-md-2"><div class="card widget"><div class="card-body">
-					<a href="maps">New maps</a>
+					New maps
 				</div></div></div>
 	</div>
 	<hr>

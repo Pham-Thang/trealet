@@ -22,5 +22,5 @@ ReactDOM.render(
       </Switch>
     </Router>
   </Provider>,
-  document.getElementById("app")
+  document.getElementById("maps")
 );

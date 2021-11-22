@@ -1,7 +1,7 @@
 /**
   * Reactjs App
   */
- if (document.getElementById('app')) {
-    require('./maps/App');
+ if (document.getElementById('maps')) {
+    require('./maps/App.js');
   }
   

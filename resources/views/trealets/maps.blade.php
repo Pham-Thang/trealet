@@ -14,11 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js"></script>
-        <div id="page">
-        <div id="app"></div>
+        <div id="maps"></div>
     </div>
-    <script src="{{ asset('js/app.js') }}"></script>
-
 @stop
 
 @section('styles')

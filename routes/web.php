@@ -61,8 +61,11 @@ Route::post('check_pass_tr/{id}','TrealetsSearch@check_key') -> name('check_key_
 /**
  * Trealets/Maps
  */
-Route::get('maps', 'MapsController@index')->name('maps');
-
+Route::get('maps/{path?}', [
+    'uses' => 'MapsController@index',
+    // 'as' => 'react',
+    'where' => ['path' => '.*']
+    ])->name('maps');
 
 /**
  * Manage_member_group
