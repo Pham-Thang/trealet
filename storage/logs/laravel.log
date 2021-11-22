@@ -1,0 +1,20 @@
+[2021-11-22 10:44:04] production.ERROR: filemtime(): stat failed for /home/huy/Desktop/trealet/trealet-project/.env {"exception":"[object] (ErrorException(code: 0): filemtime(): stat failed for /home/huy/Desktop/trealet/trealet-project/.env at /home/huy/Desktop/trealet/trealet-project/vendor/laravel/framework/src/Illuminate/Foundation/Console/ServeCommand.php:66)
+[stacktrace]
+#0 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#1 /home/huy/Desktop/trealet/trealet-project/vendor/laravel/framework/src/Illuminate/Foundation/Console/ServeCommand.php(66): filemtime()
+#2 /home/huy/Desktop/trealet/trealet-project/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): Illuminate\\Foundation\\Console\\ServeCommand->handle()
+#3 /home/huy/Desktop/trealet/trealet-project/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#4 /home/huy/Desktop/trealet/trealet-project/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure()
+#5 /home/huy/Desktop/trealet/trealet-project/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#6 /home/huy/Desktop/trealet/trealet-project/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\\Container\\BoundMethod::call()
+#7 /home/huy/Desktop/trealet/trealet-project/vendor/laravel/framework/src/Illuminate/Console/Command.php(136): Illuminate\\Container\\Container->call()
+#8 /home/huy/Desktop/trealet/trealet-project/vendor/symfony/console/Command/Command.php(299): Illuminate\\Console\\Command->execute()
+#9 /home/huy/Desktop/trealet/trealet-project/vendor/laravel/framework/src/Illuminate/Console/Command.php(121): Symfony\\Component\\Console\\Command\\Command->run()
+#10 /home/huy/Desktop/trealet/trealet-project/vendor/symfony/console/Application.php(978): Illuminate\\Console\\Command->run()
+#11 /home/huy/Desktop/trealet/trealet-project/vendor/symfony/console/Application.php(295): Symfony\\Component\\Console\\Application->doRunCommand()
+#12 /home/huy/Desktop/trealet/trealet-project/vendor/symfony/console/Application.php(167): Symfony\\Component\\Console\\Application->doRun()
+#13 /home/huy/Desktop/trealet/trealet-project/vendor/laravel/framework/src/Illuminate/Console/Application.php(94): Symfony\\Component\\Console\\Application->run()
+#14 /home/huy/Desktop/trealet/trealet-project/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run()
+#15 /home/huy/Desktop/trealet/trealet-project/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#16 {main}
+"} 
