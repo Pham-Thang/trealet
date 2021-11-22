@@ -43,6 +43,14 @@ Route::get('step-quest/{path?}', [
     ])->name('step-quest');
 // Route::view('/step-quest{path?}', 'trealets.step-quest');
 
+
+Route::get('maps/{path?}', [
+    'uses' => 'MapsController@index',
+    // 'as' => 'react',
+    'where' => ['path' => '.*']
+    ])->name('maps');
+
+
 Route::get('trealet-play-details', 'TrealetPlayDetails@index')->name('trealet-play-details');
 Route::post('trealet-play-details/score', 'TrealetPlayDetails@score')->name('trealet-play-details-score');
 Route::get('my-trealets', 'MyTrealets@index')->name('my-trealets');
@@ -64,6 +72,16 @@ Route::get('maps/{path?}', [
     // 'as' => 'react',
     'where' => ['path' => '.*']
     ])->name('maps');
+/**
+ *StepQuest
+ */
+
+Route::get('stepquest-edit', 'StepquestEditController@index')->name('streamline-edit');
+Route::get('stepquest-edit/tree-folder', 'StepquestEditController@treeFolder')->name('streamline-edit.tree-folder');
+Route::get('stepquest-edit/ungdung', 'StepquestEditController@ungdung')->name('streamline-edit.ungdung');
+Route::get('stepquest-edit/image', 'StepquestEditController@image')->name('streamline-edit.image');
+Route::post('stepquest-edit/upload', 'StepquestEditController@upload')->name('streamline-edit.upload');
+
 
 /**
  *StepQuest
