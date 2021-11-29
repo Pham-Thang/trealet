@@ -9,7 +9,7 @@ import {
 import { Provider } from "react-redux";
 import store from "./store";
 import * as action from "./store/actions";
-import Maps from "./screens/Maps/Maps";
+import Maps from "./screen/Maps/Maps";
 import "./App.css";
 
 store.dispatch(action.authCheck());

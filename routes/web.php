@@ -66,12 +66,6 @@ Route::get('show_edit_trealet/{id}','EditTrealetController@index') -> name('edit
 Route::post('edit_trealet/{id}','EditTrealetController@update') -> name('edit_trealet_to_controller');
 Route::post('check_pass_tr/{id}','TrealetsSearch@check_key') -> name('check_key_trealet_to_controller');
 
-
-Route::get('maps/{path?}', [
-    'uses' => 'MapsController@index',
-    // 'as' => 'react',
-    'where' => ['path' => '.*']
-    ])->name('maps');
 /**
  *StepQuest
  */

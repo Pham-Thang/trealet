@@ -6,11 +6,11 @@ use Vanguard\Support\Sidebar\Item;
 
 class Maps extends Plugin
 {
-    public function maps()
+    public function sidebar()
     {
         return Item::create(__('Maps'))
             ->route('maps')
-            ->icon('fas fa-maps')
+            ->icon('fas fa-map')
             ->active("maps*");
 //            ->permissions('users.manage');
     }

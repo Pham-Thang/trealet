@@ -27,6 +27,7 @@ class VanguardServiceProvider extends BaseVanguardServiceProvider
 			\Vanguard\Support\Plugins\MyTrealets::class,
 			\Vanguard\Support\Plugins\TrealetPlays::class,
 			\Vanguard\Support\Plugins\StepQuest::class,
+            \Vanguard\Support\Plugins\Maps::class,
             \Vanguard\Support\Plugins\Users::class,
             \Vanguard\UserActivity\UserActivity::class,
             \Vanguard\Support\Plugins\RolesAndPermissions::class,
