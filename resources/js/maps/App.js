@@ -9,7 +9,7 @@ import {
 import { Provider } from "react-redux";
 import store from "./store";
 import * as action from "./store/actions";
-import Maps from "./screen/Maps/Maps";
+import MapsScreen from "./screen/Maps/MapsScreen";
 import "./App.css";
 
 store.dispatch(action.authCheck());
@@ -18,7 +18,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route path="/maps" component={Maps} />
+        <Route path="/maps" component={MapsScreen} />
       </Switch>
     </Router>
   </Provider>,

@@ -11,10 +11,7 @@
 
 @section('content')
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css" rel="stylesheet">
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js"></script>
-      
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />      
     <div>
         <div id="maps"></div>
         <script src="{{asset('js/app.js')}}"></script>
@@ -23,7 +20,7 @@
 
 @section('styles')
     
-    <style>
+    {{-- <style>
         .options {
             margin-top: 20px;
             padding: 20px;
@@ -49,7 +46,5 @@
             max-width: 350px;
             width: 100%;
         }
-
-
-    </style>
+    </style> --}}
 @stop
