@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import CameraIcon from "./CameraIcon"
+import AudioIcon from "./AudioIcon";
+import QrIcon from './QrIcon';
+import FormIcon from './FormIcon';
 
 const greatPlaceStyle = {
   position: "absolute",
@@ -11,7 +15,6 @@ const Marker = (props) => {
     props.onClickMarker(true, props.detail);
   };
   const size = 80;
-  console.log(props.detail);
   return (
     <div
       style={{
@@ -32,16 +35,13 @@ const Marker = (props) => {
           width: size * 0.4,
           backgroundColor: "#FFF",
           boxShadow: "rgba(0, 0, 0, 0.56) 0px 22px 70px 0px",
-          borderRadius: size * 0.07,
+          borderRadius: size * 0.2,
         }}
       >
-        <img
-          width={size * 0.4}
-          height={size * 0.4}
-          style={{ borderRadius: size * 0.07 }}
-          src={props.detail.img[0].src}
-          alt="Logo"
-        />
+        {props.detail?.input.type === 'qrcode' ? <QrIcon/> : null} 
+        {props.detail?.input.type === 'camera' ? <CameraIcon/> : null} 
+        {props.detail?.input.type === 'audio' ? <AudioIcon/> : null} 
+        {props.detail?.input.type === 'form' ? <FormIcon/> : null} 
       </div>
       <div
         style={{

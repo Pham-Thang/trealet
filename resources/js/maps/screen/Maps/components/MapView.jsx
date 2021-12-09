@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import GoogleMap from "google-map-react";
 import GpsIcon from "../../../components/icons";
@@ -6,13 +6,12 @@ import { AimOutlined } from "@ant-design/icons";
 import Marker from "../../../components/Marker";
 import { getGeolocation, getGps } from "../../../store/actions/gps";
 import Gps from "../../../store/reducers/Gps";
-import vnu from '../../../img/vnu.jpg'; // Tell webpack this JS file uses this image
-import uet from '../../../img/uet.jpg'; // Tell webpack this JS file uses this image
-import ulis from '../../../img/ulis-logo.png'; // Tell webpack this JS file uses this image
-import g2 from '../../../img/G2.jpg';
-import vnu1 from '../../../img/ktx_mt.jpg';
-import ulis1 from '../../../img/ulis1.jpeg'; // Tell webpack this JS file uses this image
-
+import vnu from "../../../img/vnu.jpg"; // Tell webpack this JS file uses this image
+import uet from "../../../img/uet.jpg"; // Tell webpack this JS file uses this image
+import ulis from "../../../img/ulis-logo.png"; // Tell webpack this JS file uses this image
+import g2 from "../../../img/G2.jpg";
+import vnu1 from "../../../img/ktx_mt.jpg";
+import ulis1 from "../../../img/ulis1.jpeg"; // Tell webpack this JS file uses this image
 
 const arr = [
   {
@@ -39,67 +38,131 @@ const arr = [
 
 const arr2 = [
   {
-    title: "Đại học Quốc gia Hà Nội",
-    lat: 21.03768268860002,
-    lng: 105.78168530206932,
-    img: [
-      {
-        title: "",
-        src: vnu,
-      },
-      {
-        title: "",
-        src: vnu1,
-      },
-    ],
-    discreption:
-      "Đại học Quốc gia Hà Nội là một trong hai hệ thống Đại học Quốc gia của Việt Nam, được đặt dưới sự chỉ đạo trực tiếp của Chính phủ, giữ vai trò quan trọng trong hệ thống giáo dục của Việt Nam.",
+    name: "Tòa nhà hiệu bộ VNU",
+    lat: "21.03768268860002",
+    lng: "105.78168530206932",
+    desc: "Đại học Quốc gia Hà Nội là một trong hai hệ thống Đại học Quốc gia của Việt Nam, được đặt dưới sự chỉ đạo trực tiếp của Chính phủ, giữ vai trò quan trọng trong hệ thống giáo dục của Việt Nam.",
+    input: {
+      type: "qrcode",
+      label: "Hãy chụp quét Qr đi",
+    },
   },
   {
-    title: "Trường Đại học Ngoại ngữ, Đại học Quốc gia Hà Nội",
-    lat: 21.039223283888763,
-    lng: 105.78199913071451,
-    img: [
-      {
-        title: "",
-        src: ulis,
-      },
-      {
-        title: "",
-        src: ulis1,
-      },
-    ],
-    discreption:
-      "Trường Đại học Ngoại ngữ, là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được xếp vào nhóm trường đại học trọng điểm quốc gia Việt Nam. Đây được đánh giá là trường đại học đầu ngành và có lịch sử lâu đời nhất về đào tạo và giảng dạy ngôn ngữ tại Việt Nam.",
+    name: "Trường Đại học Ngoại ngữ, Đại học Quốc gia Hà Nội",
+    lat: "21.039223283888763",
+    lng: "105.78199913071451",
+    desc: "Trường Đại học Ngoại ngữ, là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được xếp vào nhóm trường đại học trọng điểm quốc gia Việt Nam. Đây được đánh giá là trường đại học đầu ngành và có lịch sử lâu đời nhất về đào tạo và giảng dạy ngôn ngữ tại Việt Nam.",
+    input: {
+      type: "camera",
+      label: "Hãy chụp 1 bức ảnh đi",
+    },
   },
   {
-    title: "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội",
-    lat: 21.038272480898943,
-    lng: 105.78283957815938,
-    img: [
-      {
-        title: "",
-        src: uet,
-      },
-      {
-        title: "",
-        src: g2,
-      },
-    ],
-    discreption:
-      "Trường Đại học Công nghệ (tiếng Anh: VNU University of Engineering and Technology; viết tắt là: UET) là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được thành lập vào năm 2004[3], địa chỉ tại 144 Xuân Thủy, quận Cầu Giấy, Hà Nội, trong khuôn viên Đại học Quốc gia Hà Nội khu vực Cầu Giấy cùng với các trường thành viên như Trường Đại học Ngoại ngữ, Trường Đại học Kinh tế, Trường Đại học Y Dược, Khoa Luật,...",
+    name: "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội",
+    lat: "21.038272480898943",
+    lng: "105.78283957815938",
+    desc: "Trường Đại học Công nghệ (tiếng Anh: VNU University of Engineering and Technology; viết tắt là: UET) là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được thành lập vào năm 2004[3], địa chỉ tại 144 Xuân Thủy, quận Cầu Giấy, Hà Nội, trong khuôn viên Đại học Quốc gia Hà Nội khu vực Cầu Giấy cùng với các trường thành viên như Trường Đại học Ngoại ngữ, Trường Đại học Kinh tế, Trường Đại học Y Dược, Khoa Luật,...",
+    input: {
+      type: "audio",
+      label: "Hãy chụp ghi âm 1 đoạn âm thanh",
+    },
   },
+  {
+    name: "Tòa nhà hiệu bộ VNU",
+    lat: "21.03768268860002",
+    lng: "105.78168530206932",
+    desc: "Đại học Quốc gia Hà Nội là một trong hai hệ thống Đại học Quốc gia của Việt Nam, được đặt dưới sự chỉ đạo trực tiếp của Chính phủ, giữ vai trò quan trọng trong hệ thống giáo dục của Việt Nam.",
+    input: {
+      type: "qrcode",
+      label: "Hãy chụp quét Qr đi",
+    },
+  },
+  {
+    name: "Trường Đại học Ngoại ngữ, Đại học Quốc gia Hà Nội",
+    lat: "21.039223283888763",
+    lng: "105.78199913071451",
+    desc: "Trường Đại học Ngoại ngữ, là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được xếp vào nhóm trường đại học trọng điểm quốc gia Việt Nam. Đây được đánh giá là trường đại học đầu ngành và có lịch sử lâu đời nhất về đào tạo và giảng dạy ngôn ngữ tại Việt Nam.",
+    input: {
+      type: "camera",
+      label: "Hãy chụp 1 bức ảnh đi",
+    },
+  },
+  {
+    name: "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội",
+    lat: "21.038272480898943",
+    lng: "105.78283957815938",
+    desc: "Trường Đại học Công nghệ (tiếng Anh: VNU University of Engineering and Technology; viết tắt là: UET) là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được thành lập vào năm 2004[3], địa chỉ tại 144 Xuân Thủy, quận Cầu Giấy, Hà Nội, trong khuôn viên Đại học Quốc gia Hà Nội khu vực Cầu Giấy cùng với các trường thành viên như Trường Đại học Ngoại ngữ, Trường Đại học Kinh tế, Trường Đại học Y Dược, Khoa Luật,...",
+    input: {
+      type: "audio",
+      label: "Hãy chụp ghi âm 1 đoạn âm thanh",
+    },
+  },
+  {
+    name: "Tòa nhà hiệu bộ VNU",
+    lat: "21.03768268860002",
+    lng: "105.78168530206932",
+    desc: "Đại học Quốc gia Hà Nội là một trong hai hệ thống Đại học Quốc gia của Việt Nam, được đặt dưới sự chỉ đạo trực tiếp của Chính phủ, giữ vai trò quan trọng trong hệ thống giáo dục của Việt Nam.",
+    input: {
+      type: "qrcode",
+      label: "Hãy chụp quét Qr đi",
+    },
+  },
+  {
+    name: "Trường Đại học Ngoại ngữ, Đại học Quốc gia Hà Nội",
+    lat: "21.039223283888763",
+    lng: "105.78199913071451",
+    desc: "Trường Đại học Ngoại ngữ, là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được xếp vào nhóm trường đại học trọng điểm quốc gia Việt Nam. Đây được đánh giá là trường đại học đầu ngành và có lịch sử lâu đời nhất về đào tạo và giảng dạy ngôn ngữ tại Việt Nam.",
+    input: {
+      type: "camera",
+      label: "Hãy chụp 1 bức ảnh đi",
+    },
+  },
+  {
+    name: "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội",
+    lat: "21.038272480898943",
+    lng: "105.78283957815938",
+    desc: "Trường Đại học Công nghệ (tiếng Anh: VNU University of Engineering and Technology; viết tắt là: UET) là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được thành lập vào năm 2004[3], địa chỉ tại 144 Xuân Thủy, quận Cầu Giấy, Hà Nội, trong khuôn viên Đại học Quốc gia Hà Nội khu vực Cầu Giấy cùng với các trường thành viên như Trường Đại học Ngoại ngữ, Trường Đại học Kinh tế, Trường Đại học Y Dược, Khoa Luật,...",
+    input: {
+      type: "audio",
+      label: "Hãy chụp ghi âm 1 đoạn âm thanh",
+    },
+  },
+  
 ];
 const MapView = (props) => {
   const { defaultGps, gps } = useSelector((state) => ({
     defaultGps: state.Gps.defaultGps,
     gps: state.Gps.gps,
   }));
+  // This ref is connected to the list
+  const listRef = useRef();
+
+  // The size of the list
+  // It will be updated later
+  const [width, setWidth] = useState();
+  const [height, setHeight] = useState();
+
+  const getListSize = () => {
+    console.log(listRef.current);
+    const newWidth = listRef.current.clientWidth;
+    setWidth(newWidth);
+
+    const newHeight = listRef.current.clientHeight;
+    setHeight(newHeight);
+  };
+
   const [zoom, setZoom] = useState(16);
   const [size, setSize] = useState(50);
+  // Update 'width' and 'height' when the window resizes
+  useEffect(() => {
+    window.addEventListener("resize", getListSize);
+  }, []);
 
   const [geolocation, setGeolocation] = useState(null);
-  const [center, setCenter] = useState({ lat: 21.038272480898943, lng: 105.78283957815938 });
+  const [center, setCenter] = useState({
+    lat: 21.038272480898943,
+    lng: 105.78283957815938,
+  });
   const [mapRef, setMapRef] = useState(null);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -123,8 +186,10 @@ const MapView = (props) => {
     setSize(size);
   };
 
+  console.log(113, window.innerHeight);
+
   return (
-    <div style={{ height: "77vh", width: "100%", borderRadius: 5 }}>
+    <div style={{ height: window.innerHeight - 72, width: "100%" }}>
       <GoogleMap
         bootstrapURLKeys={{
           key: "AIzaSyB-lfJYx98EARbL-SCEWy9TU59USvM3QZY",

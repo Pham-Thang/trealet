@@ -66,6 +66,16 @@
             </div>
         </div>
     <?php endif; ?>
+    <?php if($tr->published == "6"): ?>
+        <div class="user media d-flex align-items-center">
+			<a href='<?php echo e($play_tr); ?>'>
+            <div class="d-flex justify-content-center flex-column">
+				<h5 class="mb-0"><?php echo e($tr->title); ?></h5>
+                <small class="text-muted"><?php echo e($tr->creator); ?></small>
+            </div>
+			</a>
+        </div>
+    <?php endif; ?>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 <?php $__env->stopSection(); ?>
 

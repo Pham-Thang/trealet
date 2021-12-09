@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Layout } from "antd";
 import MapView from "./components/MapView";
 import MarkerDetail from "./components/MarkerDetail";
+import { Button } from "rsuite";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -16,33 +17,25 @@ class MapsScreen extends Component {
       detail: null,
     };
   }
-
-  onShowDetail = (e,detail) => {
-    this.setState({ isShowDetail: e ,detail: detail});
-  }
+  onShowDetail = (e, detail) => {
+    this.setState({ isShowDetail: e, detail: detail });
+  };
 
   render() {
     return (
-      <div>
-        <Content
-          style={{
-            marginTop: -23,
-            minHeight: `calc(100vh - 263px)`,
-            backgroundColor: "#fff",
-          }}
-        >
-          <div>
-            <MapView 
-              onShowDetail={this.onShowDetail}
-            />
-            <MarkerDetail
-              isShowDetail={this.state.isShowDetail}
-              onShowDetail={this.onShowDetail}
-              detail={this.state.detail}
-            />
-            
-          </div>
-        </Content>
+      <div
+        style={{
+          marginTop: -23,
+          minHeight: `calc(${window.innerHeight} - 263px)`,
+          backgroundColor: "#fff",
+        }}
+      >
+        <MapView onShowDetail={this.onShowDetail} />
+        <MarkerDetail
+          isShowDetail={this.state.isShowDetail}
+          onShowDetail={this.onShowDetail}
+          detail={this.state.detail}
+        />
       </div>
     );
   }
@@ -50,7 +43,7 @@ class MapsScreen extends Component {
 
 const mapStateToProps = (state) => ({
   defaultGps: state.Gps.defaultGps,
-  gps: state.Gps.gps
+  gps: state.Gps.gps,
 });
 
 export default connect(mapStateToProps)(MapsScreen);

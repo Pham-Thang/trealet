@@ -66,6 +66,17 @@ Route::get('show_edit_trealet/{id}','EditTrealetController@index') -> name('edit
 Route::post('edit_trealet/{id}','EditTrealetController@update') -> name('edit_trealet_to_controller');
 Route::post('check_pass_tr/{id}','TrealetsSearch@check_key') -> name('check_key_trealet_to_controller');
 
+
+Route::get('input-audio','InputController@audio')->name('input-audio');
+Route::post('input-audio/upload','InputController@audio_upload')->name('input-audio-upload');
+Route::get('input-picture','InputController@picture')->name('input-picture');
+Route::post('input-picture/upload','InputController@picture_upload')->name('input-picture-upload');
+Route::get('input-form','InputController@form')->name('input-form');
+Route::post('input-form/upload','InputController@form_upload')->name('input-form-upload');
+Route::get('input-qr','InputController@qr')->name('input-qr');
+Route::post('input-qr/upload','InputController@qr_upload')->name('input-qr-upload');
+
+
 /**
  *StepQuest
  */

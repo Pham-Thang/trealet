@@ -11,6 +11,7 @@ import store from "./store";
 import * as action from "./store/actions";
 import MapsScreen from "./screen/Maps/MapsScreen";
 import "./App.css";
+import "rsuite/dist/rsuite.min.css";
 
 store.dispatch(action.authCheck());
 

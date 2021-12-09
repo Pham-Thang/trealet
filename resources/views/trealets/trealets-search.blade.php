@@ -65,6 +65,16 @@
             </div>
         </div>
     @endif
+    @if($tr->published == "6")
+        <div class="user media d-flex align-items-center">
+			<a href='{{ $play_tr }}'>
+            <div class="d-flex justify-content-center flex-column">
+				<h5 class="mb-0">{{ $tr->title }}</h5>
+                <small class="text-muted">{{ $tr->creator }}</small>
+            </div>
+			</a>
+        </div>
+    @endif
     @endforeach
 @stop
 

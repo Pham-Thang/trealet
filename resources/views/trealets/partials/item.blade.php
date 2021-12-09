@@ -59,13 +59,13 @@
 		$vobj 	  = '';
 		
 		if($type=='picture'){
-			$vobj = '<iframe style="position: relative; width: 90%;" src="https://trealet.com/input-picture?tr_id='.$trealet_id.'&nij='.$nij.'" title="'.$title.'" frameborder="0" allow="camera" onload="this.style.height=(this.contentWindow.document.body.scrollHeight+200)+\'px\';"></iframe>';
+			$vobj = '<iframe style="position: relative; width: 90%;" src="/input-picture?tr_id='.$trealet_id.'&nij='.$nij.'" title="'.$title.'" frameborder="0" allow="camera" onload="this.style.height=(this.contentWindow.document.body.scrollHeight+200)+\'px\';"></iframe>';
 		}else if($type=='audio'){
-			$vobj = '<iframe style="position: relative; width: 100%;" src="https://trealet.com/input-audio?tr_id='.$trealet_id.'&nij='.$nij.'" title="'.$title.'" frameborder="0" allow="microphone" onload="this.style.height=(this.contentWindow.document.body.scrollHeight+100)+\'px\';"></iframe>';
+			$vobj = '<iframe style="position: relative; width: 100%;" src="/input-audio?tr_id='.$trealet_id.'&nij='.$nij.'" title="'.$title.'" frameborder="0" allow="microphone" onload="this.style.height=(this.contentWindow.document.body.scrollHeight+100)+\'px\';"></iframe>';
 		}else if($type=='form'){
-			$vobj = '<iframe style="position: relative; width: 90%;" src="https://trealet.com/input-form?tr_id='.$trealet_id.'&nij='.$nij.'" title="Input data from a form" frameborder="0" onload="this.style.height=(this.contentWindow.document.body.scrollHeight+250)+\'px\';"></iframe>';
+			$vobj = '<iframe style="position: relative; width: 90%;" src="/input-form?tr_id='.$trealet_id.'&nij='.$nij.'" title="Input data from a form" frameborder="0" onload="this.style.height=(this.contentWindow.document.body.scrollHeight+250)+\'px\';"></iframe>';
 		}else if($type=='qr'){
-			$vobj 	 .= '<iframe style="position: relative; width: 90%;" src="https://trealet.com/input-qr?tr_id='.$trealet_id.'&nij='.$nij.'" title="Scan QR code from camera" frameborder="0" allow="camera" onload="this.style.height=(this.contentWindow.document.body.scrollHeight+200)+\'px\';"></iframe>';
+			$vobj 	 .= '<iframe style="position: relative; width: 90%;" src="/input-qr?tr_id='.$trealet_id.'&nij='.$nij.'" title="Scan QR code from camera" frameborder="0" allow="camera" onload="this.style.height=(this.contentWindow.document.body.scrollHeight+200)+\'px\';"></iframe>';
 		}
 	?>
 	<div class="card">
