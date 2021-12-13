@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import CameraIcon from "./CameraIcon"
+import CameraIcon from "./CameraIcon";
 import AudioIcon from "./AudioIcon";
-import QrIcon from './QrIcon';
-import FormIcon from './FormIcon';
+import QrIcon from "./QrIcon";
+import FormIcon from "./FormIcon";
 
 const greatPlaceStyle = {
   position: "absolute",
@@ -15,9 +15,12 @@ const Marker = (props) => {
     props.onClickMarker(true, props.detail);
   };
   const size = 80;
+  // console.log(props.detail);
+  const color = props.detail.played ? "#10F61C" : "#F63810";
   return (
     <div
       style={{
+        opacity: props.detail.played ? 0.75: 1,
         height: size,
         width: size,
         position: "absolute",
@@ -34,24 +37,23 @@ const Marker = (props) => {
           height: size * 0.4,
           width: size * 0.4,
           backgroundColor: "#FFF",
-          boxShadow: "rgba(0, 0, 0, 0.56) 0px 22px 70px 0px",
+          boxShadow: `0 0 0 3px ${color}`,
           borderRadius: size * 0.2,
         }}
       >
-        {props.detail?.input.type === 'qrcode' ? <QrIcon/> : null} 
-        {props.detail?.input.type === 'camera' ? <CameraIcon/> : null} 
-        {props.detail?.input.type === 'audio' ? <AudioIcon/> : null} 
-        {props.detail?.input.type === 'form' ? <FormIcon/> : null} 
+        {props.detail?.input.type === "qr" ? <QrIcon /> : null}
+        {props.detail?.input.type === "picture" ? <CameraIcon /> : null}
+        {props.detail?.input.type === "audio" ? <AudioIcon /> : null}
+        {props.detail?.input.type === "form" ? <FormIcon /> : null}
       </div>
       <div
         style={{
           height: size * 0.1,
           width: size * 0.1,
           borderStyle: "solid",
-          borderColor: "#FFF transparent transparent transparent",
+          borderColor: `${color} transparent transparent transparent`,
           borderWidth: `${size * 0.1}px ${size * 0.05}px 0 ${size * 0.05}px`,
           margin: "auto",
-          boxShadow: "rgba(0, 0, 0, 0.56) 0px 22px 70px 4px",
         }}
       ></div>
     </div>

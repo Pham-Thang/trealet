@@ -1,192 +1,89 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import GoogleMap from "google-map-react";
+import GoogleMap, { fitBounds } from "google-map-react";
 import GpsIcon from "../../../components/icons";
 import { AimOutlined } from "@ant-design/icons";
 import Marker from "../../../components/Marker";
-import { getGeolocation, getGps } from "../../../store/actions/gps";
-import Gps from "../../../store/reducers/Gps";
-import vnu from "../../../img/vnu.jpg"; // Tell webpack this JS file uses this image
-import uet from "../../../img/uet.jpg"; // Tell webpack this JS file uses this image
-import ulis from "../../../img/ulis-logo.png"; // Tell webpack this JS file uses this image
-import g2 from "../../../img/G2.jpg";
-import vnu1 from "../../../img/ktx_mt.jpg";
-import ulis1 from "../../../img/ulis1.jpeg"; // Tell webpack this JS file uses this image
+import { getGeolocation, getGps,getKm } from "../action";
+import select from "../../../utils/select";
+import { getDistanceFromLatLonInKm } from "../../../utils/util";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { message, Button } from "antd";
+import { mapKeys } from "lodash";
 
-const arr = [
-  {
-    title: "xoms 1",
-    lat: 20.858310677546147,
-    lng: 105.9147626433391,
-  },
-  {
-    title: "xom2",
-    lat: 20.855614138080107,
-    lng: 105.91797246680144,
-  },
-  {
-    title: "xom 3",
-    lat: 20.86621072857512,
-    lng: 105.91786154584406,
-  },
-  {
-    title: "xom 4",
-    lat: 20.863483854324585,
-    lng: 105.91498474387205,
-  },
-];
 
-const arr2 = [
-  {
-    name: "Tòa nhà hiệu bộ VNU",
-    lat: "21.03768268860002",
-    lng: "105.78168530206932",
-    desc: "Đại học Quốc gia Hà Nội là một trong hai hệ thống Đại học Quốc gia của Việt Nam, được đặt dưới sự chỉ đạo trực tiếp của Chính phủ, giữ vai trò quan trọng trong hệ thống giáo dục của Việt Nam.",
-    input: {
-      type: "qrcode",
-      label: "Hãy chụp quét Qr đi",
-    },
-  },
-  {
-    name: "Trường Đại học Ngoại ngữ, Đại học Quốc gia Hà Nội",
-    lat: "21.039223283888763",
-    lng: "105.78199913071451",
-    desc: "Trường Đại học Ngoại ngữ, là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được xếp vào nhóm trường đại học trọng điểm quốc gia Việt Nam. Đây được đánh giá là trường đại học đầu ngành và có lịch sử lâu đời nhất về đào tạo và giảng dạy ngôn ngữ tại Việt Nam.",
-    input: {
-      type: "camera",
-      label: "Hãy chụp 1 bức ảnh đi",
-    },
-  },
-  {
-    name: "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội",
-    lat: "21.038272480898943",
-    lng: "105.78283957815938",
-    desc: "Trường Đại học Công nghệ (tiếng Anh: VNU University of Engineering and Technology; viết tắt là: UET) là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được thành lập vào năm 2004[3], địa chỉ tại 144 Xuân Thủy, quận Cầu Giấy, Hà Nội, trong khuôn viên Đại học Quốc gia Hà Nội khu vực Cầu Giấy cùng với các trường thành viên như Trường Đại học Ngoại ngữ, Trường Đại học Kinh tế, Trường Đại học Y Dược, Khoa Luật,...",
-    input: {
-      type: "audio",
-      label: "Hãy chụp ghi âm 1 đoạn âm thanh",
-    },
-  },
-  {
-    name: "Tòa nhà hiệu bộ VNU",
-    lat: "21.03768268860002",
-    lng: "105.78168530206932",
-    desc: "Đại học Quốc gia Hà Nội là một trong hai hệ thống Đại học Quốc gia của Việt Nam, được đặt dưới sự chỉ đạo trực tiếp của Chính phủ, giữ vai trò quan trọng trong hệ thống giáo dục của Việt Nam.",
-    input: {
-      type: "qrcode",
-      label: "Hãy chụp quét Qr đi",
-    },
-  },
-  {
-    name: "Trường Đại học Ngoại ngữ, Đại học Quốc gia Hà Nội",
-    lat: "21.039223283888763",
-    lng: "105.78199913071451",
-    desc: "Trường Đại học Ngoại ngữ, là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được xếp vào nhóm trường đại học trọng điểm quốc gia Việt Nam. Đây được đánh giá là trường đại học đầu ngành và có lịch sử lâu đời nhất về đào tạo và giảng dạy ngôn ngữ tại Việt Nam.",
-    input: {
-      type: "camera",
-      label: "Hãy chụp 1 bức ảnh đi",
-    },
-  },
-  {
-    name: "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội",
-    lat: "21.038272480898943",
-    lng: "105.78283957815938",
-    desc: "Trường Đại học Công nghệ (tiếng Anh: VNU University of Engineering and Technology; viết tắt là: UET) là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được thành lập vào năm 2004[3], địa chỉ tại 144 Xuân Thủy, quận Cầu Giấy, Hà Nội, trong khuôn viên Đại học Quốc gia Hà Nội khu vực Cầu Giấy cùng với các trường thành viên như Trường Đại học Ngoại ngữ, Trường Đại học Kinh tế, Trường Đại học Y Dược, Khoa Luật,...",
-    input: {
-      type: "audio",
-      label: "Hãy chụp ghi âm 1 đoạn âm thanh",
-    },
-  },
-  {
-    name: "Tòa nhà hiệu bộ VNU",
-    lat: "21.03768268860002",
-    lng: "105.78168530206932",
-    desc: "Đại học Quốc gia Hà Nội là một trong hai hệ thống Đại học Quốc gia của Việt Nam, được đặt dưới sự chỉ đạo trực tiếp của Chính phủ, giữ vai trò quan trọng trong hệ thống giáo dục của Việt Nam.",
-    input: {
-      type: "qrcode",
-      label: "Hãy chụp quét Qr đi",
-    },
-  },
-  {
-    name: "Trường Đại học Ngoại ngữ, Đại học Quốc gia Hà Nội",
-    lat: "21.039223283888763",
-    lng: "105.78199913071451",
-    desc: "Trường Đại học Ngoại ngữ, là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được xếp vào nhóm trường đại học trọng điểm quốc gia Việt Nam. Đây được đánh giá là trường đại học đầu ngành và có lịch sử lâu đời nhất về đào tạo và giảng dạy ngôn ngữ tại Việt Nam.",
-    input: {
-      type: "camera",
-      label: "Hãy chụp 1 bức ảnh đi",
-    },
-  },
-  {
-    name: "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội",
-    lat: "21.038272480898943",
-    lng: "105.78283957815938",
-    desc: "Trường Đại học Công nghệ (tiếng Anh: VNU University of Engineering and Technology; viết tắt là: UET) là một trường đại học thành viên của Đại học Quốc gia Hà Nội, được thành lập vào năm 2004[3], địa chỉ tại 144 Xuân Thủy, quận Cầu Giấy, Hà Nội, trong khuôn viên Đại học Quốc gia Hà Nội khu vực Cầu Giấy cùng với các trường thành viên như Trường Đại học Ngoại ngữ, Trường Đại học Kinh tế, Trường Đại học Y Dược, Khoa Luật,...",
-    input: {
-      type: "audio",
-      label: "Hãy chụp ghi âm 1 đoạn âm thanh",
-    },
-  },
-  
-];
 const MapView = (props) => {
-  const { defaultGps, gps } = useSelector((state) => ({
-    defaultGps: state.Gps.defaultGps,
-    gps: state.Gps.gps,
+  const { maps, gps, isGps, ganNhat,km } = useSelector((state) => ({
+    maps: select(state, "mapsReducer", "maps"),
+    gps: select(state, "mapsReducer", "gps"),
+    isGps: select(state, "mapsReducer", "isGps"),
+    ganNhat: select(state, "mapsReducer", "ganNhat"),
+    km: select(state, "mapsReducer", "km"),
+
   }));
-  // This ref is connected to the list
-  const listRef = useRef();
+  const dispatch = useDispatch();
 
-  // The size of the list
-  // It will be updated later
-  const [width, setWidth] = useState();
-  const [height, setHeight] = useState();
-
-  const getListSize = () => {
-    console.log(listRef.current);
-    const newWidth = listRef.current.clientWidth;
-    setWidth(newWidth);
-
-    const newHeight = listRef.current.clientHeight;
-    setHeight(newHeight);
-  };
-
-  const [zoom, setZoom] = useState(16);
-  const [size, setSize] = useState(50);
-  // Update 'width' and 'height' when the window resizes
   useEffect(() => {
-    window.addEventListener("resize", getListSize);
+    const intervalGps = setInterval(() => {
+      dispatch(getGps(navigator))
+    }, 1000);
+    return () => clearInterval(intervalGps);
   }, []);
 
-  const [geolocation, setGeolocation] = useState(null);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(getKm())
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const test = setInterval(() => {
+      // message.info(,{ marginTop: 50});
+      if(km < 15){
+        message.info({
+          content: `${ganNhat.name} cách bạn ${km} km`,
+          style: { marginTop: 60 },
+        })
+      }
+    }, 15000);
+    return () => clearInterval(test);
+  }, [ganNhat]);
+
+
+
+  // const [zoom, setZoom] = useState(16);
+  const [size, setSize] = useState(50);
+  const [map, setMap] = useState(null);
+
   const [center, setCenter] = useState({
     lat: 21.038272480898943,
     lng: 105.78283957815938,
   });
-  const [mapRef, setMapRef] = useState(null);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (gps !== null) {
-      setGeolocation(gps);
-    }
-  }, []);
 
   const onGetGps = () => {
     dispatch(getGps(navigator));
-    let x = gps;
-    setCenter(x);
   };
 
   const onZoom = (e) => {
     let metersPerPx =
       (156543.03392 * Math.cos((e.center.lat * Math.PI) / 180)) /
       Math.pow(2, e.zoom);
-    console.log(e);
-    setZoom(e.zoom);
+    // setZoom(e.zoom);
     setSize(size);
   };
+  // const onLoad = useCallback((map) => setMap(map), []);
+  // const bounds = new maps.LatLngBounds();
+  const changeMap = ({ center, zoom, bounds }) => {
+    console.log(bounds);
+  };
 
-  console.log(113, window.innerHeight);
+  const size1 = {
+    width: 640, // Map width in pixels
+    height: 380, // Map height in pixels
+  };
+  // const { center, zoom } = fitBounds(foundMarkers, size1);
 
   return (
     <div style={{ height: window.innerHeight - 72, width: "100%" }}>
@@ -206,26 +103,33 @@ const MapView = (props) => {
             },
           ],
         }}
-        onLoad={(map) => setMapRef(map)}
+        // onLoad={onLoad}
+        // bounds={oki}
         center={center}
-        zoom={zoom}
+        zoom={16}
         gestureHandling={false}
-        onChange={onZoom}
-        onClick={(e) => {
-          console.log(e);
-        }}
+        // onChange={changeMap}
+        // onClick={(e) => {
+        //   console.log(e);
+        // }}
       >
-        {arr2.map((item) => (
-          <Marker
-            zoom={zoom}
-            detail={item}
-            lat={item.lat}
-            lng={item.lng}
-            onClickMarker={props.onShowDetail}
-          />
-        ))}
+        {maps.map((item, index) => {
+          let detail = item;
+          detail.index = index;
+          return (
+            <Marker
+              key={index}
+              // zoom={zoom}
+              detail={detail}
+              lat={item.lat}
+              lng={item.lng}
+              onClickMarker={props.onShowDetail}
+            />
+          );
+        })}
         {gps !== null ? <GpsIcon lat={gps.lat} lng={gps.lng} /> : null}
       </GoogleMap>
+
       <div
         style={{
           position: "relative",
@@ -244,10 +148,11 @@ const MapView = (props) => {
         }}
       >
         <AimOutlined
-          style={{ fontSize: "20px", color: "#08c" }}
+          style={{ fontSize: "20px", color: !isGps ? "#7DCBE2" : "#08c" }}
           onClick={onGetGps}
         />
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -10,8 +10,8 @@ const AudioIcon = () => {
           y2="18.93"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#a1aab3"></stop>
-          <stop offset="1" stop-color="#8f979e"></stop>
+          <stop offset="0" stopColor="#a1aab3"></stop>
+          <stop offset="1" stopColor="#8f979e"></stop>
         </linearGradient>
         <path
           fill="url(#7Zr_n0zs~4_3KKC4ezMi7a)"
@@ -25,8 +25,8 @@ const AudioIcon = () => {
           y2="30.751"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#6d7479"></stop>
-          <stop offset="1" stop-color="#323538"></stop>
+          <stop offset="0" stopColor="#6d7479"></stop>
+          <stop offset="1" stopColor="#323538"></stop>
         </linearGradient>
         <path
           fill="url(#7Zr_n0zs~4_3KKC4ezMi7b)"
@@ -40,8 +40,8 @@ const AudioIcon = () => {
           y2="26.967"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#e96120"></stop>
-          <stop offset="1" stop-color="#cf410b"></stop>
+          <stop offset="0" stopColor="#e96120"></stop>
+          <stop offset="1" stopColor="#cf410b"></stop>
         </linearGradient>
         <circle
           cx="24"
@@ -57,9 +57,9 @@ const AudioIcon = () => {
           y2="44.014"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#484b4f"></stop>
-          <stop offset=".23" stop-color="#656d75"></stop>
-          <stop offset=".367" stop-color="#727d86"></stop>
+          <stop offset="0" stopColor="#484b4f"></stop>
+          <stop offset=".23" stopColor="#656d75"></stop>
+          <stop offset=".367" stopColor="#727d86"></stop>
         </linearGradient>
         <path
           fill="url(#7Zr_n0zs~4_3KKC4ezMi7d)"
@@ -73,8 +73,8 @@ const AudioIcon = () => {
           y2="36.358"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#a1aab3"></stop>
-          <stop offset="1" stop-color="#767d84"></stop>
+          <stop offset="0" stopColor="#a1aab3"></stop>
+          <stop offset="1" stopColor="#767d84"></stop>
         </linearGradient>
         <path
           fill="url(#7Zr_n0zs~4_3KKC4ezMi7e)"

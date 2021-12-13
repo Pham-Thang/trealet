@@ -10,8 +10,8 @@ const QrIcon = () => {
           y2="44.533"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#2aa4f4"></stop>
-          <stop offset="1" stop-color="#007ad9"></stop>
+          <stop offset="0" stopColor="#2aa4f4"></stop>
+          <stop offset="1" stopColor="#007ad9"></stop>
         </linearGradient>
         <path
           fill="url(#bNXZuCxTPbCGedyCVJtsKa)"
@@ -25,8 +25,8 @@ const QrIcon = () => {
           y2="44.249"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#2aa4f4"></stop>
-          <stop offset="1" stop-color="#007ad9"></stop>
+          <stop offset="0" stopColor="#2aa4f4"></stop>
+          <stop offset="1" stopColor="#007ad9"></stop>
         </linearGradient>
         <rect
           width="4"
@@ -43,8 +43,8 @@ const QrIcon = () => {
           y2="40.249"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#2aa4f4"></stop>
-          <stop offset="1" stop-color="#007ad9"></stop>
+          <stop offset="0" stopColor="#2aa4f4"></stop>
+          <stop offset="1" stopColor="#007ad9"></stop>
         </linearGradient>
         <rect
           width="4"
@@ -61,8 +61,8 @@ const QrIcon = () => {
           y2="47.011"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#2aa4f4"></stop>
-          <stop offset="1" stop-color="#007ad9"></stop>
+          <stop offset="0" stopColor="#2aa4f4"></stop>
+          <stop offset="1" stopColor="#007ad9"></stop>
         </linearGradient>
         <path
           fill="url(#bNXZuCxTPbCGedyCVJtsKd)"
@@ -76,8 +76,8 @@ const QrIcon = () => {
           y2="40.249"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#2aa4f4"></stop>
-          <stop offset="1" stop-color="#007ad9"></stop>
+          <stop offset="0" stopColor="#2aa4f4"></stop>
+          <stop offset="1" stopColor="#007ad9"></stop>
         </linearGradient>
         <rect
           width="4"
@@ -94,8 +94,8 @@ const QrIcon = () => {
           y2="48.249"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#2aa4f4"></stop>
-          <stop offset="1" stop-color="#007ad9"></stop>
+          <stop offset="0" stopColor="#2aa4f4"></stop>
+          <stop offset="1" stopColor="#007ad9"></stop>
         </linearGradient>
         <rect
           width="4"
@@ -112,8 +112,8 @@ const QrIcon = () => {
           y2="42.249"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#2aa4f4"></stop>
-          <stop offset="1" stop-color="#007ad9"></stop>
+          <stop offset="0" stopColor="#2aa4f4"></stop>
+          <stop offset="1" stopColor="#007ad9"></stop>
         </linearGradient>
         <rect
           width="4"
@@ -130,8 +130,8 @@ const QrIcon = () => {
           y2="20.249"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#2aa4f4"></stop>
-          <stop offset="1" stop-color="#007ad9"></stop>
+          <stop offset="0" stopColor="#2aa4f4"></stop>
+          <stop offset="1" stopColor="#007ad9"></stop>
         </linearGradient>
         <rect
           width="4"
@@ -148,8 +148,8 @@ const QrIcon = () => {
           y2="20.249"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#2aa4f4"></stop>
-          <stop offset="1" stop-color="#007ad9"></stop>
+          <stop offset="0" stopColor="#2aa4f4"></stop>
+          <stop offset="1" stopColor="#007ad9"></stop>
         </linearGradient>
         <rect
           width="4"
@@ -166,8 +166,8 @@ const QrIcon = () => {
           y2="34.249"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#2aa4f4"></stop>
-          <stop offset="1" stop-color="#007ad9"></stop>
+          <stop offset="0" stopColor="#2aa4f4"></stop>
+          <stop offset="1" stopColor="#007ad9"></stop>
         </linearGradient>
         <rect
           width="4"
@@ -184,8 +184,8 @@ const QrIcon = () => {
           y2="60.902"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#2aa4f4"></stop>
-          <stop offset="1" stop-color="#007ad9"></stop>
+          <stop offset="0" stopColor="#2aa4f4"></stop>
+          <stop offset="1" stopColor="#007ad9"></stop>
         </linearGradient>
         <path
           fill="url(#bNXZuCxTPbCGedyCVJtsKk)"
@@ -199,8 +199,8 @@ const QrIcon = () => {
           y2="44.493"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#2aa4f4"></stop>
-          <stop offset="1" stop-color="#007ad9"></stop>
+          <stop offset="0" stopColor="#2aa4f4"></stop>
+          <stop offset="1" stopColor="#007ad9"></stop>
         </linearGradient>
         <path
           fill="url(#bNXZuCxTPbCGedyCVJtsKl)"

@@ -10,8 +10,8 @@ const CameraIcon = () => {
           y2="42.25"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset=".9" stop-color="#6d7882"></stop>
-          <stop offset=".917" stop-color="#45494d"></stop>
+          <stop offset=".9" stopColor="#6d7882"></stop>
+          <stop offset=".917" stopColor="#45494d"></stop>
         </linearGradient>
         <path
           fill="url(#KSO7WLFLBNFgc821jKHL3a)"
@@ -25,7 +25,7 @@ const CameraIcon = () => {
           gradientUnits="userSpaceOnUse"
         >
           <stop offset="0"></stop>
-          <stop offset="1" stop-opacity="0"></stop>
+          <stop offset="1" stopOpacity="0"></stop>
         </radialGradient>
         <circle
           cx="24"
@@ -41,13 +41,13 @@ const CameraIcon = () => {
           r="16.518"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#bd8af5"></stop>
-          <stop offset=".137" stop-color="#b88bf5"></stop>
-          <stop offset=".309" stop-color="#a88ff3"></stop>
-          <stop offset=".499" stop-color="#8f96f2"></stop>
-          <stop offset=".702" stop-color="#6b9eef"></stop>
-          <stop offset=".913" stop-color="#3eaaec"></stop>
-          <stop offset="1" stop-color="#29afea"></stop>
+          <stop offset="0" stopColor="#bd8af5"></stop>
+          <stop offset=".137" stopColor="#b88bf5"></stop>
+          <stop offset=".309" stopColor="#a88ff3"></stop>
+          <stop offset=".499" stopColor="#8f96f2"></stop>
+          <stop offset=".702" stopColor="#6b9eef"></stop>
+          <stop offset=".913" stopColor="#3eaaec"></stop>
+          <stop offset="1" stopColor="#29afea"></stop>
         </radialGradient>
         <circle
           cx="24"

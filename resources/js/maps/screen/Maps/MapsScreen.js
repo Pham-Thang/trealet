@@ -5,6 +5,9 @@ import { Layout } from "antd";
 import MapView from "./components/MapView";
 import MarkerDetail from "./components/MarkerDetail";
 import { Button } from "rsuite";
+import { getMaps } from "./action";
+import select from '../../utils/select';
+import toJs from '../../hoc/ToJS';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -18,10 +21,18 @@ class MapsScreen extends Component {
     };
   }
   onShowDetail = (e, detail) => {
+    if(!e){
+      this.props.getMaps(window.location.search.replace("?tr=", ""));
+    }
     this.setState({ isShowDetail: e, detail: detail });
   };
 
+  componentDidMount() {
+    this.props.getMaps(window.location.search.replace("?tr=", ""));
+  }
+
   render() {
+    console.log(this.props.maps);
     return (
       <div
         style={{
@@ -42,8 +53,12 @@ class MapsScreen extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  defaultGps: state.Gps.defaultGps,
-  gps: state.Gps.gps,
 });
 
-export default connect(mapStateToProps)(MapsScreen);
+const mapDispatchToProps = (dispatch) => ({
+  getMaps: (trId) => dispatch(getMaps(trId)),
+});
+
+export default toJs(
+  connect(mapStateToProps, mapDispatchToProps)(toJs(MapsScreen)),
+);

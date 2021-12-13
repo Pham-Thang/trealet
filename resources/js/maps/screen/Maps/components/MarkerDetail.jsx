@@ -4,12 +4,11 @@ import { EnvironmentOutlined, CameraOutlined } from "@ant-design/icons";
 import MarkerInfo from "./MarkerInfo";
 import MarkerUpload from "./MarkerUpload";
 import { Drawer, Button } from "rsuite";
-import { Message, toaster } from 'rsuite';
+import { Message, toaster } from "rsuite";
 
 const { SubMenu } = Menu;
 
 const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
-
   const [current, setCurrent] = useState("info");
 
   const onClose = () => {
@@ -22,8 +21,7 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
     setCurrent(e.key);
   };
 
-  console.log(window.location.search);
-
+  const trId = window.location.search.replace("?tr=", "");
   return (
     <div>
       <Drawer
@@ -36,57 +34,66 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
         <Drawer.Header>
           <Drawer.Title>{detail?.name}</Drawer.Title>
         </Drawer.Header>
-        <Drawer.Body>         
+        <Drawer.Body>
           <div>
-            {detail?.input.type === "camera" ? (<>
-              <Message type="success" style={{ marginBottom: 15}}>{detail?.desc}</Message>
-              <iframe
-                frameBorder="0"
-                style={{ width: '100vh' }}
-                src={`${window.location.origin}/input-picture?tr_id=99450274157953025&nij=1`}
-                title="picture"
-                frameborder="0"
-                allow="camera"
-                width="500px"
-              ></iframe></>
+            {detail?.input.type === "pictu" ? (
+              <>
+                <Message type="success" style={{ marginBottom: 15 }}>
+                  {detail?.desc}
+                </Message>
+                <iframe
+                  frameBorder="0"
+                  style={{ position: "relative", width: "100%", height: 250 }}
+                  src={`${window.location.origin}/input-picture?tr_id=${trId}&nij=${detail?.index}`}
+                  title="picture"
+                  allow="camera"
+                  width="300px"
+                />
+              </>
             ) : null}
             {detail?.input.type === "form" ? (
               <>
-              <Message type="error" style={{ marginBottom: 15}}>{detail?.desc}</Message>
-              <iframe
-                frameBorder="0"
-                style={{ width: '100vh'}}
-                src={`${window.location.origin}/input-form?tr_id=99450274157953025&nij=1`}
-                title="form"
-                frameborder="0"
-                allow="camera"
-                width="500px"
-              ></iframe></>
+                <Message type="error" style={{ marginBottom: 15 }}>
+                  {detail?.desc}
+                </Message>
+                <iframe
+                  frameBorder="0"
+                  style={{ position: "relative", width: "100%", height: 250 }}
+                  src={`${window.location.origin}/input-form?tr_id=${trId}&nij=${detail?.index}`}
+                  title="Input data from a form"
+                  allow="camera"
+                  width="300px"
+                />
+              </>
             ) : null}
             {detail?.input.type === "audio" ? (
               <>
-              <Message type="warning" style={{ marginBottom: 15}}>{detail?.desc}</Message>
-              <iframe
-                frameBorder="0"
-                style={{ width: '100vh'}}
-                src={`${window.location.origin}/input-audio?tr_id=99450274157953025&nij=1`}
-                title="audio"
-                frameborder="0"
-                allow="microphone"
-                width="500px"
-              ></iframe></>
+                <Message type="warning" style={{ marginBottom: 15 }}>
+                  {detail?.desc}
+                </Message>
+                <iframe
+                  frameBorder="0"
+                  style={{ position: "relative", width: "100%", height: 180 }}
+                  src={`${window.location.origin}/input-audio?tr_id=${trId}&nij=${detail?.index}`}
+                  title="audio"
+                  allow="microphone"
+                  width="300px"
+                />
+              </>
             ) : null}
-            {detail?.input.type === "qrcode" ? (<>
-              <Message type="info" style={{ marginBottom: 15}}>{detail?.desc}</Message>
-              <iframe
-                frameBorder="0"
-                style={{ width: '100vh' }}
-                src={`${window.location.origin}/input-qr?tr_id=99450274157953025&nij=1`}
-                title="qr"
-                frameborder="0"
-                allow="camera"
-                width="500px"
-              />
+            {detail?.input.type === "qr" ? (
+              <>
+                <Message type="info" style={{ marginBottom: 15 }}>
+                  {detail?.desc}
+                </Message>
+                <iframe
+                  frameBorder="0"
+                  style={{ position: "relative", width: "100%", height: 300 }}
+                  src={`${window.location.origin}/input-qr?tr_id=${trId}&nij=${detail?.index}`}
+                  title="Scan QR code from camera"
+                  allow="camera"
+                  width="300px"
+                />
               </>
             ) : null}
           </div>

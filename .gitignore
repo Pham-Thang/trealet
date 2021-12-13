@@ -1,6 +1,6 @@
 /vendor/
 node_modules/
-publicupload/
+upload/
 npm-debug.log
 yarn-error.log
 yarn.lock

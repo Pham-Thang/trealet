@@ -44,11 +44,8 @@ Route::get('step-quest/{path?}', [
 // Route::view('/step-quest{path?}', 'trealets.step-quest');
 
 
-Route::get('maps/{path?}', [
-    'uses' => 'MapsController@index',
-    // 'as' => 'react',
-    'where' => ['path' => '.*']
-    ])->name('maps');
+Route::get('maps', 'MapsController@index')->name('maps');
+Route::get('maps-trealet', 'MapsController@maps_trealet')->name('maps-trealet');
 
 
 Route::get('trealet-play-details', 'TrealetPlayDetails@index')->name('trealet-play-details');

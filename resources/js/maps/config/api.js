@@ -28,4 +28,11 @@ export const API_URLS = {
       },
     }),
   },
+  MAPS: {
+    getMaps: () => ({
+      endPoint: `/maps-trealet`,
+      method: "GET",
+      headers: HEADERS.DEFAULT_HEADER,
+    }),
+  },
 };

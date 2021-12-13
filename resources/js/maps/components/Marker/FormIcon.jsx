@@ -31,8 +31,8 @@ const FormIcon = () => {
           gradientTransform="matrix(1 0 0 -1 0 50)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#3079d6"></stop>
-          <stop offset="1" stop-color="#297cd2"></stop>
+          <stop offset="0" stopColor="#3079d6"></stop>
+          <stop offset="1" stopColor="#297cd2"></stop>
         </linearGradient>
         <path
           fill="url(#X5mvSxmxOaHjL5lPrnmrNa)"
@@ -67,8 +67,8 @@ const FormIcon = () => {
           gradientTransform="matrix(1 0 0 -1 0 50)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#dedede"></stop>
-          <stop offset="1" stop-color="#d6d6d6"></stop>
+          <stop offset="0" stopColor="#dedede"></stop>
+          <stop offset="1" stopColor="#d6d6d6"></stop>
         </linearGradient>
         <path
           fill="url(#X5mvSxmxOaHjL5lPrnmrNb)"
