@@ -27,7 +27,7 @@ const MapView = (props) => {
   useEffect(() => {
     const intervalGps = setInterval(() => {
       dispatch(getGps(navigator))
-    }, 1000);
+    }, 777);
     return () => clearInterval(intervalGps);
   }, []);
 
@@ -41,13 +41,13 @@ const MapView = (props) => {
   useEffect(() => {
     const test = setInterval(() => {
       // message.info(,{ marginTop: 50});
-      if(km < 15){
-        message.info({
-          content: `${ganNhat.name} cách bạn ${km} km`,
+      if(km < 50){
+        message.loading({
+          content: `${ganNhat.name} cách bạn ${km.toFixed(4)} km`,
           style: { marginTop: 60 },
         })
       }
-    }, 15000);
+    }, 11111);
     return () => clearInterval(test);
   }, [ganNhat]);
 

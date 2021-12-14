@@ -36,7 +36,7 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
         </Drawer.Header>
         <Drawer.Body>
           <div>
-            {detail?.input.type === "pictu" ? (
+            {detail?.input.type === "picture" ? (
               <>
                 <Message type="success" style={{ marginBottom: 15 }}>
                   {detail?.desc}

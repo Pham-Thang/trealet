@@ -16,24 +16,33 @@ export const getMaps = (trId) => async (dispatch) => {
   const { response, error } = await apiCall({ ...api, params });
   if (!error && response.status === 200) {
     const json = JSON.parse(response.data.json);
-    const maps = json.item;
-    maps.map((item, index) => {
+    var maps = json.item;
+    const list = [];
       response.data.played.forEach((playedItem) => {
+        maps.map((item, index) => {
         if (index === playedItem.no_in_json) {
-          item.played = true;
+          console.log(index);
+          console.log(playedItem.no_in_json);
           if (playedItem.type === "audio" || playedItem.type === "picture") {
             item.data = playedItem.data;
+            item.played = true;
+            console.log(playedItem.type);
+            list.push(item);
           }
           if (playedItem.type === "qr" || playedItem.type === "form") {
             item.data = JSON.parse(playedItem.data);
+            item.played = true;
+            console.log(playedItem.type);
+            list.push(item);
           }
-        } else {
+        }
+        else {
           item.played = false;
           item.data = null;
         }
       });
-      return item;
     });
+    console.log(list);
     dispatch({
       type: TYPE.GET_MAPS_SUCCES,
       payload: maps,
@@ -104,8 +113,8 @@ export const getKm = () => async (dispatch, getState) => {
   if (gps) {
     maps.forEach((item, index) => {
       let km = getDistanceFromLatLonInKm(item.lat, item.lng, gps.lat, gps.lng);
-      console.log(item.name + "-----" + km + "km");
-      if( tmp > km) indexMin = index; tmp = km
+      if( tmp > km && !(item.played)) {indexMin = index; tmp = km;}
+      console.log(item.name + '-----------' + km + 'km');
     });
   const vitri = await indexMin;
   dispatch({

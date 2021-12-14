@@ -104,7 +104,7 @@ class InputController extends Controller
 		
 		$output_png = request()->server('DOCUMENT_ROOT').'/upload/trealet-data/'.$user_id.'_'.$tr_id.'_'.$oid.'.png';
 		$output_jpg = request()->server('DOCUMENT_ROOT').'/upload/trealet-data/'.$user_id.'_'.$tr_id.'_'.$oid.'.jpg';
-
+		
 		move_uploaded_file($from, $output_png);
 		$this->PNG2JPG($output_png, $output_jpg);
 		unlink($output_png);

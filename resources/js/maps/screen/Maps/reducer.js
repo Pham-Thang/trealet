@@ -24,6 +24,7 @@ const maps = (state = mapsState, action) => {
       });
     }
     case TYPE.GET_MAPS_SUCCES: {
+      console.log(action.payload);
       return state.merge({
         maps: action.payload,
         isFetching: false,
