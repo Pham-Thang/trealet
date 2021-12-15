@@ -10,9 +10,7 @@
 @stop
 
 @section('content')
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />      
-    <div>
+    <div class="maps">
         <div id="maps"></div>
         <script src="{{asset('js/app.js')}}"></script>
     </div>
@@ -45,6 +43,9 @@
             vertical-align: middle;
             max-width: 350px;
             width: 100%;
+        }
+        .maps{
+            margin-bottom: -px;
         }
     </style> --}}
 @stop

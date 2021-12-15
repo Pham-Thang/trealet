@@ -3,6 +3,7 @@
 namespace Vanguard\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Vanguard\Http\Controllers\Controller;
 use Vanguard\UserToTrealet;
 
@@ -149,7 +150,7 @@ class InputController extends Controller
 		$trealet_id = request()->get('tr_id');
 		$nij 		= request()->get('nij');
 		$user_id	= auth()->id();
-		
+
 		return view('trealets.input-picture', compact('user_id','trealet_id','nij'));
 	}
 	
@@ -234,13 +235,22 @@ class InputController extends Controller
 	
 	public function qr()
 	{
-		if(!auth()->check())
-			return "Bạn phải đăng nhập để sử dụng chức năng này";
-		
+        $out =  new ConsoleOutput();
+        $out->writeln("this");
+        $out->writeln(request()->get('tr_id'));
+        $user_id	= auth()->id();
+        if(request()->get('tr_id')) {
+            if (!auth()->check()){
+            return "Bạn phải đăng nhập để sử dụng chức năng này";
+            }
 		$trealet_id = request()->get('tr_id');
 		$nij 		= request()->get('nij');
-		$user_id	= auth()->id();
-		
-		return view('trealets.input-qr', compact('user_id','trealet_id','nij'));
+
+        }
+        else{
+            $trealet_id = 1;
+            $nij 		= 0;
+        }
+        return view('trealets.input-qr', compact('user_id','trealet_id','nij'));
 	}
 }

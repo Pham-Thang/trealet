@@ -4,86 +4,62 @@ import GoogleMap, { fitBounds } from "google-map-react";
 import GpsIcon from "../../../components/icons";
 import { AimOutlined } from "@ant-design/icons";
 import Marker from "../../../components/Marker";
-import { getGeolocation, getGps,getKm } from "../action";
+import { getGeolocation, getGps, getKm, setZooCenter } from "../action";
 import select from "../../../utils/select";
 import { getDistanceFromLatLonInKm } from "../../../utils/util";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { message, Button } from "antd";
-import { mapKeys } from "lodash";
 
 
 const MapView = (props) => {
-  const { maps, gps, isGps, ganNhat,km } = useSelector((state) => ({
+  const { maps, gps, isGps, ganNhat,km, center, zoom } = useSelector((state) => ({
     maps: select(state, "mapsReducer", "maps"),
     gps: select(state, "mapsReducer", "gps"),
     isGps: select(state, "mapsReducer", "isGps"),
     ganNhat: select(state, "mapsReducer", "ganNhat"),
     km: select(state, "mapsReducer", "km"),
+    center: select(state, "mapsReducer", "center"),
+    zoom: select(state, "mapsReducer", "zoom"),
 
   }));
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const intervalGps = setInterval(() => {
-      dispatch(getGps(navigator))
-    }, 777);
-    return () => clearInterval(intervalGps);
-  }, []);
+  // useEffect(() => {
+  //   const intervalGps = setInterval(() => {
+  //     dispatch(getGps(navigator))
+  //   }, 777);
+  //   return () => clearInterval(intervalGps);
+  // }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      dispatch(getKm())
-    }, 3500);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     dispatch(getKm())
+  //   }, 3500);
+  //   return () => clearInterval(interval);
+  // }, []);
 
-  useEffect(() => {
-    const test = setInterval(() => {
-      // message.info(,{ marginTop: 50});
-      if(km < 50){
-        message.loading({
-          content: `${ganNhat.name} cách bạn ${km.toFixed(4)} km`,
-          style: { marginTop: 60 },
-        })
-      }
-    }, 11111);
-    return () => clearInterval(test);
-  }, [ganNhat]);
-
-
-
-  // const [zoom, setZoom] = useState(16);
-  const [size, setSize] = useState(50);
-  const [map, setMap] = useState(null);
-
-  const [center, setCenter] = useState({
-    lat: 21.038272480898943,
-    lng: 105.78283957815938,
-  });
+  // useEffect(() => {
+  //   const test = setInterval(() => {
+  //     // message.info(,{ marginTop: 50});
+  //     if(km < 50){
+  //       message.loading({
+  //         content: `${ganNhat.name} cách bạn ${km.toFixed(4)} km`,
+  //         style: { marginTop: 60 },
+  //         duration: 4,
+  //       })
+  //     }
+  //   }, 11111);
+  //   return () => clearInterval(test);
+  // }, [ganNhat]);
 
   const onGetGps = () => {
     dispatch(getGps(navigator));
   };
 
-  const onZoom = (e) => {
-    let metersPerPx =
-      (156543.03392 * Math.cos((e.center.lat * Math.PI) / 180)) /
-      Math.pow(2, e.zoom);
-    // setZoom(e.zoom);
-    setSize(size);
-  };
-  // const onLoad = useCallback((map) => setMap(map), []);
-  // const bounds = new maps.LatLngBounds();
   const changeMap = ({ center, zoom, bounds }) => {
-    console.log(bounds);
+    dispatch(setZooCenter(zoom,center));
   };
-
-  const size1 = {
-    width: 640, // Map width in pixels
-    height: 380, // Map height in pixels
-  };
-  // const { center, zoom } = fitBounds(foundMarkers, size1);
 
   return (
     <div style={{ height: window.innerHeight - 72, width: "100%" }}>
@@ -103,23 +79,18 @@ const MapView = (props) => {
             },
           ],
         }}
-        // onLoad={onLoad}
-        // bounds={oki}
         center={center}
-        zoom={16}
+        zoom={zoom}
         gestureHandling={false}
-        // onChange={changeMap}
-        // onClick={(e) => {
-        //   console.log(e);
-        // }}
+        onChange={changeMap}
       >
         {maps.map((item, index) => {
           let detail = item;
           detail.index = index;
           return (
             <Marker
+              zoom={zoom}
               key={index}
-              // zoom={zoom}
               detail={detail}
               lat={item.lat}
               lng={item.lng}

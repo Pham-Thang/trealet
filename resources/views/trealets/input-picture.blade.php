@@ -499,7 +499,7 @@ $("#upload-photo").click(function () {
 		   success : function(data) {
 			   uploaded_pic = true;
 			   $('#upload-photo').html('<i class="material-icons" style="color:blue">done</i>');
-			   alert('Đã cập nhật');
+			   alert('Done');
 		   }
 	});
 });

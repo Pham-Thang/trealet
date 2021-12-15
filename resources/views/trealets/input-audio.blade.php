@@ -28,13 +28,13 @@
 
 </style>
 <body>
-	<div style="max-width: 28em;">
-		<div id="controls">
-			<a id="recordButton" title="Record"><i id="recordIcon" class="material-icons" style="color:#FF0000">mic</i></a>
-			<a id="stopButton" title="Stop"><i id="stopIcon" class="material-icons" style="color:gray">stop_circle</i></a>
-			<a id="uploadButton" title="Upload"><i id="uploadIcon" class="material-icons" style="color:gray">upload</i></a>
+	<div style="max-width: 28em;controls; margin:auto">
+		<div id="controls" style="display: flex;justify-content: space-around;">
+			<a id="recordButton" title="Record"><i id="recordIcon" class="material-icons" style="color:#FF0000;margin: auto">mic</i></a>
+			<a id="stopButton" title="Stop"><i id="stopIcon" class="material-icons" style="color:gray;margin: auto">stop_circle</i></a>
+			<a id="uploadButton" title="Upload"><i id="uploadIcon" class="material-icons" style="color:gray;margin: auto">upload</i></a>
 		</div>
-	<ol id="recordingsList"></ol>
+	<ol id="recordingsList" style="margin: 15px auto"></ol>
 	</div>
 
 	<!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
@@ -194,7 +194,7 @@ function createDownloadLink(blob,encoding) {
 				
 				//clear click event
 				uploadbutton.removeEventListener('click', doUpload);
-				alert('Đã cập nhật');
+				alert('Done');
 
 			}else{
 				console.log(xhr.responseText);

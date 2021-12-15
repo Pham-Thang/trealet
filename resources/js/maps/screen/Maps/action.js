@@ -15,37 +15,57 @@ export const getMaps = (trId) => async (dispatch) => {
   const api = API_URLS.MAPS.getMaps();
   const { response, error } = await apiCall({ ...api, params });
   if (!error && response.status === 200) {
-    const json = JSON.parse(response.data.json);
-    var maps = json.item;
-    const list = [];
-      response.data.played.forEach((playedItem) => {
-        maps.map((item, index) => {
-        if (index === playedItem.no_in_json) {
-          console.log(index);
-          console.log(playedItem.no_in_json);
-          if (playedItem.type === "audio" || playedItem.type === "picture") {
-            item.data = playedItem.data;
-            item.played = true;
-            console.log(playedItem.type);
-            list.push(item);
-          }
-          if (playedItem.type === "qr" || playedItem.type === "form") {
-            item.data = JSON.parse(playedItem.data);
-            item.played = true;
-            console.log(playedItem.type);
-            list.push(item);
+    const toPlay = JSON.parse(response.data.json);
+    const mapsList = toPlay.item;
+    const playedList = response.data.played;
+    console.log(JSON.parse(response.data.json).item);
+    console.log(playedList);
+    let x = JSON.parse(response.data.json).item
+    mapsList.map((mapsItem,index) => {
+      mapsItem.played = false;
+      mapsItem.data = null;
+      playedList.forEach((played) => {
+        if (index === played.no_in_json) {
+          console.log(played.type);
+          switch (played.type) {
+            case "audio":
+              mapsItem.data = played.data;
+              mapsItem.played = true;
+              break;
+            case "picture":
+              mapsItem.data = played.data;
+              mapsItem.played = true;
+              break;
+            case "qr":
+              mapsItem.data = JSON.parse(played.data);
+              mapsItem.played = true;
+              break;
+            case "form":
+              mapsItem.data = JSON.parse(played.data);
+              mapsItem.played = true;
+              break;
+            default:
+              break;
           }
         }
-        else {
-          item.played = false;
-          item.data = null;
-        }
+
       });
     });
-    console.log(list);
+    let lat =0;
+    let lng =0;
+    mapsList.forEach((map) => {
+      lat += parseFloat(map.lat);
+      lng += parseFloat(map.lng);
+    })
+    let center = {
+      lat: lat/(mapsList.length),
+      lng: lng/(mapsList.length),
+    }
+
     dispatch({
       type: TYPE.GET_MAPS_SUCCES,
-      payload: maps,
+      payload: mapsList,
+      center,
     });
   } else {
     dispatch({
@@ -113,17 +133,54 @@ export const getKm = () => async (dispatch, getState) => {
   if (gps) {
     maps.forEach((item, index) => {
       let km = getDistanceFromLatLonInKm(item.lat, item.lng, gps.lat, gps.lng);
-      if( tmp > km && !(item.played)) {indexMin = index; tmp = km;}
-      console.log(item.name + '-----------' + km + 'km');
+      if (tmp > km && !item.played) {
+        indexMin = index;
+        tmp = km;
+      }
+      console.log(item.name + "-----------" + km + "km");
     });
-  const vitri = await indexMin;
-  dispatch({
-    type: TYPE.GET_KM_SUCCES,
-    payload: {
-      ganNhat: maps[vitri],
-      khoangCach: tmp,
-    },
-  });
+    const vitri = await indexMin;
+    dispatch({
+      type: TYPE.GET_KM_SUCCES,
+      payload: {
+        ganNhat: maps[vitri],
+        khoangCach: tmp,
+      },
+    });
   }
+};
 
+export const setZooCenter = (nowZoom,nowCenter) => async (dispatch, getState) => {
+
+  const state = getState();
+  const maps = select(state, "mapsReducer", "maps");
+  const gps = select(state, "mapsReducer", "gps");
+  let zoom = 14;
+  let lat =0;
+  let lng =0;
+  maps.forEach((map) => {
+    lat += parseFloat(map.lat);
+    lng += parseFloat(map.lng);
+  })
+  let center = {
+    lat: lat/(maps.length),
+    lng: lng/(maps.length),
+  }
+  let km = await getDistanceFromLatLonInKm(parseFloat(nowCenter.lat), parseFloat(nowCenter.lng), center.lat, center.lng);
+  dispatch({
+    type: TYPE.SET_ZOOM_CENTER,
+    zoom: nowZoom,
+    center: nowCenter,
+  });
+  if(nowZoom < 14 || km > 6) {
+    dispatch({
+      type: TYPE.SET_ZOOM_CENTER_SUCCES,
+      center,
+      zoom: 17,
+    });
+    message.warning({
+      content: "Di chuyển bản đồ ra ngoài phạm vi Trealet",
+      style: { marginTop: 60 },
+    })
+  }
 };

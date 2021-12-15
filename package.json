@@ -40,6 +40,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "actionsheet-react": "^1.0.14",
     "antd": "^4.16.13",
     "antd-img-crop": "^3.16.0",
     "audio-react-recorder": "^1.0.4",

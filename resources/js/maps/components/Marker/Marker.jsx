@@ -20,7 +20,7 @@ const Marker = (props) => {
   return (
     <div
       style={{
-        opacity: props.detail.played ? 0.75: 1,
+        opacity: props.detail.played ? 0.9: 1,
         height: size,
         width: size,
         position: "absolute",
