@@ -19,10 +19,16 @@ class TrealetsSearch extends Controller
     public function index()
     {
         //At this momment query all Trealets for mock searching where published is 1
-        $trs = Trealets::all()->where('active',"!=", 1);
+        $trs = Trealets::where('active','=', '0' )->get();
         foreach ($trs as $tr) {
             $user = User::where('id',$tr->user_id)->first();
-            $tr->creator = $user->username;
+
+            if($user){
+                $tr->creator = $user->username;
+            }
+            else{
+                $tr->creator = "";
+            }
         };
         $user = NULL;
 
@@ -31,21 +37,16 @@ class TrealetsSearch extends Controller
             $user = User::where('id','=',auth()->id())->first();
         }
 
-        return view('trealets.trealets-search', compact('user','trs'));
+        return view('trealets.trealets-search', compact('trs'));
     }
     public function check_key(Request $req, $id)
     {
-
-        $output = new ConsoleOutput();
-        $output->writeln(auth()->id());
-        $tr = Trealets::find($id) -> first();
+        $tr = Trealets::where('id','=',$id) -> first();
         if($tr->pass != $req->key){
-            return redirect()->back()->withSuccess('Bạn đã nhập sai key!!' ) ;
-
+            return redirect()->back()->withSuccess('Bạn đã nhập sai key!!') ;
         }
         else {
-
-            return (new StreamlineController)->play_a_trealet($id);
+            return redirect("streamline?tr=".$tr->id_str);
         }
     }
 }

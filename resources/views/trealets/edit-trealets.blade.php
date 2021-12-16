@@ -25,15 +25,7 @@
                            name="title" placeholder="@lang('Tên trealet')" value="{{ $trealet->title }}">
                 </div>
 
-                <div class="form-group">
-                    <label for="state">State</label>
-                    <select name="state" class="form-control" style="width:250px">
 
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-
-                    </select>
-                </div>
                 <div>
                 <div class="form-group">
 
@@ -72,7 +64,12 @@
                         <i class="fa fa-refresh"></i>
                         @lang('Update Trealet')
                     </button>
-
+                    @if($trealet->type == \Vanguard\Trealets::STEPQUEST_TYPE)
+                    <a class="btn btn-primary" id="update-details-btn" href="{{ route('stepquest-edit.edit', $trealet->id) }}" >
+                        <i class="fa fa-refresh"></i>
+                        @lang('Edit Stepquest')
+                    </a>
+                    @endif
 
                 </div>
 

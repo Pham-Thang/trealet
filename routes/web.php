@@ -36,18 +36,6 @@ Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProvider
  * Trealets
  */
 Route::get('trealet-plays', 'TrealetPlaysController@index')->name('trealet-plays');
-Route::get('step-quest/{path?}', [
-    'uses' => 'StepQuestController@index',
-    // 'as' => 'react',
-    'where' => ['path' => '.*']
-    ])->name('step-quest');
-// Route::view('/step-quest{path?}', 'trealets.step-quest');
-
-
-Route::get('maps', 'MapsController@index')->name('maps');
-Route::get('maps-trealet', 'MapsController@maps_trealet')->name('maps-trealet');
-
-
 Route::get('trealet-play-details', 'TrealetPlayDetails@index')->name('trealet-play-details');
 Route::post('trealet-play-details/score', 'TrealetPlayDetails@score')->name('trealet-play-details-score');
 Route::get('my-trealets', 'MyTrealets@index')->name('my-trealets');
@@ -58,43 +46,42 @@ Route::get('streamline-edit', 'StreamlineEditController@index')->name('streamlin
 Route::delete('delete/{id}','MyTrealets@destroy_trealet') -> name('destroy_trealet');
 Route::get('duplicate/{id}','MyTrealets@duplicate_trealet') -> name('duplicate_trealet');
 Route::get('publish/{id}','MyTrealets@publish_trealet') -> name('publish_trealet');
-Route::get('play/{id}','StreamlineController@play_a_trealet') -> name('play_trealet');
+Route::get('play/{id}','TrealetPlaysController@play_a_trealet') -> name('play_trealet');
 Route::get('show_edit_trealet/{id}','EditTrealetController@index') -> name('edit_trealet');
 Route::post('edit_trealet/{id}','EditTrealetController@update') -> name('edit_trealet_to_controller');
 Route::post('check_pass_tr/{id}','TrealetsSearch@check_key') -> name('check_key_trealet_to_controller');
 
+Route::get('input-audio',   		'InputController@audio')->name('input-audio');
+Route::post('input-audio/upload',   'InputController@audio_upload')->name('input-audio-upload');
+Route::get('input-picture', 		'InputController@picture')->name('input-picture');
+Route::post('input-picture/upload', 'InputController@picture_upload')->name('input-picture-upload');
+Route::get('input-form', 			'InputController@form')->name('input-form');
+Route::post('input-form/upload', 	'InputController@form_upload')->name('input-form-upload');
+Route::get('input-qr', 				'InputController@qr')->name('input-qr');
+Route::post('input-qr/upload',		'InputController@qr_upload')->name('input-qr-upload');
 
-Route::get('input-audio','InputController@audio')->name('input-audio');
-Route::post('input-audio/upload','InputController@audio_upload')->name('input-audio-upload');
-Route::get('input-picture','InputController@picture')->name('input-picture');
-Route::post('input-picture/upload','InputController@picture_upload')->name('input-picture-upload');
-Route::get('input-form','InputController@form')->name('input-form');
-Route::post('input-form/upload','InputController@form_upload')->name('input-form-upload');
-Route::get('input-qr','InputController@qr')->name('input-qr');
-Route::post('input-qr/upload','InputController@qr_upload')->name('input-qr-upload');
 
 
+Route::post('upload_new_trealet','EditTrealetController@upload_new_trealet')->name('upload_new_trealet');
+Route::post('upload_video','UploadController@video_upload')->name('video_upload');
+Route::post('upload_image',		'UploadController@image_upload')->name('image-upload');
 /**
  *StepQuest
  */
-
-Route::get('stepquest-edit', 'StepquestEditController@index')->name('streamline-edit');
-Route::get('stepquest-edit/tree-folder', 'StepquestEditController@treeFolder')->name('streamline-edit.tree-folder');
-Route::get('stepquest-edit/ungdung', 'StepquestEditController@ungdung')->name('streamline-edit.ungdung');
-Route::get('stepquest-edit/image', 'StepquestEditController@image')->name('streamline-edit.image');
-Route::post('stepquest-edit/upload', 'StepquestEditController@upload')->name('streamline-edit.upload');
-
+Route::get('stepquest-edit', 'StepquestEditController@index')->name('stepquest-edit');
+Route::get('stepquest-edit/{id}/edit', 'StepquestEditController@edit')->name('stepquest-edit.edit');
+Route::post('stepquest-edit/{id}/update', 'StepquestEditController@update')->name('stepquest-edit.update');
+Route::get('stepquest-edit/tree-folder', 'StepquestEditController@treeFolder')->name('stepquest-edit.tree-folder');
+Route::get('stepquest-edit/ungdung', 'StepquestEditController@ungdung')->name('stepquest-edit.ungdung');
+Route::get('stepquest-edit/image', 'StepquestEditController@image')->name('stepquest-edit.image');
+Route::post('stepquest-edit/upload', 'StepquestEditController@upload')->name('stepquest-edit.upload');
 
 /**
- *StepQuest
+ * Maps
  */
 
-Route::get('stepquest-edit', 'StepquestEditController@index')->name('streamline-edit');
-Route::get('stepquest-edit/tree-folder', 'StepquestEditController@treeFolder')->name('streamline-edit.tree-folder');
-Route::get('stepquest-edit/ungdung', 'StepquestEditController@ungdung')->name('streamline-edit.ungdung');
-Route::get('stepquest-edit/image', 'StepquestEditController@image')->name('streamline-edit.image');
-Route::post('stepquest-edit/upload', 'StepquestEditController@upload')->name('streamline-edit.upload');
-
+Route::get('maps', 'MapsController@index')->name('maps');
+Route::get('maps-trealet', 'MapsController@maps_trealet')->name('maps-trealet');
 
 /**
  * Manage_member_group

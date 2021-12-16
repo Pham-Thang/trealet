@@ -7,7 +7,7 @@
     <td class="align-middle">{{ $tr->title }}</td>
     <td class="align-middle">{{ $tr->type }}</td>
     <td class="align-middle">{{ $tr->created_at->format('y-m-d h:m') }}</td>
-    <td class="align-middle">{{ $tr->state }}</td>
+
     <td class="align-middle">{{ $tr->open_at }}</td>
     <td class="align-middle">{{ $tr->close_at }}</td>
 
@@ -53,7 +53,7 @@
                         </a>
                     @endif
                     @if ($tr->role == 0 )
-                        <a href="invite/{{$tr->id}}" class="dropdown-item text-gray-500">
+                        <a href="invite/{{$tr->id}} " class="dropdown-item text-gray-500">
                             <i class="fas fa-users   mr-2"></i>
                             @lang('Share')
                         </a>

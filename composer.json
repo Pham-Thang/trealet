@@ -10,17 +10,21 @@
         "authorization",
         "register"
     ],
-    "authors": [{
-        "name": "Milos Stojanovic",
-        "email": "stojanovic.loshmi@gmail.com",
-        "homepage": "https://mstojanovic.net",
-        "role": "Developer"
-    }],
+    "authors": [
+        {
+            "name": "Milos Stojanovic",
+            "email": "stojanovic.loshmi@gmail.com",
+            "homepage": "https://mstojanovic.net",
+            "role": "Developer"
+        }
+    ],
     "type": "project",
-    "repositories": [{
-        "type": "vcs",
-        "url": "https://github.com/loshmis/laravel-countries"
-    }],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/loshmis/laravel-countries"
+        }
+    ],
     "require": {
         "php": "^7.3|^8.0",
         "ext-json": "*",
@@ -56,9 +60,6 @@
         "laravel/sail": "^1.0.1"
     },
     "autoload": {
-        "files": [
-            "app/Help/helper.php"
-        ],
         "psr-4": {
             "Vanguard\\": "app/",
             "Database\\Factories\\": "database/factories/",

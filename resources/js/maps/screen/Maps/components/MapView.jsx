@@ -25,33 +25,33 @@ const MapView = (props) => {
   }));
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const intervalGps = setInterval(() => {
-  //     dispatch(getGps(navigator))
-  //   }, 777);
-  //   return () => clearInterval(intervalGps);
-  // }, []);
+  useEffect(() => {
+    const intervalGps = setInterval(() => {
+      dispatch(getGps(navigator))
+    }, 777);
+    return () => clearInterval(intervalGps);
+  }, []);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     dispatch(getKm())
-  //   }, 3500);
-  //   return () => clearInterval(interval);
-  // }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(getKm())
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
 
-  // useEffect(() => {
-  //   const test = setInterval(() => {
-  //     // message.info(,{ marginTop: 50});
-  //     if(km < 50){
-  //       message.loading({
-  //         content: `${ganNhat.name} cách bạn ${km.toFixed(4)} km`,
-  //         style: { marginTop: 60 },
-  //         duration: 4,
-  //       })
-  //     }
-  //   }, 11111);
-  //   return () => clearInterval(test);
-  // }, [ganNhat]);
+  useEffect(() => {
+    const test = setInterval(() => {
+      // message.info(,{ marginTop: 50});
+      if(km < 30){
+        message.loading({
+          content: `${ganNhat.name} cách bạn ${(km.toFixed(4)*10000)%1000} m`,
+          style: { marginTop: 60 },
+          duration: 4,
+        })
+      }
+    }, 11111);
+    return () => clearInterval(test);
+  }, [ganNhat]);
 
   const onGetGps = () => {
     dispatch(getGps(navigator));

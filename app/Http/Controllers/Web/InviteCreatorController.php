@@ -25,8 +25,10 @@ class InviteCreatorController extends Controller
             $member = User::select()
                 ->where('email', $value['email'])
                 ->first();
-            $member->status = $value['status'];
-            array_push($members, $member);
+            if($member) {
+                $member->status = $value['status'];
+                array_push($members, $member);
+            }
         };
         $emails = array();
         return view('trealets.trealet-share', compact('members'), compact('trealet_id')
@@ -38,6 +40,7 @@ class InviteCreatorController extends Controller
 
         $iv = Invite::select()
             ->where('email',$request->get('email'))
+            ->where('trealet_id',$trealet_id)
             ->first();
         if($iv){
             return redirect()->back()->withSuccess('Người dùng đã có trong danh sách creator !' ) ;
@@ -52,7 +55,7 @@ class InviteCreatorController extends Controller
         $invite = Invite::create([
             'email' => $request->get('email'),
             'token' => $token,
-            'status' => 'unconfirm',
+            'status' => 'Unconfirm',
             'trealet_id' => $trealet_id
         ]);
         // send the email
@@ -63,10 +66,14 @@ class InviteCreatorController extends Controller
     }
     public function accept($token)
     {
-        $output = new ConsoleOutput();
-        $output->writeln($token);
+
         $invite = Invite::select()->where('token', $token)->first();
-        $output->writeln($invite);
+
+        if($invite-> status == "Active"){
+            return redirect('my-trealets');
+        }
+        if($invite-> status == "Unconfirm")
+        {
         $invite-> status = "Active";
         $invite ->save();
         $user = User::select()
@@ -79,6 +86,7 @@ class InviteCreatorController extends Controller
         $new_tr ->user_id = $user->id;
         $new_tr ->save();
         return redirect('my-trealets');
+        }
 
     }
 

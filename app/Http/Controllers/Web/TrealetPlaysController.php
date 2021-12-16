@@ -4,6 +4,7 @@ namespace Vanguard\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use Vanguard\Http\Controllers\Controller;
+use Vanguard\Trealets;
 use Vanguard\User;
 use Vanguard\UserToTrealet;
 
@@ -33,4 +34,17 @@ class TrealetPlaysController extends Controller
 		}
         return view('trealets.trealet-plays', compact('utts'));   
     }
+    public function play_a_trealet($id){
+        $tr = Trealets::where('id','=',$id)->first();
+        $creator = User::where('id','=',$tr['user_id'])->first();
+
+        if(!$tr) return 'Cannot find the trealet';
+        if($tr->type == "360view"){
+            return view('trealets.360view');
+        }
+        else{
+            return (new StreamlineController)->play_a_trealet($id);
+        }
+    }
+
 }

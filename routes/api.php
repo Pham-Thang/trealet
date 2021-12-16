@@ -64,5 +64,5 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/countries', 'CountriesController@index');
 });
 
-Route::get('/trealets', 'TrealetsController@index');
-Route::get('/trealets/{id}', 'TrealetsController@show');
+Route::get('/trealets/stepquest', 'TrealetsController@index');
+Route::get('/trealets/stepquest/{id}', 'TrealetsController@show');

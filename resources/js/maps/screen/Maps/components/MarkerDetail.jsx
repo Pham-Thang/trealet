@@ -35,16 +35,14 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
   };
 
   const renderIframeInput = (detail) => {
-    console.log(detail);
     switch (detail?.input.type) {
       case "picture":
         return (
-          <>
+          <div style={{width: '100vh'}}>
             <iframe
               frameBorder="0"
               style={{
                 position: "relative",
-                width: "100%",
                 height: 300,
                 alignContent: "center",
                 margin: "auto",
@@ -52,62 +50,58 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
               src={`${window.location.origin}/input-picture?tr_id=${trId}&nij=${detail?.index}`}
               title="picture"
               allow="camera"
-              width="300px"
+              width={window.innerWidth - 34}
             />
-          </>
+          </div>
         );
       case "audio":
         return (
-          <>
+          <div style={{width: '100vh'}}>
             <iframe
               frameBorder="0"
               style={{
                 position: "relative",
-                width: "100%",
                 height: 220,
-                alignContent: "center",
-                margin: "auto",
               }}
               src={`${window.location.origin}/input-audio?tr_id=${trId}&nij=${detail?.index}`}
               title="audio"
               allow="microphone"
-              // width="300px"
+              width={window.innerWidth - 34}
             />
-          </>
+          </div>
         );
       case "qr":
         return (
-          <>
+          <div style={{width: '100vh'}}>
             <iframe
               onLoad={(e) => console.log(e)}
               // onSubmit="alert(this.contentWindow.location);"
               frameBorder="0"
-              style={{ position: "relative", width: "100%", height: 300 }}
+              style={{ position: "relative", height: 300 }}
               src={`${window.location.origin}/input-qr?tr_id=${trId}&nij=${detail?.index}`}
               title="Scan QR code from camera"
               allow="camera"
-              width="300px"
+              width={window.innerWidth - 34}
             />
-          </>
+          </div>
         );
       case "form":
         return (
-          <>
+          <div style={{width: '100vh'}}>
             <iframe
               ref={ref}
               frameBorder="0"
               style={{
                 position: "relative",
-                width: "100%",
                 height: 280,
                 margin: "auto",
               }}
               src={`${window.location.origin}/input-form?tr_id=${trId}&nij=${detail?.index}`}
               title="Input data from a form"
               allow="camera"
-              width="300px"
+              width={window.innerWidth - 34}
             />
-          </>
+          </div>
         );
       default:
         return null;

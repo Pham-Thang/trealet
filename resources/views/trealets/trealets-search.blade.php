@@ -5,8 +5,9 @@
 
 
 @section('content')
+    @include('partials.messages')
 
-	<div class="card">
+    <div class="card">
 	<h4 class="card-header">Nhập từ khóa để tìm trealets</h4>
 
 	<div class="card-body">	<center><input id="search" type="text" placeholder="" style='width:70%' autofocus/>

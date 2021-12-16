@@ -7,6 +7,7 @@ use Vanguard\Album;
 use Vanguard\Http\Controllers\Controller;
 use Vanguard\Image;
 use Vanguard\Trealets;
+use Illuminate\Support\Facades\DB;
 
 class StepquestEditController extends Controller
 {
@@ -15,6 +16,35 @@ class StepquestEditController extends Controller
         $albums = $this->getAlbum();
 
         return view('trealets.my-stepquest', compact('albums'));
+    }
+
+    public function edit($id)
+    {
+        $data = Trealets::findOrFail($id);
+        $stepquest = json_decode($data->json, true)['trealet'];
+
+        return view('trealets.my-stepquest-edit', compact('id', 'stepquest'));
+    }
+
+    public function update($id, Request $request)
+    {
+        $main = array_reduce($request->get('main'), function ($stepInit, $e) {
+            $stepInit[$e['name']] = $e['value'];
+            return $stepInit;
+        }, []);
+        $stepQuest = ['trealet' => array_merge($main, ['items' => $request->get('items')])];
+
+        DB::update(
+            'update au_trealets set user_id = ?, title = ?,json = ? where id = ?',
+            [
+                auth()->id(),
+                $main['title'],
+                json_encode($stepQuest, JSON_UNESCAPED_UNICODE),
+                $id,
+            ]
+        );
+
+        return route('my-trealets');
     }
 
     public function getAlbum()
@@ -102,13 +132,15 @@ class StepquestEditController extends Controller
 
         $stepQuest = ['trealet' => array_merge($main, ['items' => $request->get('items')])];
 
-        Trealets::create([
-            'json' => json_encode($stepQuest, JSON_UNESCAPED_UNICODE),
-            'user_id' => auth()->id(),
-            'title' => $main['title'],
-            'type' => Trealets::STEPQUEST_TYPE,
-            'state' => 1
-        ]);
+        DB::insert(
+            'insert into au_trealets(id_str, user_id, title, type, json) value(UUID_SHORT(), ?, ?, ?, ?)',
+            [
+                auth()->id(),
+                $main['title'],
+                Trealets::STEPQUEST_TYPE,
+                json_encode($stepQuest, JSON_UNESCAPED_UNICODE),
+            ]
+        );
 
         return route('my-trealets');
     }
