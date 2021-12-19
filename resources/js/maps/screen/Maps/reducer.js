@@ -9,6 +9,8 @@ const mapsState = fromJS({
     lat: 21.030653,
     lng: 105.84713,
   },
+  listPlayer: [],
+  info: null,
   isFetchingGps: false,
   isGps: false,
   ganNhat: null,
@@ -33,6 +35,8 @@ const maps = (state = mapsState, action) => {
       return state.merge({
         maps: action.payload,
         center: action.center,
+        info: action.info,
+        listPlayer: action.listPlayer,
         isFetching: false,
       });
     }

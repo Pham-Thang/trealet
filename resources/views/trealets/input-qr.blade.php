@@ -14,12 +14,14 @@
       <a id="btn-scan-qr">
         <img src="assets/input-qr/scanme.png">
       </a>
-      
-	  <canvas hidden="" id="qr-canvas"></canvas>
-	  <input type="submit" class="btn btn-primary" id="btn-scan-qr-stop" value="Stop" style="visibility:hidden">
-
-      <div id="qr-result" hidden="">
-	  <div><input type='text' id='outputD' readonly> <input type="submit" class="btn btn-primary" id="btn-submit" value="Submit"></div>
+      <canvas hidden="" id="qr-canvas" style="margin-left: 10px"></canvas>
+      <br/>
+      <input type="submit" class="btn btn-primary" id="btn-scan-qr-stop" value="Stop" style="visibility:hidden">
+      <div id="qr-result" hidden="" style="margin-top: -70px">
+        <div>
+          <input type='text' id='outputD' readonly>
+          <input type="submit" class="btn btn-primary" id="btn-submit" value="Submit">
+        </div>
       </div>
     </div>
 
