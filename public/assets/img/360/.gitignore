@@ -1,4 +1,4 @@
-video/
+video/*
 !.gitignore
 !360_icon
 
