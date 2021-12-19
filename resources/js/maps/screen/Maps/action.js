@@ -4,6 +4,7 @@ import { apiCall } from "../../utils/api";
 import select from "../../utils/select";
 import { message, Button } from "antd";
 import { getDistanceFromLatLonInKm } from "../../utils/util";
+import { lte } from "lodash";
 
 export const getMaps = (trId) => async (dispatch) => {
   dispatch({
@@ -18,30 +19,45 @@ export const getMaps = (trId) => async (dispatch) => {
     const toPlay = JSON.parse(response.data.json);
     const mapsList = toPlay.item;
     const playedList = response.data.played;
-    console.log(JSON.parse(response.data.json).item);
-    console.log(playedList);
-    let x = JSON.parse(response.data.json).item
+    const my_id = response.data.user_id;
+    const playedListAll = response.data.played_all;
+    const usersList = [];
+    playedListAll.forEach(item => {
+      if(!usersList.find(user => user.userId === item.user_id)){
+        usersList.push({username: item.username, userId: item.user_id, firstName: item.first_name, lastName: item.last_name})
+      }
+    })
+    usersList.forEach(user => {
+      let count = 0;
+      playedListAll.forEach(item => {
+        if(item.user_id === user.userId){
+          count++;
+        }
+      })
+      user.count = count;
+      count = 0;
+    })
+ 
     mapsList.map((mapsItem,index) => {
       mapsItem.played = false;
       mapsItem.data = null;
-      playedList.forEach((played) => {
-        if (index === played.no_in_json) {
-          console.log(played.type);
-          switch (played.type) {
+      playedList.forEach((playedItem) => {
+        if (index === playedItem.no_in_json) {
+          switch (playedItem.type) {
             case "audio":
-              mapsItem.data = played.data;
+              mapsItem.data = playedItem.data;
               mapsItem.played = true;
               break;
             case "picture":
-              mapsItem.data = played.data;
+              mapsItem.data = playedItem.data;
               mapsItem.played = true;
               break;
             case "qr":
-              mapsItem.data = JSON.parse(played.data);
+              mapsItem.data = JSON.parse(playedItem.data);
               mapsItem.played = true;
               break;
             case "form":
-              mapsItem.data = JSON.parse(played.data);
+              mapsItem.data = JSON.parse(playedItem.data);
               mapsItem.played = true;
               break;
             default:
@@ -61,11 +77,21 @@ export const getMaps = (trId) => async (dispatch) => {
       lat: lat/(mapsList.length),
       lng: lng/(mapsList.length),
     }
-
+    var myInfo = null;
+    usersList.forEach(user => {
+      if(user.userId === my_id){
+        myInfo = user;
+      }
+    })
+    usersList.sort(function (a, b) {
+      return b.count - a.count;
+    });
     dispatch({
       type: TYPE.GET_MAPS_SUCCES,
       payload: mapsList,
       center,
+      info: myInfo,
+      listPlayer: usersList,
     });
   } else {
     dispatch({
@@ -137,7 +163,7 @@ export const getKm = () => async (dispatch, getState) => {
         indexMin = index;
         tmp = km;
       }
-      console.log(item.name + "-----------" + km + "km");
+      // console.log(item.name + "-----------" + km + "km");
     });
     const vitri = await indexMin;
     dispatch({
