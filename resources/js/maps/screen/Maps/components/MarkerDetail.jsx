@@ -35,6 +35,7 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
   };
 
   const renderIframeInput = (detail) => {
+    console.log(detail);
     switch (detail?.input.type) {
       case "picture":
         return (
@@ -50,7 +51,7 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
               src={`${window.location.origin}/input-picture?tr_id=${trId}&nij=${detail?.index}`}
               title="picture"
               allow="camera"
-              width={window.innerWidth - 34}
+              width="100%"
             />
           </div>
         );
@@ -62,11 +63,13 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
               style={{
                 position: "relative",
                 height: 220,
+                alignContent: "center",
+                margin: "auto",
               }}
               src={`${window.location.origin}/input-audio?tr_id=${trId}&nij=${detail?.index}`}
               title="audio"
               allow="microphone"
-              width={window.innerWidth - 34}
+              width="100%"
             />
           </div>
         );
@@ -77,11 +80,11 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
               onLoad={(e) => console.log(e)}
               // onSubmit="alert(this.contentWindow.location);"
               frameBorder="0"
-              style={{ position: "relative", height: 300 }}
+              style={{ position: "relative",height: 300 }}
               src={`${window.location.origin}/input-qr?tr_id=${trId}&nij=${detail?.index}`}
               title="Scan QR code from camera"
               allow="camera"
-              width={window.innerWidth - 34}
+              width="100%"
             />
           </div>
         );
@@ -99,7 +102,7 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
               src={`${window.location.origin}/input-form?tr_id=${trId}&nij=${detail?.index}`}
               title="Input data from a form"
               allow="camera"
-              width={window.innerWidth - 34}
+              width="100%"
             />
           </div>
         );

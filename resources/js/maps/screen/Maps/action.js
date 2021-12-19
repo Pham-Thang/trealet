@@ -18,15 +18,15 @@ export const getMaps = (trId) => async (dispatch) => {
     const toPlay = JSON.parse(response.data.json);
     const mapsList = toPlay.item;
     const playedList = response.data.played;
-    // console.log(JSON.parse(response.data.json).item);
-    // console.log(playedList);
+    console.log(JSON.parse(response.data.json).item);
+    console.log(playedList);
     let x = JSON.parse(response.data.json).item
     mapsList.map((mapsItem,index) => {
       mapsItem.played = false;
       mapsItem.data = null;
       playedList.forEach((played) => {
         if (index === played.no_in_json) {
-          // console.log(played.type);
+          console.log(played.type);
           switch (played.type) {
             case "audio":
               mapsItem.data = played.data;
@@ -76,12 +76,12 @@ export const getMaps = (trId) => async (dispatch) => {
 
 export const getGeolocation = (payload) => async (dispatch) => {
   const res = await axios.get("https://61a4fe6f4c822c0017042039.mockapi.io/v1");
-  // console.log(res.data);
+  console.log(res.data);
   dispatch({
     type: TYPE.GET_GEOLOCATION,
   });
   // const { response, error } = await apiCall({ ...api });
-  // console.log("log res", response);
+  console.log("log res", response);
   if (!error && response.status === 200 && response.data.success === true) {
     dispatch({
       type: TYPE.GET_GEOLOCATION_SUCCES,
@@ -137,7 +137,7 @@ export const getKm = () => async (dispatch, getState) => {
         indexMin = index;
         tmp = km;
       }
-      // console.log(item.name + "-----------" + km + "km");
+      console.log(item.name + "-----------" + km + "km");
     });
     const vitri = await indexMin;
     dispatch({
