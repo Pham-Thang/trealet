@@ -500,6 +500,7 @@ $("#upload-photo").click(function () {
 			   uploaded_pic = true;
 			   $('#upload-photo').html('<i class="material-icons" style="color:blue">done</i>');
 			   alert('Done');
+         window.top.postMessage({ success: true },'*');
 		   }
 	});
 });

@@ -81,6 +81,7 @@ $full_path = 'assets/input-form/forms/'.$jsonform;
 		http.send(params);
 		http.onload = function() {
 			//$('#res').html('<p>' + http.responseText + '</p>');
+			window.top.postMessage({ success: true },'*');
 			alert("Done");
 		}	
 	}	

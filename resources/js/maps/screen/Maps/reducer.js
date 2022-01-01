@@ -9,6 +9,7 @@ const mapsState = fromJS({
     lat: 21.030653,
     lng: 105.84713,
   },
+  mapsInfo: null,
   listPlayer: [],
   info: null,
   isFetchingGps: false,
@@ -16,6 +17,7 @@ const mapsState = fromJS({
   ganNhat: null,
   km: 0,
   zoom: 17,
+  isUpdating: false,
 });
 
 const maps = (state = mapsState, action) => {
@@ -38,6 +40,7 @@ const maps = (state = mapsState, action) => {
         info: action.info,
         listPlayer: action.listPlayer,
         isFetching: false,
+        mapsInfo: action.mapsInfo,
       });
     }
     case TYPE.GET_GPS: {
@@ -80,21 +83,20 @@ const maps = (state = mapsState, action) => {
       });
     case TYPE.SET_ZOOM_CENTER: {
       return state.merge({
-        isFetching: true,
         zoom: action.zoom,
         center: action.center,
       });
     }
-    case TYPE.SET_ZOOM_CENTER_FAIL: {
-      return state.merge({
-        isFetching: false,
-      });
-    }
+    case TYPE.SET_ZOOM_CENTER_FAIL:
     case TYPE.SET_ZOOM_CENTER_SUCCES: {
       return state.merge({
-        isFetching: false,
         zoom: action.zoom,
         center: action.center,
+      });
+    }
+    case TYPE.SET_UPDATE: {
+      return state.merge({
+        isUpdating: action.isUpdating,
       });
     }
     default:

@@ -16,7 +16,7 @@ const Marker = (props) => {
     };
     const size = 80;
     // console.log(props.detail);
-    const color = props.detail.played ? "#10F61C" : "#F63810";
+    const color = props.detail.played ? "#157B15" : "#d43a02";
     return (
         <div
             style={{
@@ -27,7 +27,7 @@ const Marker = (props) => {
                 marginTop: size * -0.4,
                 marginLeft: size * -0.4,
                 transform: "translate(-10%, -10%)",
-                display: props.zoom < 14 ? "none" : "",
+                display: props.zoom < 13 ? "none" : "",
             }}
         >
             {props.detail?.index === 0 ? (

@@ -14,10 +14,11 @@ class InputController extends Controller
         //$this->middleware('auth');
     }
 	
-	function delete_prev($user_id, $tr_id, $type)
+	function delete_prev($user_id, $tr_id, $nij, $type)
 	{
 		$utts = UserToTrealet::where([['user_id','=',$user_id],
 									  ['trealet_id_str','=',$tr_id],
+									  ['no_in_json','=',$nij],
 									  ['type','=',$type]])->get();
 
 		foreach($utts as $utt)
@@ -30,6 +31,7 @@ class InputController extends Controller
 		
 		$utts = UserToTrealet::where([['user_id','=',$user_id],
 									  ['trealet_id_str','=',$tr_id],
+									  ['no_in_json','=',$nij],
 									  ['type','=',$type]])->delete();
 	}
 	
@@ -65,7 +67,7 @@ class InputController extends Controller
 		//Extract user_id and tr_id from input filename
 		list($user_id, $tr_id, $nij, $name) = sscanf($filename, '%d %s %d %s');
 		
-		$this->delete_prev($user_id, $tr_id,'audio');
+		$this->delete_prev($user_id, $tr_id, $nij,'audio');
 		
 		if($this->insert_new_audio($realpath, $user_id, $tr_id, $nij))
 			return 'Done';
@@ -134,7 +136,7 @@ class InputController extends Controller
 	
 		list($user_id, $tr_id, $nij, $name) = sscanf($filename, '%d %s %d %s');
 
-		$this->delete_prev($user_id, $tr_id,'picture');
+		$this->delete_prev($user_id, $tr_id, $nij,'picture');
 
 		if($this->insert_new_picture($realpath, $user_id, $tr_id, $nij))
 			return 'Done';
@@ -172,6 +174,7 @@ class InputController extends Controller
 		
 		$affected = UserToTrealet::where([['user_id','=',$user_id],
 										  ['trealet_id_str','=',$tr_id],
+										  ['no_in_json','=',$nij],
 										  ['type','=','form']])->delete();
 		
 		$affected = UserToTrealet::insert(
@@ -218,6 +221,7 @@ class InputController extends Controller
 		
 		$affected = UserToTrealet::where([['user_id','=',$user_id],
 										  ['trealet_id_str','=',$tr_id],
+										  ['no_in_json','=',$nij],
 										  ['type','=','qr']])->delete();
 		
 		$affected = UserToTrealet::insert(

@@ -191,8 +191,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center py-2">
-                                    <button class="btn btn-secondary btn-sm w-60 delete-step" data-id="step1">Xóa
-                                    </button>
+                                    <button class="btn btn-secondary btn-sm w-60 delete-step" data-id="step1">Xóa</button>
                                 </div>
                             </form>
                         </div>
@@ -327,18 +326,18 @@
 
     $(document).on('click', '#step-number #new-step', function(e) {
         e.preventDefault();
-        const currentSteps = $('#step-number li:not(:first-child):not(:last-child)').length;
+        const currentStepsText = $('#step-number li:not(:first-child):not(:last-child)').length;
+        const currentSteps = Number($('#steps .step:last-child').attr('data-id'));
         $('#step-number .step-number .tablinks')
             .removeClass('active');
         $(`<li class="step-number">
-				<a href="#" class="tablinks active" onclick="chooseStep(event, 'step${currentSteps + 1}')">${currentSteps + 1}
+				<a href="#" class="tablinks active" onclick="chooseStep(event, 'step${currentSteps + 1}')">${currentStepsText + 1}
 				</a>
 				</li>`)
             .insertAfter('.step-number:last');
-        $(`#step${currentSteps}`).addClass('d-none');
-        $(`.step`).addClass('d-none');
-        const html = `<div class="border border-secondary step" data-id="${currentSteps + 1}" id="step${currentSteps + 1}"><form>${$(`#step${currentSteps}`).html()}</form><div>`;
-        const element = $(html)
+        $(`#steps .step`).addClass('d-none');
+        const html = `<div class="border border-secondary step" data-id="${currentSteps + 1}" id="step${currentSteps + 1}"><form>${$(`#step1`).html()}</form><div>`;
+        const element = $(html);
         element.find('.delete-step').removeAttr('data-id').attr('data-id', `step${currentSteps + 1}`);
         element.find('input:not([name=answer])').val('');
         element.find('textarea').val('');
@@ -375,15 +374,27 @@
             return false;
         }
         e.preventDefault();
-        $('#step-number').find('.step-number .active').closest('li').nextAll().get().forEach(function(element) {
-            if (!$(element).hasClass('create-step')) {
-                $(element).find('a').text(Number($(element).text()) - 1);
-            }
-        });
+        $('#step-number').find('.step-number .active')
+            .closest('li')
+            .nextAll()
+            .get()
+            .forEach(function(element) {
+                if (!$(element).hasClass('create-step')) {
+                    $(element).find('a').text(Number($(element).text()) - 1);
+                }
+            });
         $('#step-number').find('.step-number .active').closest('li').remove();
         $('#step-number').find('.step-number:first-child .tablinks').addClass('active');
         $(`#${$(this).data('id')}`).remove();
         $('#steps').find('.step:first-child').removeClass('d-none');
+    });
+
+    $(document).on('click', '#reset', function(e) {
+        e.preventDefault();
+        $('#steps .step:nth-child(2)').removeClass('d-none');
+        $('#steps .step:not(:first-child):not(#step1)').remove();
+        $('#step-number .step-number:nth-child(2) .tablinks').addClass('active');
+        $('#step-number .step-number:not(:first-child):not(:nth-child(2))').remove();
     })
 
     $(document).on('click', '#save', function(e) {

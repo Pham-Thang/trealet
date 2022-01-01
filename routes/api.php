@@ -66,3 +66,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 Route::get('/trealets/stepquest', 'TrealetsController@index');
 Route::get('/trealets/stepquest/{id}', 'TrealetsController@show');
+
+Route::get('map/{id}', 'MapController@index')->name('map.index');
+Route::post('map','MapController@store')->name('map.store');
+Route::put('map/{id}','MapController@update')->name('map.update');

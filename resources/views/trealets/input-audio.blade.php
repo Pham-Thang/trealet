@@ -193,14 +193,17 @@ function createDownloadLink(blob,encoding) {
 			if(xhr.responseText=='Done'){
 				uploadIcon.innerText='done';
 				uploadIcon.style.color='blue';
-				
+				window.top.postMessage({ success: true },'*');
+
 				//clear click event
 				uploadbutton.removeEventListener('click', doUpload);
 				alert('Done');
 
 			}else{
-				console.log(xhr.responseText);
+				// console.log(xhr.responseText);
 				//document.body.innerHTML = xhr.responseText;
+				window.top.postMessage({ success: true },'*');
+
 			}
 		}
 	});	

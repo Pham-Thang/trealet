@@ -5,14 +5,19 @@ import MarkerInfo from "./MarkerInfo";
 import MarkerUpload from "./MarkerUpload";
 import { Drawer, Button } from "rsuite";
 import { Message, toaster } from "rsuite";
-import { getMaps, getGps, getKm, setZooCenter } from "../action";
+import { getMaps, getGps, getKm, setIsUpdating } from "../action";
 import { useSelector, useDispatch } from "react-redux";
+import select from "../../../utils/select";
 
 const { SubMenu } = Menu;
 
 const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
     const trId = window.location.search.replace("?tr=", "");
-
+    const { isFetching, maps, isUpdating } = useSelector((state) => ({
+        isFetching: select(state, "mapsReducer", "isFetching"),
+        maps: select(state, "mapsReducer", "maps"),
+        isUpdating: select(state, "mapsReducer", "isUpdating"),
+    }));
     const dispatch = useDispatch();
     const ref = useRef();
 
@@ -27,11 +32,12 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
         setUpdatCheckIn(false);
     }, [detail]);
 
-    const handleClick = (e) => {
-        if (updatCheckIn) {
-            dispatch(getMaps(trId));
-        }
-        setUpdatCheckIn(!updatCheckIn);
+    const handleClickUpdate = () => {
+        dispatch(setIsUpdating(true));
+    };
+
+    const handleClickDone = () => {
+        dispatch(setIsUpdating(false));
     };
 
     const renderIframeInput = (detail) => {
@@ -43,7 +49,10 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                             frameBorder="0"
                             style={{
                                 position: "relative",
-                                height: window.innerWidth - 34,
+                                height:
+                                    window.innerWidth - 34 > 400
+                                        ? 300
+                                        : (window.innerWidth - 34) * 0.75,
                                 borderRadius: 7,
                             }}
                             src={`${window.location.origin}/input-picture?tr_id=${trId}&nij=${detail?.index}`}
@@ -75,11 +84,13 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                     <div>
                         <iframe
                             onLoad={(e) => console.log(e)}
-                            // onSubmit="alert(this.contentWindow.location);"
                             frameBorder="0"
                             style={{
                                 position: "relative",
-                                height: (window.innerWidth - 54) > 400 ? 339 : (window.innerWidth - 54)*0.75 + 39,
+                                height:
+                                    window.innerWidth - 54 > 400
+                                        ? 339
+                                        : (window.innerWidth - 54) * 0.75 + 39,
                                 borderRadius: 7,
                             }}
                             src={`${window.location.origin}/input-qr?tr_id=${trId}&nij=${detail?.index}`}
@@ -122,7 +133,11 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                         }}
                     >
                         <h6 style={{ margin: 10 }}>Ảnh bạn đã gửi:</h6>
-                        <img src={`${window.location.origin}/${detail.data}`} />
+                        <img
+                            src={`${window.location.origin}/${
+                                maps[detail?.index]?.data
+                            }`}
+                        />
                     </div>
                 );
             case "audio":
@@ -133,7 +148,9 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                         <h6 style={{ margin: 10 }}>Audio bạn đã gửi:</h6>
                         <audio controls>
                             <source
-                                src={`${window.location.origin}/${detail.data}`}
+                                src={`${window.location.origin}/${
+                                    maps[detail?.index]?.data
+                                }`}
                                 type="audio/ogg"
                             />
                         </audio>
@@ -144,7 +161,7 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                     <div style={{ marginTop: 15 }}>
                         <h6 style={{ margin: 10 }}>Thông tin QR của bạn : </h6>
                         <Message type="info" style={{ marginBottom: 15 }}>
-                            {detail?.data.scanneddata}
+                            {maps[detail?.index]?.data.scanneddata}
                         </Message>
                     </div>
                 );
@@ -153,7 +170,7 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                     <div style={{ marginTop: 15 }}>
                         <h6 style={{ margin: 10 }}>Nội dung bạn đã gửi :</h6>
                         <Message type="info" style={{ marginBottom: 15 }}>
-                            {detail?.data.comment}
+                            {maps[detail?.index]?.data.comment}
                         </Message>
                     </div>
                 );
@@ -170,36 +187,39 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                 {detail?.name}
             </h5>
             <div>
-                {!detail?.played || updatCheckIn ? (
+                {!maps[detail?.index]?.played || isUpdating ? (
                     <div style={{ marginTop: 15 }}>
                         <Message type="warning" style={{ marginBottom: 15 }}>
                             {detail?.desc}
                         </Message>
+                        <h6 style={{ marginTop: 15, marginLeft: 10, marginBottom: 8 }}>{`${detail?.input.label} : `}</h6>
                         {renderIframeInput(detail)}
-                        {updatCheckIn ? (
+                        {isUpdating ? (
                             <Button
                                 appearance="primary"
-                                onClick={handleClick}
+                                onClick={handleClickDone}
                                 style={{ marginTop: 15 }}
                             >
-                                {!updatCheckIn ? "Update" : "Done"}
+                                {"Cancel"}
                             </Button>
                         ) : null}
                     </div>
                 ) : (
                     <div style={{ marginTop: 15 }}>
                         <Alert
-                            message="Bạn đã hoàn thành check in"
+                            message="Bạn đã hoàn thành check in tại đây"
                             type="success"
                             showIcon
                         />
                         <Message type="warning" style={{ marginTop: 15 }}>
                             {detail?.desc}
                         </Message>
-                        {renderViewInput(detail)}
+                        {isFetching
+                            ? renderViewInput(null)
+                            : renderViewInput(detail)}
                         <Button
                             appearance="ghost"
-                            onClick={handleClick}
+                            onClick={handleClickUpdate}
                             style={{ marginTop: 15 }}
                         >
                             Update

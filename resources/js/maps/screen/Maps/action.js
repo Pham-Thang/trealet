@@ -6,7 +6,7 @@ import { message, Button } from "antd";
 import { getDistanceFromLatLonInKm } from "../../utils/util";
 import { lte } from "lodash";
 
-export const getMaps = (trId) => async (dispatch) => {
+export const getMaps = (trId) => async (dispatch, getState) => {
   dispatch({
     type: TYPE.GET_MAPS,
   });
@@ -22,6 +22,10 @@ export const getMaps = (trId) => async (dispatch) => {
     const my_id = response.data.user_id;
     const playedListAll = response.data.played_all;
     const usersList = [];
+    const mapsInfo = {
+      title: response.data.title,
+      desc: JSON.parse(response.data.json).desc,
+    }
     playedListAll.forEach(item => {
       if(!usersList.find(user => user.userId === item.user_id)){
         usersList.push({username: item.username, userId: item.user_id, firstName: item.first_name, lastName: item.last_name})
@@ -84,15 +88,37 @@ export const getMaps = (trId) => async (dispatch) => {
       }
     })
     usersList.sort(function (a, b) {
-      return b.count - a.count;
+      return b.count === a.count ? a.username - b.username : b.count - a.count;
     });
-    dispatch({
-      type: TYPE.GET_MAPS_SUCCES,
-      payload: mapsList,
-      center,
-      info: myInfo,
-      listPlayer: usersList,
-    });
+    const state = getState();
+    const oldmaps = select(state, "mapsReducer", "maps");
+    const oldcenter = select(state, "mapsReducer", "center");
+    // console.log(oldmaps.size);
+    // console.log(oldcenter);
+    // const HNcenter = {
+    //   lat: 21.030653,
+    //   lng: 105.84713,
+    // };
+
+    if(oldmaps.size === 0){
+      dispatch({
+        type: TYPE.GET_MAPS_SUCCES,
+        payload: mapsList,
+        center,
+        info: myInfo,
+        listPlayer: usersList,
+        mapsInfo,
+      });
+      }else{
+        dispatch({
+          type: TYPE.GET_MAPS_SUCCES,
+          payload: mapsList,
+          center: oldcenter,
+          info: myInfo,
+          listPlayer: usersList,
+        });
+      }
+    
   } else {
     dispatch({
       type: TYPE.GET_MAPS_FAIL,
@@ -192,21 +218,34 @@ export const setZooCenter = (nowZoom,nowCenter) => async (dispatch, getState) =>
     lat: lat/(maps.length),
     lng: lng/(maps.length),
   }
-  let km = await getDistanceFromLatLonInKm(parseFloat(nowCenter.lat), parseFloat(nowCenter.lng), center.lat, center.lng);
   dispatch({
     type: TYPE.SET_ZOOM_CENTER,
     zoom: nowZoom,
     center: nowCenter,
   });
-  if(nowZoom < 14 || km > 6) {
-    dispatch({
-      type: TYPE.SET_ZOOM_CENTER_SUCCES,
-      center,
-      zoom: 17,
-    });
-    message.warning({
-      content: "Di chuyển bản đồ ra ngoài phạm vi Trealet",
-      style: { marginTop: 60 },
-    })
-  }
+
+  // let km = await getDistanceFromLatLonInKm(parseFloat(nowCenter.lat), parseFloat(nowCenter.lng), center.lat, center.lng);
+  // dispatch({
+  //   type: TYPE.SET_ZOOM_CENTER,
+  //   zoom: nowZoom,
+  //   center: nowCenter,
+  // });
+  // if(nowZoom < 14 || km > 6) {
+  //   dispatch({
+  //     type: TYPE.SET_ZOOM_CENTER_SUCCES,
+  //     center,
+  //     zoom: 17,
+  //   });
+  //   message.warning({
+  //     content: "Di chuyển bản đồ ra ngoài phạm vi Trealet",
+  //     style: { marginTop: 60 },
+  //   })
+  // }
+};
+
+export const setIsUpdating = (isUpdating) => async (dispatch) => {
+  dispatch({
+    type: TYPE.SET_UPDATE,
+    isUpdating: isUpdating,
+  });
 };

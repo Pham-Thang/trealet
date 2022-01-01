@@ -83,6 +83,15 @@ Route::post('stepquest-edit/upload', 'StepquestEditController@upload')->name('st
 Route::get('maps', 'MapsController@index')->name('maps');
 Route::get('maps-trealet', 'MapsController@maps_trealet')->name('maps-trealet');
 
+
+/**
+ * Map-Edit
+ */
+Route::get('map-edit','MapEditController@index')->name('get-map-edit');
+Route::post('map-edit','MapEditController@storeMap')->name('store-map-edit');
+Route::get('map-edit/{id}','MapEditController@getMap')->name('getMapEditById');
+
+
 /**
  * Manage_member_group
  */
