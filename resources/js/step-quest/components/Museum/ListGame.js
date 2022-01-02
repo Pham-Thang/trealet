@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import { FaAngleRight } from 'react-icons/fa';
 const BtnStart = (props) => {
     const history = useHistory();
-    const handleClick = () => history.replace(`/step-quest/game/${props.data.id}`);
+    const handleClick = () => history.replace(`/stepquest/game/${props.data.id}`);
 
     return (
         <div className="w-100 flex-c-m listGame">

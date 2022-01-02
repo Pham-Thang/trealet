@@ -1,16 +1,17 @@
-.title{
-    text-align: center;
-    text-align: center;
-}
+/* .title{
+    padding-top: 12px;
+} */
 .introgames{
     display: flex;
     text-align: center;
-    background-color: #4791FC35;
+    /* background-color: #4791FC35; */
+    /* padding: 12px; */
 }
 .description{
     font-size: 18px;
-    font-weight: 500;
-    width: 80%;
-    margin: auto;
+    font-weight: 400;
+    padding:20px;
     text-align: justify;
+}.game-detail{
+    overflow: auto;
 }

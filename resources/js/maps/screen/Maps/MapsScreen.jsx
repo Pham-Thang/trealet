@@ -102,7 +102,7 @@ const MapsScreen = () => {
             >
                 <Modal.Header>
                     <Modal.Title>
-                        <h5>Welcome to</h5>
+                        <h5>Chào mừng bạn đến với bản đồ</h5>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

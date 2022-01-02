@@ -1,3 +1,3 @@
-if (document.getElementById('step-quest')) {
+if (document.getElementById('stepquest')) {
     require('./step-quest/index.js');
 }

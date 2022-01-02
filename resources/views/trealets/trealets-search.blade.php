@@ -19,6 +19,9 @@
 	@foreach($trs as $tr)
 	<?php
 		$play_tr = $tr->type.'?tr='.$tr->id_str;
+        if($tr->type == "stepquest") {
+		    $play_tr = $tr->type.'/'.$tr->id.'?tr='.$tr->id_str;
+        }
 	?>
     @if($tr->published == "1")
         <div class="user media d-flex align-items-center">

@@ -134,9 +134,8 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                     >
                         <h6 style={{ margin: 10 }}>Ảnh bạn đã gửi:</h6>
                         <img
-                            src={`${window.location.origin}/${
-                                maps[detail?.index]?.data
-                            }`}
+                            src={`${window.location.origin}/${maps[detail?.index]?.data
+                                }`}
                         />
                     </div>
                 );
@@ -148,9 +147,8 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                         <h6 style={{ margin: 10 }}>Audio bạn đã gửi:</h6>
                         <audio controls>
                             <source
-                                src={`${window.location.origin}/${
-                                    maps[detail?.index]?.data
-                                }`}
+                                src={`${window.location.origin}/${maps[detail?.index]?.data
+                                    }`}
                                 type="audio/ogg"
                             />
                         </audio>
@@ -192,6 +190,23 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                         <Message type="warning" style={{ marginBottom: 15 }}>
                             {detail?.desc}
                         </Message>
+                        <div style={{ marginTop: 15 }}>
+                            {maps[detail?.index]?.videoUrl ?
+                                (<video
+                                    controls
+                                    type="video/mp4"
+                                    width={window.innerWidth - 34}
+                                    src={`${window.location.origin}/${maps[detail?.index]?.videoUrl?.replace('../', '')}`}
+                                >
+                                </video>) : null
+                            }
+                            {maps[detail?.index]?.imgUrl ?
+                                (<img
+                                    width={window.innerWidth - 34}
+                                    src={`${window.location.origin}/${maps[detail?.index]?.imgUrl?.replace('../', '')}`}
+                                />) : null
+                            }
+                        </div>
                         <h6 style={{ marginTop: 15, marginLeft: 10, marginBottom: 8 }}>{`${detail?.input.label} : `}</h6>
                         {renderIframeInput(detail)}
                         {isUpdating ? (
@@ -207,13 +222,30 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                 ) : (
                     <div style={{ marginTop: 15 }}>
                         <Alert
-                            message="Bạn đã hoàn thành check in tại đây"
+                            message="Bạn đã hoàn thành trò chơi tại đây"
                             type="success"
                             showIcon
                         />
                         <Message type="warning" style={{ marginTop: 15 }}>
                             {detail?.desc}
                         </Message>
+                        <div style={{ marginTop: 15 }}>
+                            {maps[detail?.index]?.videoUrl ?
+                                (<video
+                                    controls
+                                    type="video/mp4"
+                                    width={window.innerWidth - 34}
+                                    src={`${window.location.origin}/${maps[detail?.index]?.videoUrl?.replace('../', '')}`}
+                                >
+                                </video>) : null
+                            }
+                            {maps[detail?.index]?.imgUrl ?
+                                (<img
+                                    width={window.innerWidth - 34}
+                                    src={`${window.location.origin}/${maps[detail?.index]?.imgUrl?.replace('../', '')}`}
+                                />) : null
+                            }
+                        </div>
                         {isFetching
                             ? renderViewInput(null)
                             : renderViewInput(detail)}

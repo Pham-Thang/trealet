@@ -326,7 +326,7 @@ const MapView = (props) => {
             >
                 <Modal.Header>
                     <Modal.Title>
-                        <h5>Ranking</h5>
+                        <h5>Xếp hạng</h5>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -365,7 +365,7 @@ const MapView = (props) => {
             >
                 <Modal.Header>
                     <Modal.Title>
-                        <h5>My Play</h5>
+                        <h5>Thông tin bản đồ hiện tại</h5>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

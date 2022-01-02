@@ -1,7 +1,7 @@
 .headerGame {
     display: flex;
     justify-content: space-between;
-    height: 65px;
+    height: 47.14px;
     align-items: center;
     font-size: 30px;
     padding: 0 24px;
@@ -12,7 +12,7 @@
 
 .time {
     width: 100%;
-    background-color: #4791FC35;
+    /* background-color: #4791FC35; */
 }
 
 .timeleft {
@@ -27,6 +27,7 @@
 
 .content {
     flex: 1;
+    overflow: auto;
 }
 
 .score {

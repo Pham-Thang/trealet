@@ -1,33 +1,46 @@
+.ScrDisplay {
+    overflow: auto;
+}
+
 .imgGame {
-    /* width: 80%; */
-    margin-left: auto;
-    margin-right: auto;
-    padding-bottom: 24px;
+    padding-bottom: 16px;
     text-align: center;
     justify-content: center;
     align-items: center;
 }
-
-/* .imgGame .img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    
-} */
-.display-img{
+.display-img {
     border-radius: 10px;
+    margin-top: 16px;
+    max-width: 90%;
 }
+
 .des {
-    width: 80%;
     font-size: 18px;
     color: black;
     margin: auto;
+    max-width: 90%;
 }
-.des p{
+
+.des p {
     text-align: justify;
 }
+
 .name {
-    width: 80%;
-    margin: auto auto auto;
+    margin: auto;
     font-weight: 500;
+}
+
+.rs-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rs-play, .rs-stop, .rs-pause, .rs-resume {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }

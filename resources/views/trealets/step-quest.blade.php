@@ -23,7 +23,7 @@
 
 @section('content')
 <div>
-    <div id="step-quest"></div>
+    <div id="stepquest"></div>
     <script src="{{asset('js/app.js')}}"></script>
 </div>
 @stop

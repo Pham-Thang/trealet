@@ -68,6 +68,13 @@ Route::post('upload_image',		'UploadController@image_upload')->name('image-uploa
 /**
  *StepQuest
  */
+
+Route::get('stepquest/{path?}', [
+    'uses' => 'StepQuestController@index',
+    // 'as' => 'react',
+    'where' => ['path' => '.*']
+    ])->name('stepquest');
+
 Route::get('stepquest-edit', 'StepquestEditController@index')->name('stepquest-edit');
 Route::get('stepquest-edit/{id}/edit', 'StepquestEditController@edit')->name('stepquest-edit.edit');
 Route::post('stepquest-edit/{id}/update', 'StepquestEditController@update')->name('stepquest-edit.update');

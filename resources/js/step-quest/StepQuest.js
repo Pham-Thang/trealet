@@ -19,6 +19,6 @@ function Example() {
 
 export default Example;
 
-if (document.getElementById('step-quest')) {
-    ReactDOM.render(<Example />, document.getElementById('step-quest'));
+if (document.getElementById('stepquest')) {
+    ReactDOM.render(<Example />, document.getElementById('stepquest'));
 }

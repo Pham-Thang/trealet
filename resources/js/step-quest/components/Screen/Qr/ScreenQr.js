@@ -1,44 +1,33 @@
 import React, { Component } from "react";
-import './ScreenQr.css';
-import { Button } from "react-bootstrap";
-import QrReaderTVC from "./QrReader.js"
+import "./ScreenQr.css";
 class ScreenQr extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-          isHide : true
-        };
-        console.log(this.props)
-        this.onClick= this.onClick.bind(this);
-      }
-      
-      onClick (){
-        //   this.props.toggle(true)
-        this.setState({
-          isHide: !this.state.isHide
-        })
-      }
-    render() {
-        return (
-            <div >
+  constructor(props) {
+    super(props);
+    var tr_id = new URL(window.location.href).searchParams.get("tr");
+    this.state = {
+      tr_id,
+    };
+  }
 
-                {
-                    this.state.isHide ?
-                        (
-                            <div className = "Qrreader">
-                                <div className = "Qrreader_title">
-                                {/* <p > {this.props.data.title}</p> */}
-                                <p>Hãy đến địa điểm A quét mã QR và trả lời các câu hỏi để nhận được phần quà từ Bảo Tàng !</p>
-                                </div>
-                               
-                                <Button onClick={this.onClick}>Qr Code</Button>
-                            </div>
-                        ) : (<QrReaderTVC />)
-
-                }
-            </div>
-        )
-    }
-
+  render() {
+    var src = `${window.location.origin}/input-qr?tr_id=${this.state.tr_id}&nij=5`;
+    return (
+      <div>
+        <div className="Qr_Title mt-4">
+          <p> {this.props.data.hint} </p>{" "}
+        </div>{" "}
+        <div>
+          <iframe
+            style={{ position: "relative", height: "300px", width: "80%" }}
+            src={src}
+            title="abc"
+            frameBorder="0"
+            allow="microphone"
+            className="iframe"
+          />
+        </div>{" "}
+      </div>
+    );
+  }
 }
 export default ScreenQr;

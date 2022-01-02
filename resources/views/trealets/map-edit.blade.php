@@ -89,6 +89,14 @@
                                 <input type="textarea" class="form-control" rows="4" class="inputType" name="inputType_form" id="input_form">
                               </div>
                               
+                              
+                            </div>
+                            <div class="inputType_fileUpload">
+                                <input type="file" name="inputType_fileUpload" id="input_fileUpload" style="display: none;" />
+                                <label for="input_fileUpload" onmouseover="this.style.color = '#28a745'" onmouseout="this.style.color = '#212529'">Nhấn để chọn file</label>
+                                <img id="image_upload" style="width: 100%">
+                                <video id="video_upload" controls style="display: none; width: 100%"></video>
+                                <br>
                             </div>
 
                             <input type="submit"  class="btn btn-primary btn-small" value="Lưu">
@@ -114,6 +122,8 @@
 @section('scripts')
     <script type="text/javascript">
       // local map data
+      var fileUploadData = [];
+      var fileUploadUrl =[];
       var temp_makers_scale = 4;
       var map;
       var mapPolyLine;
@@ -222,6 +232,7 @@
                   position: {lat: +locations[i].lat, lng: +locations[i].lng},
                   draggable: true,
                   map: map,
+                  icon: makeIcon(i+1),
                 });
               }
               else{
@@ -229,7 +240,8 @@
                   position: {lat: +locations[i].lat, lng: +locations[i].lng},
                   draggable: true,
                   map: map,
-                  icon: icon,
+                  // icon: icon,
+                  icon: makeIcon(1),
                 });
               }
 
@@ -338,6 +350,7 @@
           // mapPolyLine event
           google.maps.event.addListener(mapPolyLine.getPath(),'insert_at',function(event){
             console.log(event+" insert_at");
+            event = +event;
 
             if(event  != gMarkers.length){
               const index = event;
@@ -350,7 +363,11 @@
                   position: {lat: lat, lng: lng},
                   draggable: true,
                   map: map,
+                  icon: makeIcon(1+event),
                 });
+              
+              let imgUrl = $("#image_upload").attr("src");
+              let videoUrl = $("#video_upload").attr("src");
 
               let pId = $("#placeId").val();
               let pName = $("#placeName").val();
@@ -366,7 +383,9 @@
                 "lat": lat,
                 "lng": lng,
                 "desc": pDes,
-                "input": input
+                "input": input,
+                "imgUrl": imgUrl,
+                "videoUrl": videoUrl
               }
               if(pId==''){
                 locations.splice(index,0,locationElement);
@@ -428,17 +447,19 @@
                   infowindow.close();
                 }))
               }
+              resetIcon(event+1);
               $("#addForm").trigger('reset');
             }
           })
           google.maps.event.addListener(mapPolyLine.getPath(),'remove_at',function(event){
-
+            event = +event;
             console.log(event+" remove_at");
             if(mapPolyLine.getPath().length != gMarkers.length){
               gMarkers[event].setMap(null);
               gMarkers.splice(event,1);
               locations.splice(event,1);
             }
+            resetIcon(event);
             
           })
           google.maps.event.addListener(mapPolyLine.getPath(),'set_at',function(event){
@@ -448,50 +469,21 @@
       }
 
       $('#saveMap').click(function(e){
-        let url = "/api/map", method = "POST";
-        if(mapId!=null){
-          url = "/api/map/"+mapId;
-          method = "PUT"
-        } 
+        
+        
         Swal.fire({
               title: 'Bạn có muôn lưu lại bản đồ khám phá?',
-              text: "",
-              icon: 'warning',
+              html: getDetailFromLocations(locations),
+              icon: 'question',
               showCancelButton: true,
               confirmButtonColor: '#3085d6',
               cancelButtonColor: '#d33',
               cancelButtonText: 'Quay lại',
               confirmButtonText: 'Đồng ý',
-              footer: '<a href="javascript:alert(getDetailFromLocations(locations))">Xem chi tiết bản đồ</a>'
           })
           .then((result)=>{
             if(result.isConfirmed){
-              $.ajax({
-                  url: url,
-                  type: method,
-                  data: JSON.stringify(mapTrealet),
-                  contentType: "application/json; charset=utf-8",
-                  success: function () {
-                      Swal.fire({
-                        title: 'Thành công',
-                        text: "Bạn có muốn chuyển về trang quản lý trealet?",
-                        icon: 'success',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        cancelButtonText: 'Ở lại',
-                        confirmButtonText: 'Chuyển'
-                      })
-                      .then((result)=>{
-                        if(result.isConfirmed){
-                          window.location.href = "/my-trealets"
-                        }
-                      });
-                  },
-                  error: function (xhr, ajaxOptions, thrownError) {
-                      Swal.fire("Lưu bản đồ thất bại", "Hãy kiểm tra lại thông tin bản đồ", "error");
-                  }
-              });
+              saveMap();
             }
             else{
 
@@ -508,12 +500,15 @@
         $("#placeLat").val(locations[i].lat);
         $("#placeLng").val(locations[i].lng);
         $("#placeDes").val(locations[i].desc);
+        let imgUrl = $("#image_upload").attr("src",locations[i].imgUrl);
+        let videoUrl = $("#video_upload").attr("src",locations[i].videoUrl);
 
         if($("#placeId").val()>=0) $("#placeInputType").val(locations[i].input.type).change();
         if($("#placeId").val()>=0) $("#placeInputType").val(locations[i].input.type).change();
         var inputType = $("#placeInputType").val();
         $("#input_"+inputType).val(locations[i].input.label);
-
+        if(imgUrl.attr("src")!="" && imgUrl.attr("src") != undefined) $("#image_upload").show();
+        else if(videoUrl.attr("src")!="" && videoUrl.attr("src") != undefined) $("#video_upload").show();
         $("#deleteMarker").show();
       }
 
@@ -522,23 +517,18 @@
       }
 
       function deleteMarker(id){
-        let location_temp = locations[id];
-        locations.splice(id,1);
-        var marker_temp = gMarkers[id];
-        gMarkers[id].setMap(null);
-        gMarkers.splice(id,1);
+        id = +id;
         const path = mapPolyLine.getPath();
         path.removeAt(id);
+        $("#addForm").trigger('reset');
+        fileUploadData.splice(id,1);
+      }
 
       
-        $("#addForm").trigger('reset');
-      }
       $("#deleteMarker").click(function(e){
         let p_id = $("#placeId").val();
         deleteMarker(p_id);
       })
-
-
 
       //add collapse to all tags hiden and showed by select mystuff
       $('.inputType_hide').addClass('collapse');
@@ -559,9 +549,12 @@
       $("#addForm").on('reset',function(e){
           $("#deleteMarker").hide();
           $('.inputType_hide').collapse('hide');
+          $('#video_upload').hide().attr("src","");
+          $('#image_upload').hide().attr("src","");
       })
       $("#addForm").submit(function(e) {
           e.preventDefault();
+          //get input data
 
           let pId = $("#placeId").val();
           let pName = $("#placeName").val();
@@ -574,18 +567,51 @@
             "type": pInput,
             "label": pInputLabel
           }
+          let pFileUploadData ;
+          let imgUrl = $("#image_upload").attr("src");
+          let videoUrl = $("#video_upload").attr("src");
+
+
+          //set file upload data
+          if(imgUrl != ""){
+            pFileUploadData = {
+              "img" :  $('#input_fileUpload')[0].files[0],
+              "video" : ""
+            }
+          }
+          else if(videoUrl!= ""){
+            pFileUploadData = {
+              "img" : "",
+              "video": $('#input_fileUpload')[0].files[0],
+            }
+          }
+          else{
+            pFileUploadData = {
+              "img" : "",
+              "video" : ""
+            }
+          }
+
+          
+
+
+          // init marker
           let locationElement ={
             "name": pName,
             "lat": pLat,
             "lng": pLng,
             "desc": pDes,
-            "input": input
+            "input": input,
+            "imgUrl": imgUrl,
+            "videoUrl": videoUrl,
           }
-          console.log(pId);
+
           if(pId !=''){
             locations[pId] = locationElement;
+            fileUploadData[pId] = pFileUploadData;
           }
           else{
+            fileUploadData.push(pFileUploadData);
             let marker;
 
             if(gMarkers.length!=0){
@@ -593,6 +619,7 @@
                 position:{lat: +pLat, lng: +pLng},
                 draggable: true,
                 map: map,
+                icon: makeIcon(gMarkers.length+1),
               });
             }
             else{
@@ -600,14 +627,7 @@
                 position:{lat: +pLat, lng: +pLng},
                 draggable: true,
                 map: map,
-                icon: { path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-                        fillColor: "blue",
-                        fillOpacity: 1,
-                        strokeWeight: 0,
-                        rotation: 0,
-                        scale: 2,
-                        anchor: new google.maps.Point(13, 21),
-                      },
+                icon: makeIcon(1),
               });
             }
             const path = mapPolyLine.getPath();
@@ -678,15 +698,129 @@
           temp_makers.setMap(null);
           
       });
+      
+
+      $('#input_fileUpload').on('change',function(event){
+        if(!event || !event.target || !event.target.files || event.target.files.length === 0) return;
+        let pId = $("#placeId").val();
+        const fileURL = URL.createObjectURL(event.target.files[0]);
+        const imgExtensions = ['jpg','png','PNG'];
+        const videoExtensions = ['mkv','mp4','webm'];
+        const name = event.target.files[0].name;
+        const lastDot = name.lastIndexOf('.');
+        const ext = name.substring(lastDot+1);
+        if(imgExtensions.includes(ext)){
+          $("#video_upload").hide().attr("src",'');
+          $("#image_upload").show().attr("src",fileURL);
+        } else if(videoExtensions.includes(ext)){
+          $("#image_upload").hide().attr("src",'');
+          $("#video_upload").show().attr("src",fileURL);
+        }
+      })
 
       function getDetailFromLocations(array){
-        let i,l = array.length,detail = '';
+        let i,l = array.length,detail = "<div id = 'dataLocations'>";
         for(i = 0; i<l; i++){
-          detail +="Địa điểm " +i+"."+"\n Tên địa điểm: "+array[i].name+"\n Mô tả:"+array[i].desc+"\n Hành động: "+array[i].input.label+"\n";
+          detail +="<strong>Địa điểm</strong> " +(i+1)+", <strong>Tên địa điểm</strong>: "+array[i].name+", <strong>Mô tả</strong>:"+array[i].desc+", <strong>Hành động</strong>: "+array[i].input.label+"<br> ";
         }
+        detail +="</diiv>";
         return detail;
       }
+
+      function makeIcon(index){
+        return 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+index+'|FE6256|000000';
+      }
+
+      function resetIcon(index){
+        for(let i = index;i<gMarkers.length;i++) gMarkers[i].setIcon(makeIcon(i+1));
+      }
+
+      function saveMap(){
+        for(let i =0; i < fileUploadData.length;i++){
+          var formData = new FormData();
+          let fileType = '';
+          if(fileUploadData[i].img != '') fileType = 'picture_file';
+          else if(fileUploadData[i].video != '') fileType = 'video_file';
+
+          if(fileType == '') break;
+          else if(fileType == 'picture_file'){
+            formData.append(fileType, fileUploadData[i].img);
+            formData.append("_token", '{{ csrf_token() }}');
+            $.ajax({
+                   url : '/upload_image',
+                   type : 'POST',
+                   data : formData,
+                   async : false,
+                   processData: false,  
+                   contentType: false,  
+                   success : function(data) {
+                      locations[i].imgUrl = data;
+                      console.log(data);
+                   }
+            })
+          }
+          else if(fileType == 'video_file'){
+            formData.append(fileType, fileUploadData[i].video);
+            formData.append("_token", '{{ csrf_token() }}');
+            $.ajax({
+                   url : '/upload_video',
+                   type : 'POST',
+                   data : formData,
+                   async : false,
+                   processData: false,  
+                   contentType: false,  
+                   success : function(data) {
+                      locations[i].videoUrl = data;
+                      console.log(data);
+                   }
+            });
+          }         
+        }
+        let url = "/api/map", method = "POST";
+          if(mapId!=null){
+            url = "/api/map/"+mapId;
+            method = "PUT"
+          } 
+
+          $.ajax({
+              url: url,
+              type: method,
+              data: JSON.stringify(mapTrealet),
+              contentType: "application/json; charset=utf-8",
+              success: function () {
+                  Swal.fire({
+                    title: 'Thành công',
+                    text: "Bạn có muốn chuyển về trang quản lý trealet?",
+                    icon: 'success',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Ở lại',
+                    confirmButtonText: 'Chuyển'
+                  })
+                  .then((result)=>{
+                    if(result.isConfirmed){
+                      window.location.href = "/my-trealets"
+                    }
+                  });
+              },
+              error: function (xhr, ajaxOptions, thrownError) {
+                  Swal.fire("Lưu bản đồ thất bại", "Hãy kiểm tra lại thông tin bản đồ", "error");
+              }
+          }); 
+
+        
+      }
     </script>
+    <style type="text/css">
+      #dataLocations{
+        width: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: 21rem;
+      };
+
+    </style>
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyCqlYpOSuyeiwzpyhcJfivgBizL-DET_Dw&callback=initMap" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

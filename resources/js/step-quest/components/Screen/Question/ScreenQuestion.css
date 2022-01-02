@@ -13,11 +13,11 @@
     display: flex;
     color: azure;
 }
-.imgGame{
+/* .imgGame{
     max-width: 80%;
     margin: auto;
     padding:24px auto;
-}
+} */
 
 .imgGame .img {
     width: 100%;

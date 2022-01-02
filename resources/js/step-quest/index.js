@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
     <App />,
-  document.getElementById('step-quest')
+  document.getElementById('stepquest')
 );
 
 // If you want to start measuring performance in your app, pass a function
