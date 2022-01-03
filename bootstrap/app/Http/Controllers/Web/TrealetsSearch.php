@@ -46,7 +46,7 @@ class TrealetsSearch extends Controller
             return redirect()->back()->withSuccess('Bạn đã nhập sai key!!') ;
         }
         else {
-            return redirect("streamline?tr=".$tr->id_str);
+            return redirect($tr->type."?tr=".$tr->id_str);
         }
     }
 }

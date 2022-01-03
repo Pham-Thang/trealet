@@ -195,14 +195,14 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                                 (<video
                                     controls
                                     type="video/mp4"
-                                    width={window.innerWidth - 34}
+                                    width={window.innerWidth - 34 > 600 ? 600 : window.innerWidth - 34}
                                     src={`${window.location.origin}/${maps[detail?.index]?.videoUrl?.replace('../', '')}`}
                                 >
                                 </video>) : null
                             }
                             {maps[detail?.index]?.imgUrl ?
                                 (<img
-                                    width={window.innerWidth - 34}
+                                    width={window.innerWidth - 34 > 600 ? 600 : window.innerWidth - 34}
                                     src={`${window.location.origin}/${maps[detail?.index]?.imgUrl?.replace('../', '')}`}
                                 />) : null
                             }
@@ -234,14 +234,14 @@ const MarkerDetail = ({ detail, onShowDetail, isShowDetail }) => {
                                 (<video
                                     controls
                                     type="video/mp4"
-                                    width={window.innerWidth - 34}
+                                    width={window.innerWidth - 34 > 600 ? 600 : window.innerWidth - 34}
                                     src={`${window.location.origin}/${maps[detail?.index]?.videoUrl?.replace('../', '')}`}
                                 >
                                 </video>) : null
                             }
                             {maps[detail?.index]?.imgUrl ?
                                 (<img
-                                    width={window.innerWidth - 34}
+                                    width={window.innerWidth - 34 > 600 ? 600 : window.innerWidth - 34}
                                     src={`${window.location.origin}/${maps[detail?.index]?.imgUrl?.replace('../', '')}`}
                                 />) : null
                             }

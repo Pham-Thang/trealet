@@ -76,7 +76,7 @@ const MapView = (props) => {
     useEffect(() => {
         const interval = setInterval(() => {
             dispatch(getKm());
-        }, 7000);
+        }, 5000);
         return () => clearInterval(interval);
     }, []);
 
@@ -346,7 +346,7 @@ const MapView = (props) => {
                                 }}
                             >
                                 <h6>
-                                    {`Top ${index + 1} :  ${player.username}`}
+                                    {`Hạng ${index + 1} :  ${ player.username == null ? player.firstName + ' ' + player.lastName : player.username}`}
                                 </h6>
                                 <h6>
                                     {`Đã check in ${player?.count} / ${maps.length} vị trí`}
@@ -365,7 +365,7 @@ const MapView = (props) => {
             >
                 <Modal.Header>
                     <Modal.Title>
-                        <h5>Thông tin bản đồ hiện tại</h5>
+                        <h5>Chi tiết</h5>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -395,7 +395,7 @@ const MapView = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <h6 style={{ marginTop: 15 }}>
-                        {`Bạn đã check in tại : ${info?.count} / ${maps.length} vị trí`}
+                        {`Bạn đã check in tại : ${info?.count == undefined ? 0 : info?.count} / ${maps.length} vị trí`}
                     </h6>
                 </Modal.Footer>
             </Modal>
