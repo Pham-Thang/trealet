@@ -8,6 +8,7 @@ use Vanguard\Http\Controllers\Controller;
 use Vanguard\Image;
 use Vanguard\Trealets;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class StepquestEditController extends Controller
 {
@@ -28,18 +29,54 @@ class StepquestEditController extends Controller
 
     public function update($id, Request $request)
     {
-        $main = array_reduce($request->get('main'), function ($stepInit, $e) {
-            $stepInit[$e['name']] = $e['value'];
-            return $stepInit;
-        }, []);
-        $stepQuest = ['trealet' => array_merge($main, ['items' => $request->get('items')])];
+        $trealet = Trealets::findOrFail($id);
+        $oldItems = json_decode($trealet->json, true)['trealet']['items'];
 
+        $files = [];
+        foreach ($request->file() as $key => $file) {
+            $path = $file->storeAs(
+                'upload/trealet-data',
+                date('YmdHis') . $key . '.' . $file->getClientOriginalExtension(),
+                ['disk' => 'public']
+            );
+            $files = array_merge($files, [
+                [
+                    'key' => $key,
+                    'value' => url($path),
+                ]
+            ]);
+        }
+        $items = array_map(function ($value) use ($files, $oldItems) {
+            $keyFound = array_search(
+                $value['index'],
+                array_column($files, 'key')
+            );
+            if ($keyFound !== false) {
+                $value['file'] = $files[$keyFound]['value'];
+            } else {
+                $keyFound = array_search($value['key'], array_column($oldItems, 'key'));
+                if ($keyFound !== false) {
+                    if ($oldItems[$keyFound]['file']) {
+                        $value['file'] = $oldItems[$keyFound]['file'];
+                    }
+                }
+            }
+            unset($value['index']);
+
+            return $value;
+        }, $request->get('items'));
+        $stepQuest = [
+            'trealet' => array_merge(
+                $request->only('title', 'des'),
+                ['items' => $items]
+            )
+        ];
         DB::update(
             'update au_trealets set user_id = ?, title = ?,json = ? where id = ?',
             [
                 auth()->id(),
-                $main['title'],
-                json_encode($stepQuest, JSON_UNESCAPED_UNICODE),
+                $request->get('title', ''),
+                stripslashes(json_encode($stepQuest, JSON_UNESCAPED_UNICODE)),
                 $id,
             ]
         );
@@ -62,15 +99,16 @@ class StepquestEditController extends Controller
     public function ungdung(Request $request)
     {
         $donvi = $request->get('donVi', 1);
+        return Album::where('parentid', $donvi)
+            ->get()
+            ->map(function ($album) {
+                $folders = explode('/', $album->folder);
 
-        return Album::where('parentid', $donvi)->get()->map(function ($album) {
-            $folders = explode('/', $album->folder);
-
-            return [
-                'id' => $album->id,
-                'title' => str_replace('-', ' ', $folders[count($folders) - 1]),
-            ];
-        })->toJson();
+                return [
+                    'id' => $album->id,
+                    'title' => str_replace('-', ' ', $folders[count($folders) - 1]),
+                ];
+            })->toJson();
     }
 
     public function treeFolder()
@@ -125,20 +163,41 @@ class StepquestEditController extends Controller
 
     public function upload(Request $request)
     {
-        $main = array_reduce($request->get('main'), function ($stepInit, $e) {
-            $stepInit[$e['name']] = $e['value'];
-            return $stepInit;
-        }, []);
+        $files = [];
+        foreach ($request->file() as $key => $file) {
+            $path = $file->storeAs(
+                'upload/trealet-data',
+                date('YmdHis') . $key . '.' . $file->getClientOriginalExtension(),
+                ['disk' => 'public']
+            );
+            $files = array_merge($files, [
+                [
+                    'key' => $key,
+                    'value' => url($path),
+                ]
+            ]);
+        }
+        $items = array_map(function ($value) use ($files) {
+            $keyFound = array_search(
+                $value['index'],
+                array_column($files, 'key')
+            );
+            if ($keyFound !== false) {
+                $value['file'] = $files[$keyFound]['value'];
+            }
+            unset($value['index']);
 
-        $stepQuest = ['trealet' => array_merge($main, ['items' => $request->get('items')])];
+            return $value;
+        }, $request->get('items'));
 
+        $stepQuest = ['trealet' => array_merge($request->only('title', 'des'), ['items' => $items])];
         DB::insert(
             'insert into au_trealets(id_str, user_id, title, type, json) value(UUID_SHORT(), ?, ?, ?, ?)',
             [
                 auth()->id(),
-                $main['title'],
+                $request->get('title', ''),
                 Trealets::STEPQUEST_TYPE,
-                json_encode($stepQuest, JSON_UNESCAPED_UNICODE),
+                stripslashes(json_encode($stepQuest, JSON_UNESCAPED_UNICODE)),
             ]
         );
 

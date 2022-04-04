@@ -18,7 +18,7 @@
 				</div></div></div>
 
 		<div class="col-md-2"><div class="card widget"><div class="card-body">
-					<a href="stepquest-edit">New stepquest</a>
+					New stepquest
 				</div></div></div>
 
 		<div class="col-md-2"><div class="card widget"><div class="card-body">
@@ -30,7 +30,7 @@
 				</div></div></div>
 
 		<div class="col-md-2"><div class="card widget"><div class="card-body">
-					<a href="map-edit">New map</a>
+					New maps
 				</div></div></div>
 	</div>
 	<hr>
@@ -44,7 +44,7 @@
 						<th class="min-width-200">@lang('Title')</th>
 						<th class="min-width-80">@lang('Type')</th>
 						<th class="min-width-80">@lang('Create at')</th>
-						<th class="min-width-80">@lang('State')</th>
+
 						<th class="min-width-80">@lang('Open at')</th>
 						<th class="min-width-80">@lang('Close at')</th>
 						<th class="min-width-80">@lang('Published')</th>

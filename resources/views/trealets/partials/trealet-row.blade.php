@@ -58,6 +58,13 @@
                             @lang('Share')
                         </a>
                     @endif
+                    @if ($tr->type == "maps" )
+                        <a href="map-edit/{{$tr->id}} " class="dropdown-item text-gray-500">
+                            <i class="fas fa-wrench mr-2"></i>
+                                @lang('Update')
+                        </a>
+                    @endif
+                   
                 </div>
             </div>
 

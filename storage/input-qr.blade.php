@@ -101,7 +101,6 @@ btnSubmit.onclick = () => {
 		//$('#res').html('<p>' + http.responseText + '</p>');
 		//btnSubmit.innerText = http.responseText;
 		//console.log(http.responseText);
-    window.top.postMessage({ success: true },'*');
 		alert("Done");
     localStorage.setItem("current", values.scanneddata)
 	}

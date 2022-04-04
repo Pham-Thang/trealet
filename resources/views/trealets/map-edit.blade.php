@@ -739,8 +739,8 @@
         for(let i =0; i < fileUploadData.length;i++){
           var formData = new FormData();
           let fileType = '';
-          if(fileUploadData[i].img != '') fileType = 'picture_file';
-          else if(fileUploadData[i].video != '') fileType = 'video_file';
+          if(fileUploadData[i].img && fileUploadData[i]?.img != '') fileType = 'picture_file';
+          else if(fileUploadData[i].video && fileUploadData[i]?.video != '') fileType = 'video_file';
 
           if(fileType == '') break;
           else if(fileType == 'picture_file'){
@@ -754,8 +754,10 @@
                    processData: false,  
                    contentType: false,  
                    success : function(data) {
-                      locations[i].imgUrl = data;
-                      console.log(data);
+                      if(data != 'No picture file uploaded'){
+                        locations[i].imgUrl = data;
+                        console.log(data);
+                      }
                    }
             })
           }
@@ -770,8 +772,10 @@
                    processData: false,  
                    contentType: false,  
                    success : function(data) {
-                      locations[i].videoUrl = data;
-                      console.log(data);
+                    if(data != 'No video file uploaded'){
+                        locations[i].videoUrl = data;
+                        console.log(data);
+                      }
                    }
             });
           }         
@@ -821,7 +825,7 @@
       };
 
     </style>
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyCqlYpOSuyeiwzpyhcJfivgBizL-DET_Dw&callback=initMap" type="text/javascript"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDaN01Pp4i8Q-JFCHFlWuYWhexqj-tNHy0&callback=initMap" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @stop
