@@ -72,12 +72,12 @@ class Answer extends Component {
     return (
       <div className="q-answer">
         {" "}
-        {this.props.data.img ? (
+        {this.props.data.file ? (
           <div className="img-question flex-c-m">
-            <img className="img-q" src={this.props.data.img} />{" "}
+            <img className="img-q" src={this.props.data.file} />{" "}
           </div>
         ) : undefined}{" "}
-        <div className="question mt-4"> {this.props.data.question} </div>{" "}
+        <div className="question"> {this.props.data.question} </div>{" "}
         <div className="list-option"> {listItems} </div> <ToastContainer />
       </div>
     );

@@ -12,7 +12,6 @@
     <td class="align-middle">{{ $tr->close_at }}</td>
 
     @if ($tr->published == 0)
-
         <td class="align-middle">No one</td>
     @endif
     @if ($tr->published == 1)
@@ -41,11 +40,19 @@
                             @lang('Check plays')
                         </a>
                     @endif
-
+                    
+                    @if ($tr->type == "stepquest")
+                    <a href="stepquest/{{$tr->id}}" class="dropdown-item text-gray-500">
+                        <i class="fas fa-play mr-2"></i>
+                        @lang('Play')
+                    </a>
+                    @else 
                     <a href="play/{{$tr->id}}" class="dropdown-item text-gray-500">
                         <i class="fas fa-play mr-2"></i>
                         @lang('Play')
                     </a>
+                    @endif
+
                     @if ($tr->role == 1 || $tr->role == 0)
                         <a href="duplicate/{{$tr->id}}" class="dropdown-item text-gray-500">
                             <i class="fas fa-clone mr-2"></i>
@@ -58,6 +65,13 @@
                             @lang('Share')
                         </a>
                     @endif
+                    @if ($tr->type == "maps" )
+                        <a href="map-edit/{{$tr->id}} " class="dropdown-item text-gray-500">
+                            <i class="fas fa-wrench mr-2"></i>
+                                @lang('Update')
+                        </a>
+                    @endif
+                   
                 </div>
             </div>
 

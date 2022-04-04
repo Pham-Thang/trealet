@@ -94,7 +94,21 @@
 	$title 	  = $item['video']['video_title'] ?? '';
 	$desc	  = $item['video']['description_video'] ?? '';
 	$src      = $item['video']['video_src'] ?? '';
-	$vobj 	  = '<video controls style="position: relative; width: 90%;"><source type="video/mp4" src=/'.$src.'></video>';
+	$vobj 	  = '<video controls style="position: relative; width: 90%;"><source type="video/mp4" src='.$src.'></video>';
+	?>
+
+	<div class="card">
+		<h4 class="card-header">{{ $title }}</h4>
+		<div class="card-body"  ><div style="text-align: center;">{!! $vobj !!}</div><br><p style="padding: 20px">{!! $desc !!}</p></div>
+	</div>
+
+@elseif (isset($item['audio']) && isset($item['audio']['type']))
+	<?php
+	$type 	  = $item['audio']['type'];
+	$title 	  = $item['audio']['audio_title'] ?? '';
+	$desc	  = $item['audio']['description_audio'] ?? '';
+	$src      = $item['audio']['audio_src'] ?? '';
+	$vobj 	  = '<audio controls style="position: relative; width: 90%;"><source  src=/'.$src.'></audio>';
 	?>
 
 	<div class="card">

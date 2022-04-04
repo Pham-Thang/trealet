@@ -5,16 +5,20 @@
     align-items: center;
 }
 
-.img-question {
+/* .img-question {
     width: 80%;
-    /* height: 200px; */
+    
     margin-bottom: 24px;
-}
+} */
 .img-question .img-q {
-    max-width: 100%;
+    /* max-width: 100%;
     max-height: 100%;
     object-fit: cover;
+    border-radius: 10px; */
     border-radius: 10px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    max-width: 92%;
 }
 .question {
     width: fit-content;
@@ -24,7 +28,7 @@
     margin-bottom: 24px;
     background-color: #ff8f0fd1;
     border-radius: 6px;
-    max-width: 85%;
+    max-width: 92%;
 }
 
 .answer-text {

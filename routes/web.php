@@ -50,7 +50,7 @@ Route::get('play/{id}','TrealetPlaysController@play_a_trealet') -> name('play_tr
 Route::get('show_edit_trealet/{id}','EditTrealetController@index') -> name('edit_trealet');
 Route::post('edit_trealet/{id}','EditTrealetController@update') -> name('edit_trealet_to_controller');
 Route::post('check_pass_tr/{id}','TrealetsSearch@check_key') -> name('check_key_trealet_to_controller');
-
+Route::post('edit_old_trealet','EditTrealetController@edit_trealet') -> name('edit_old_trealet_to_controller');
 Route::get('input-audio',   		'InputController@audio')->name('input-audio');
 Route::post('input-audio/upload',   'InputController@audio_upload')->name('input-audio-upload');
 Route::get('input-picture', 		'InputController@picture')->name('input-picture');
@@ -64,7 +64,8 @@ Route::post('input-qr/upload',		'InputController@qr_upload')->name('input-qr-upl
 
 Route::post('upload_new_trealet','EditTrealetController@upload_new_trealet')->name('upload_new_trealet');
 Route::post('upload_video','UploadController@video_upload')->name('video_upload');
-Route::post('upload_image',		'UploadController@image_upload')->name('image-upload');
+Route::post('upload_image',	'UploadController@image_upload')->name('image-upload');
+Route::post('upload_audio',	'UploadController@audio_upload')->name('audio-upload');
 /**
  *StepQuest
  */

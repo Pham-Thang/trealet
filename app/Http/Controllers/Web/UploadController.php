@@ -70,6 +70,26 @@ class UploadController extends Controller
 
     }
 
+    public function audio_upload(Request $request){
+        if(!request()->hasFile('audio_file')) return "No video file uploaded";
+        $file = request()->file('audio_file');
+        $filename = $file->getClientOriginalName();
+        $realpath = $file->getRealPath();
+        $output = new ConsoleOutput();
+        $output->writeln($realpath);
+        $path = $this->insert_new_audio($realpath, date('YmdHis') );
+        return $path;
+    }
+
+    function insert_new_audio($from, $name)
+    {
+        $output_mp3 = request()->server('DOCUMENT_ROOT').'/upload/trealet-data/'.$name.'.mp3';
+        move_uploaded_file($from, $output_mp3);
+        $w_output = '../upload/trealet-data/'.$name.'.mp3';
+        return $w_output;
+
+    }
+
     /**
      * Display a listing of the resource.
      *

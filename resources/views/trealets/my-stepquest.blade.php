@@ -32,13 +32,13 @@
                                 <div class="d-flex mb-2 px-4 py-1">
                                     <div class="text-left w-110 font-500">Tiêu đề</div>
                                     <div class="flex-grow-1">
-                                        <input type="text" class="w-100 bg-color form-control" name="title" placeholder="Nhap Tieu De">
+                                        <input type="text" class="w-100 form-control" name="title" placeholder="Nhap Tieu De">
                                     </div>
                                 </div>
                                 <div class="d-flex mb-2 px-4 py-1">
                                     <div class="text-left w-110 font-500">Mô tả</div>
                                     <div class="flex-grow-1">
-                                        <textarea class="w-100 bg-color no-resize form-control" name="des" rows="3"></textarea>
+                                        <textarea class="w-100 no-resize form-control" name="des" rows="3"></textarea>
                                     </div>
                                 </div>
                             </form>
@@ -46,65 +46,89 @@
                         <div class="border border-secondary step d-none" data-id="1" id="step1">
                             <form>
                                 <div class="main-block d-flex justify-content-between border-bottom border-secondary">
-                                    <div class="flex-grow-1 w-75 d-flex" style="position: relative">
-                                        <div>
+                                    <div class="flex-grow-1 d-flex" style="position: relative">
+                                        <div class="flex-grow-1">
                                             <ul class="tab tab-type mt-2" style="min-width: 550px;">
                                                 <li><a href="#" class="active" onclick="chooseType(event, 'display')">Hiển thị</a></li>
-                                                <li><a href="#" onclick="chooseType(event, 'qr')">QR</a></li>
-                                                <li><a href="#" onclick="chooseType(event, 'quizz')">Câu đố</a></li>
-                                                <li><a href="#" onclick="chooseType(event, 'audio')">Âm thanh</a></li>
-                                                <li><a href="#" onclick="chooseType(event, 'picture')">Hình ảnh</a></li>
+                                                <li><a href="#" onclick="chooseType(event, 'qr')">Quét QR</a></li>
+                                                <li><a href="#" onclick="chooseType(event, 'quizz')">Câu Đố</a></li>
+                                                <li><a href="#" onclick="chooseType(event, 'audio')">Ghi Âm</a></li>
+                                                <li><a href="#" onclick="chooseType(event, 'picture')">Chụp Hình</a></li>
                                             </ul>
                                             <div class="main-data">
                                                 <div class="wrap-type" id="display">
                                                     <h4 class="text-center">Hiển thị</h4>
                                                     <div class="p-2">
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Gợi ý</label><input type="text" class="suggest form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Gợi ý</label><input type="text" class="suggest form-control mb-2 ml-2">
                                                         </div>
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Mô tả</label><textarea class="description form-control mb-2 ml-2"></textarea>
+                                                            <label style="min-width: 60px;text-align:center" for="">Mô tả</label><textarea class="description form-control mb-2 ml-2"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="p-2">
-                                                        <ul id="sortable1" class="connectedSortable py-2 px-2 list-group border">
-                                                        </ul>
+                                                        <div class="d-flex">
+                                                            <ul id="sortable1" class="flex-grow-1 connectedSortable connectedSortable1 py-2 px-2 list-group border">
+                                                            </ul>
+                                                            <div class="w-100">
+                                                                <div class="custom-control custom-radio">
+                                                                    <p class="mb-0 text-center">Upload</p>
+                                                                    <input type="file" class="form-control" id="file-display" />
+                                                                    <img alt="" id="picture-display" style="width: 100%;height:100%">
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="p-2">
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Youtube</label><input type="text" class="youtube form-control mb-2 ml-2">
                                                         </div>
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <label style="min-width: 60px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="wrap-type d-none" id="qr">
-                                                    <h4 class="text-center">QR</h4>
+                                                    <h4 class="text-center">Quét QR</h4>
                                                     <div class="p-2">
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Gợi ý</label><input type="text" class="hint form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Gợi ý</label><input type="text" class="hint form-control mb-2 ml-2">
                                                         </div>
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Mã</label><input type="text" class="code form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Mã</label><input type="text" class="code form-control mb-2 ml-2">
                                                         </div>
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
                                                         </div>
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Thời gian</label><input type="number" class="time form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Thời gian</label><input type="number" class="time form-control mb-2 ml-2">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="wrap-type d-none" id="quizz">
                                                     <h4 class="text-center">Câu đố</h4>
                                                     <div class="p-2">
-                                                        <ul id="sortable1" class="connectedSortable py-2 px-2 list-group border">
-                                                        </ul>
+                                                        <div class="d-flex">
+                                                            <ul id="sortable1" class="flex-grow-1 connectedSortable connectedSortable1 py-2 px-2 list-group border">
+                                                            </ul>
+                                                            <div class="w-100">
+                                                                <div class="custom-control custom-radio">
+                                                                    <p class="mb-0 text-center">Upload</p>
+                                                                    <input type="file" class="form-control" id="file-quizz" />
+                                                                    <img alt="" id="picture-quizz" style="width: 100%;height:100%">
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="d-flex flex-column px-2">
-                                                        <div>
-                                                            <input type="text" placeholder="Question" class="form-control mb-2" name="question">
+                                                        <div class="answer-box">
+                                                            <div class="d-flex align-items-center">
+                                                                <label style="min-width: 60px;text-align:center" for="">Câu hỏi</label>
+                                                                <input type="text" placeholder="Question" class="form-control mb-2" name="question">
+                                                            </div>
                                                             <div class="form-check mb-1 answer">
                                                                 <input type="radio" class="form-check-input" value="1" name="answer">
                                                                 <input type="text" name="textAnser1" id="" class="answerText form-control">
@@ -121,46 +145,47 @@
                                                                 <input type="radio" class="form-check-input" value="4" name="answer">
                                                                 <input type="text" name="textAnser4" id="" class="answerText form-control">
                                                             </div>
+                                                            <p class="text-danger error-answer d-none mb-0"></p>
                                                         </div>
                                                     </div>
                                                     <div class="p-2">
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
                                                         </div>
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="wrap-type d-none" id="audio">
-                                                    <h4 class="text-center">Âm thanh</h4>
+                                                    <h4 class="text-center">Ghi Âm</h4>
                                                     <div class="p-2">
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Gợi ý</label><input type="text" class="suggest_audio form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Gợi ý</label><input type="text" class="suggest_audio form-control mb-2 ml-2">
                                                         </div>
                                                     </div>
                                                     <div class="p-2">
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
                                                         </div>
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="wrap-type d-none" id="picture">
-                                                    <h4 class="text-center">Hình ảnh</h4>
+                                                    <h4 class="text-center">Chụp Hình</h4>
                                                     <div class="p-2">
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Gợi ý</label><input type="text" class="suggest_picture form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Gợi ý</label><input type="text" class="suggest_picture form-control mb-2 ml-2">
                                                         </div>
                                                     </div>
                                                     <div class="p-2">
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
                                                         </div>
                                                         <div class="d-flex align-items-center">
-                                                            <label style="min-width: 40px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2">
+                                                            <label style="min-width: 60px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -169,7 +194,7 @@
                                         <div style="width: 5px;position: relative">
                                             <div class="hr-vertical"></div>
                                         </div>
-                                        <ul id="sortable2" class="connectedSortable py-2 px-2 list-group">
+                                        <ul id="sortable2" class="connectedSortable connectedSortable2 py-2 px-2 list-group">
                                         </ul>
                                         <div id="tree"></div>
                                     </div>
@@ -202,8 +227,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>
 <script>
     (function() {
-        const donvi = $('#donvi').val();
-        showUngDung(donvi);
         $.ajax({
             url: "{{ route('stepquest-edit.tree-folder') }}",
             success: function(res) {
@@ -245,29 +268,6 @@
         $(e.target).addClass('active');
     }
 
-    function showUngDung(donViId) {
-        $.ajax({
-            url: "{{ route('stepquest-edit.ungdung') }}",
-            data: {
-                donVi: donViId
-            },
-            success: (response) => {
-                const ungdung = JSON.parse(response);
-                if (ungdung.length == 0) {
-                    $('#ungdung')
-                        .empty()
-                        .append(`<option value="" disable>No Data</option>`);
-                } else {
-                    $('#ungdung')
-                        .empty()
-                        .append(JSON.parse(response).map((item, index) => (
-                            `<option ${index == 0 ? 'selected' : ''} value="${item.id}">${item.title}</option>`
-                        )));
-                }
-            }
-        });
-    }
-
     function showItem(donViId, stepNumber = 1) {
         $.ajax({
             url: "{{ route('stepquest-edit.image') }}",
@@ -290,17 +290,6 @@
             }
         });
     }
-
-    let folder = '';
-    // $(document).on('change', '#ungdung', (e) => {
-    // 	folder = $(e.target).find(':selected').data('folder');
-    // 	showItem($(e.target).val());
-    // })
-
-    $(document).on('change', '#donvi', function() {
-        const donViId = $(this).val();
-        showUngDung(donViId)
-    })
 
     $(document).on('click', '#step-number #new-step', function(e) {
         e.preventDefault();
@@ -325,6 +314,10 @@
         element.find('.wrap-type').addClass('d-none');
         element.find('.wrap-type:first-child').removeClass('d-none');
         element.find('#sortable2, #sortable1').empty();
+        element.find('.answer-box').removeClass('border border-danger');
+        element.find('.answer-box').find('.error-answer').addClass('d-none').text('');
+        element.find('#picture-display').removeAttr('src');
+        element.find('#picture-quizz').removeAttr('src');
         element.appendTo('#steps');
         $.ajax({
             url: "{{ route('stepquest-edit.tree-folder') }}",
@@ -343,6 +336,13 @@
             connectWith: ".connectedSortable",
             cursor: "grabbing",
         }).disableSelection();
+
+        $(document).on('change', `#step${currentSteps + 1} #file-quizz`, async function() {
+            $(`#step${currentSteps + 1} #picture-quizz`).attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
+        });
+        $(document).on('change', `#step${currentSteps + 1} #file-display`, async function() {
+            $(`#step${currentSteps + 1} #picture-display`).attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
+        });
     });
 
     $(document).on('click', '.delete-step', function(e) {
@@ -369,92 +369,124 @@
         $('#steps .step:not(:first-child):not(#step1)').remove();
         $('#step-number .step-number:nth-child(2) .tablinks').addClass('active');
         $('#step-number .step-number:not(:first-child):not(:nth-child(2))').remove();
-    })
+    });
+
+    $(document).on('click', 'input[name=answer]', function() {
+        $(this).closest('.answer-box').removeClass('border border-danger');
+        $(this).closest('.answer-box').find('.error-answer').addClass('d-none').text('');
+    });
+
+    $(document).on('change', '#step1 #file-quizz', async function() {
+        console.log(URL.createObjectURL(this.files[this.files.length - 1]));
+        $('#step1 #picture-quizz').attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
+    });
+
+    $(document).on('change', '#step1 #file-display', async function() {
+        console.log(URL.createObjectURL(this.files[this.files.length - 1]));
+        $('#step1 #picture-display').attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
+    });
+
+    function convertFileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+        });
+    }
 
     $(document).on('click', '#save', function(e) {
         const items = [];
+        let validData = true;
         e.preventDefault();
+        let formData = new FormData();
+        $('#main-form').serializeArray().forEach(function({
+            name,
+            value
+        }, index) {
+            formData.append(name, value.replace(/"/g, "'"));
+        });
         $('#steps').find('.step:not(:first-child)')
-            .get().forEach(function(item) {
+            .get().forEach(function(item, index) {
                 let step = $(item).find('.main-block .main-data .wrap-type:not(.d-none)').get();
-                let element = $.map($(step).find('#sortable1 li').get(), function(el, i) {
-                    return {
-                        id: Number($(el).attr('data-id')),
-                        value: $(el).text()
-                    };
-                });
-                let data = {};
                 const type = $(step).attr('id');
                 switch (type) {
                     case 'display': {
-                        data = {
-                            type: 'Display',
-                            title: $(step).find('.suggest').val(),
-                            description: $(step).find('.description').val(),
-                        };
+                        formData.append(`items[${index}][index]`, index);
+                        formData.append(`items[${index}][type]`, 'Display');
+                        formData.append(`items[${index}][title]`, $(step).find('.suggest').val().replace(/"/g, "'"));
+                        formData.append(`items[${index}][description]`, $(step).find('.description').val().replace(/"/g, "'"));
+                        formData.append(`items[${index}][youtube]`, $(step).find('.youtube').val().replace(/"/g, "'"));
+                        formData.append(`${index}`, $(step).find('#file-display')[0].files[0]);
                         break;
                     }
                     case 'qr': {
-                        data = {
-                            type: 'QR',
-                            hint: $(step).find('.hint').val(),
-                            code: $(step).find('.code').val(),
-                        };
+                        formData.append(`items[${index}][index]`, index);
+                        formData.append(`items[${index}][type]`, 'QR');
+                        formData.append(`items[${index}][hint]`, $(step).find('.hint').val().replace(/"/g, "'"));
+                        formData.append(`items[${index}][code]`, $(step).find('.code').val().replace(/"/g, "'"));
                         break;
                     }
                     case 'quizz': {
-                        let listOption = [];
-                        $(item).find('.answer .answerText').get().forEach(function(item, index) {
-                            listOption = [...listOption, {
-                                id: index + 1,
-                                text: $(item).val()
-                            }]
+                        let answer = $(step).find('input[name=answer]').filter(':checked').first().val();
+                        formData.append(`${index}`, $(step).find('#file-quizz')[0].files[0]);
+                        formData.append(`items[${index}][index]`, index);
+                        formData.append(`items[${index}][type]`, 'Quizz');
+                        formData.append(`items[${index}][question]`, $(step).find('input[name=question]').val().replace(/"/g, "'"));
+                        formData.append(`items[${index}][answer]`, $(step).find('input[name=answer]').filter(':checked').first().val());
+                        $(item).find('.answer .answerText').get().forEach(function(item, i) {
+                            formData.append(`items[${index}][ListOption][${i}][id]`, i + 1);
+                            formData.append(`items[${index}][ListOption][${i}][text]`, $(item).val().replace(/"/g, "'"));
                         });
-                        console.log($(step).find('input[name=answer]').filter(':checked').first())
-                        data = {
-                            type: 'Quizz',
-                            question: $(step).find('input[name=question]').val(),
-                            answer: $(step).find('input[name=answer]').filter(':checked').first().val(),
-                            ListOption: listOption,
-                        };
+                        if (answer) {
+                            $(step).find('.answer-box').removeClass('border border-danger');
+                            $(step).find('.answer-box').find('.error-answer').addClass('d-none').text('');
+                            validData = true;
+                        } else {
+                            $(step).find('.answer-box').addClass('border border-danger');
+                            $(step).find('.answer-box').find('.error-answer').removeClass('d-none').text('Chọn câu trả lời');
+                            validData = false;
+                        }
                         break;
                     }
                     case 'audio': {
-                        data = {
-                            type: 'Audio',
-                            hint: $(step).find('.suggest_audio').val()
-                        };
+                        formData.append(`items[${index}][index]`, index);
+                        formData.append(`items[${index}][type]`, 'Audio');
+                        formData.append(`items[${index}][hint]`, $(step).find('.suggest_audio').val().replace(/"/g, "'"));
                         break;
                     }
                     case 'picture': {
-                        data = {
-                            type: 'Picture',
-                            hint: $(step).find('.suggest_picture').val()
-                        };
+                        formData.append(`items[${index}][index]`, index);
+                        formData.append(`items[${index}][type]`, 'Picture');
+                        formData.append(`items[${index}][hint]`, $(step).find('.suggest_picture').val().replace(/"/g, "'"));
                         break;
                     }
                 }
-                data.score = $(step).find('.score').first().val()
-                data.time = $(step).find('.time').first().val()
-                items.push({
-                    ...data,
-                    image: element
-                })
+                formData.append(`items[${index}][key]`, Date.now());
+                formData.append(`items[${index}][score]`, $(step).find('.score').first().val().replace(/"/g, "'"));
+                formData.append(`items[${index}][time]`, $(step).find('.time').first().val().replace(/"/g, "'"));
+                $(step).find('#sortable1 li').each(function(i, el) {
+                    formData.append(`items[${index}][image][${i}][id]`, Number($(el).attr('data-id')));
+                    formData.append(`items[${index}][image][${i}][value]`, $(el).text().replace(/"/g, "'"));
+                });
             });
-        $.ajax({
-            url: "{{ route('stepquest-edit.upload') }}",
-            type: 'post',
-            data: {
-                main: $('#main-form').serializeArray(),
-                items,
-            },
-            success: function(href) {
-                window.location.href = href
-            },
-            error: function(res) {
-                alert('error');
-            }
-        });
+
+        if (validData) {
+            $.ajax({
+                url: "{{ route('stepquest-edit.upload') }}",
+                type: 'post',
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function(href) {
+                    window.location.href = href
+                },
+                error: function(res) {
+                    alert('error');
+                }
+            });
+        }
+
     });
 </script>
 @endsection
@@ -575,8 +607,13 @@
         min-width: 80px;
     }
 
-    .connectedSortable {
+    .connectedSortable1 {
+        min-height: 200px;
         width: 100%;
+    }
+
+    .connectedSortable2 {
+        width: 30%;
         min-height: 200px;
     }
 
@@ -592,6 +629,10 @@
     .item-grab {
         cursor: grab;
         background: #8abeb7;
+    }
+
+    #tree {
+        max-width: 300px;
     }
 
     #tree ul {
