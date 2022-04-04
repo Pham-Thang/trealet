@@ -17,9 +17,13 @@
 					<a href="streamline-edit">New streamline</a>
 				</div></div></div>
 
-		<div class="col-md-2"><div class="card widget"><div class="card-body">
-					New stepquest
-				</div></div></div>
+		<div class="col-md-2">
+			<div class="card widget">
+				<div class="card-body">
+					<a href="stepquest-edit">New stepquest</a>
+				</div>
+			</div>
+		</div>
 
 		<div class="col-md-2"><div class="card widget"><div class="card-body">
 					New 360
@@ -71,15 +75,15 @@
 
 		@stop
 
-		@section('styles')
-			<style>
-				.user.media {
-					float: left;
-					border: 1px solid #dfdfdf;
-					background-color: #fff;
-					padding: 15px 20px;
-					border-radius: 4px;
-					margin-right: 15px;
-				}
-			</style>
+@section('styles')
+	<style>
+		.user.media {
+			float: left;
+			border: 1px solid #dfdfdf;
+			background-color: #fff;
+			padding: 15px 20px;
+			border-radius: 4px;
+			margin-right: 15px;
+		}
+	</style>
 @stop
