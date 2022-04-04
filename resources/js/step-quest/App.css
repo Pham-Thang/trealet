@@ -72,6 +72,7 @@
   .sidebar {
     position: absolute !important;
     width: 250px !important;
+    overflow-y: auto;
   }
 }
 

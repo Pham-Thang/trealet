@@ -12,9 +12,10 @@ class ScreenDisplay extends Component {
     return (
       <div className="ScrDisplay">
         <div className="img_Game">
-          {this.props.data.file ? undefined: (<iframe className="display-youtube" width={350} height={200} src={this.props.data.youtube} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>) }
-          {this.props.data.youtube ? undefined: (<img className = "display-img" src= {this.props.data.file } />)}
-
+          {this.props.data.youtube && 
+            (<iframe className="display-youtube" width={350} height={200} src={this.props.data.youtube} frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>) }
+          {this.props.data.file && 
+            (<img className = "display-img" src= {this.props.data.file } />)}
         </div>
         <div className="name">
           <h4>{this.props.data.title}</h4>
