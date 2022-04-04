@@ -62,7 +62,7 @@ class Answer extends Component {
         key={answer.id}
         className={`answer-text ${answer.isCorrect ? "correct" : ""} ${
           answer.isWrong ? "wrong" : ""
-        }`}
+        } ${this.props.data.fulltime && "disabled"}`}
         onClick={() => this.checkAnswer(answer)}
       >
         {" "}

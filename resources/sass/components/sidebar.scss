@@ -112,6 +112,7 @@ $sidebar-bg-color: #30353e;
     width: 80px;
     min-width: 80px;
     overflow-y: auto;
+    height: calc(100vh - 70px);
 
     .sub-menu li {
         padding-left: 0;

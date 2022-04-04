@@ -10978,6 +10978,7 @@ label {
   width: 80px;
   min-width: 80px;
   overflow-y: auto;
+  height: calc(100vh - 70px);
 }
 
 .sidebar-collapsed .sidebar .sub-menu li {
