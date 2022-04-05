@@ -10880,7 +10880,7 @@ label {
   padding-bottom: 30px;
   position: fixed;
   box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.06), 0 1px 0 0 rgba(0, 0, 0, 0.02);
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
   transition: all 0.3s;
   /* closed state */
@@ -10977,6 +10977,8 @@ label {
 .sidebar-collapsed .sidebar {
   width: 80px;
   min-width: 80px;
+  overflow-y: auto;
+  height: calc(100vh - 70px);
 }
 
 .sidebar-collapsed .sidebar .sub-menu li {
@@ -11062,7 +11064,7 @@ label {
 .sidebar-sticky {
   position: relative;
   top: 0;
-  height: calc(100vh - 48px);
+  height: calc(100vh - 367px);
   padding-top: 0.5rem;
   overflow-x: hidden;
   overflow-y: auto;

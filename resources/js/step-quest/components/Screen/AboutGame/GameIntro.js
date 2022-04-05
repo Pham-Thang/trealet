@@ -21,10 +21,11 @@ class GameIntro extends Component {
     if (this.props.match && this.props.match.params) {
       let id = this.props.match.params.id;
       axios
-        .get(`https://www.trealet.com/api/trealets/stepquest/${id}`)
+        .get(`http://127.0.0.1:8000/api/trealets/stepquest/${id}`)
         .then((response) => {
-          var data = response.data.data.json.trealet;
+          var data = response.data?.data?.json?.trealet;
           this.setState({ game: data });
+          this.handleClick()
         });
     }
   }
@@ -39,7 +40,7 @@ class GameIntro extends Component {
       <div className="flex-1 introgames">
         {" "}
         {!this.state.showGameDetail ? (
-          <div className="game-detail">
+          <div className="game-detail w-full">
             <div className="d-flex title">
               <BtnBack />
               <div> {this.state.game ? this.state.game.title : ""} </div>{" "}

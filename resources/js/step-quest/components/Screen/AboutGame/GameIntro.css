@@ -12,6 +12,8 @@
     font-weight: 400;
     padding:20px;
     text-align: justify;
-}.game-detail{
+}
+.game-detail{
     overflow: auto;
+    width: 100%;
 }
