@@ -74,5 +74,9 @@
     padding: 20px !important;
 } */
 .btn-primary{
-margin: 20px;
+    margin: 20px;
+}
+
+.btn-secondary {
+    margin: 20px;
 }

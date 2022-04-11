@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import "./Answer.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./Answer.css";
 class Answer extends Component {
   constructor(props) {
     super(props);
@@ -57,12 +57,12 @@ class Answer extends Component {
     }
   }
   render() {
-    const listItems = this.props.data.ListOption.map((answer) => (
+    const listItems = this.props.data.ListOption.map((answer, index) => (
       <div
         key={answer.id}
-        className={`answer-text ${answer.isCorrect ? "correct" : ""} ${
+        className={`answer-text answer-text-${index} ${answer.isCorrect ? "correct" : ""} ${
           answer.isWrong ? "wrong" : ""
-        } ${this.props.data.fulltime && "disabled"}`}
+        } ${this.props.data.fulltime || this.props.data.IsCheck ? "disabled" : ''}`}
         onClick={() => this.checkAnswer(answer)}
       >
         {" "}

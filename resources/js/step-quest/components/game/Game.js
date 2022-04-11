@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import ContentGame from "../Home/ContentGame";
-import { FaBars, FaStar } from "react-icons/fa";
 import { Progress } from "antd";
 import "antd/dist/antd.css";
-import "./Game.css";
+import React, { Component } from "react";
 import { Dropdown } from "react-bootstrap";
+import { FaBars, FaStar } from "react-icons/fa";
+import ContentGame from "../Home/ContentGame";
+import "./Game.css";
 class Game extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +15,9 @@ class Game extends Component {
       width: 100,
       backgroundColor: "green",
       interval: null,
+      bonusScore: 0,
+      showBonusScore: false,
+      bonusScorePositionBottom: "50%"
     };
     this.step = 0;
     this.isCheck = false;
@@ -51,14 +54,26 @@ class Game extends Component {
       }
       me.setState({
         width: width,
-        backgroundColor: width > 40 ? "green" : "red",
+        backgroundColor: width > 50 
+          ? "green" 
+          : width > 25
+            ? "orange"
+            : "red",
       });
     }, 100);
   }
 
   handleScore = (data) => {
     var currentScore = this.state.score;
-    this.setState({ score: currentScore + data });
+    this.setState({ score: currentScore + data, showBonusScore: true, bonusScore: data, bonusScorePositionBottom: "50%" });
+
+    
+    setTimeout(() => {
+      this.setState({ bonusScorePositionBottom: "80%" });
+      setTimeout(() => {
+        this.setState({ showBonusScore: false});
+      }, 500)
+    }, 100);
   };
   handleStepNext = (data) => {
     // màn tiếp theo
@@ -75,25 +90,26 @@ class Game extends Component {
 
     if (this.step > this.state.currentStep) {
       var currentScore = this.state.score;
+      let newScore = currentScore
       let prevQuestion = this.props.data.items[data - 1]
       if (prevQuestion && !prevQuestion.fulltime) {
         let anwser = localStorage.getItem("current")
         console.log(anwser, prevQuestion)
         if (prevQuestion.type == "QR") {
           if(anwser == prevQuestion.code) {
-            currentScore =
-              Number(this.state.score) +
+            newScore =
+              Number(currentScore) +
               Number(prevQuestion.score);  
           }
         }else if (prevQuestion.type == "Audio" || prevQuestion.type == "Picture") {
           if(anwser == 1) {
-            currentScore =
-              Number(this.state.score) +
+            newScore =
+              Number(currentScore) +
               Number(prevQuestion.score);
           }
         }else if (prevQuestion.type == "Display") {
-          currentScore =
-            Number(this.state.score) +
+          newScore =
+            Number(currentScore) +
             Number(prevQuestion.score);
         }
       }
@@ -101,8 +117,10 @@ class Game extends Component {
 
       this.setState({
         currentStep: this.step,
-        score: currentScore,
       });
+      if (newScore !== currentScore) {
+        this.handleScore(newScore - currentScore)
+      }
     }
   };
   handleStepPrevous = () => {
@@ -154,6 +172,15 @@ class Game extends Component {
             clickNext={this.handleStepNext}
           />{" "}
         </div>{" "}
+        {
+          this.state.showBonusScore ? 
+          <div className="animation-score" id="bonus-score" style={{bottom: this.state.bonusScorePositionBottom}}>
+            <div className="score"> {"+" + this.state.bonusScore} </div>{" "}
+            <FaStar className="star" />
+          </div>
+          : ""
+        }
+        
       </div>
     );
   }

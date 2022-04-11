@@ -1,16 +1,14 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Button } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+import ScreenDisplay from "../Screen/Display/ScreenDisplay";
+import ScreenPicture from "../Screen/Picture/Picture";
+import ScreenQr from "../Screen/Qr/ScreenQr";
+import Answer from "../Screen/Question/Answer";
+import Recorder from "../Screen/Recorder/Recorder";
+import ScreenResult from "../Screen/Result/ScreenResult";
 // import App from "../../App";
 import "./Game.css";
-import ScreenDisplay from "../Screen/Display/ScreenDisplay";
-import ScreenQr from "../Screen/Qr/ScreenQr";
-import ScreenResult from "../Screen/Result/ScreenResult";
-import { withRouter } from "react-router-dom";
-import Answer from "../Screen/Question/Answer";
-import QrReader from "react-qr-reader";
-import Recorder from "../Screen/Recorder/Recorder";
-import ScreenPicture from "../Screen/Picture/Picture";
 class ContentGame extends Component {
   constructor(props) {
     super(props);
@@ -90,7 +88,7 @@ class ContentGame extends Component {
             <div className="button">
               {" "}
               {this.currentIndex == 0 ? undefined : (
-                <Button onClick={this.onClickPrev}> Quay lại </Button>
+                <Button onClick={this.onClickPrev} className="btn-reverse"> Quay lại </Button>
               )}
               {this.currentIndex < this.state.product.length - 1 ? (
                 <Button onClick={this.onClickNext}> Tiếp tục </Button>

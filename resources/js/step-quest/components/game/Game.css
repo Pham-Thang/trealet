@@ -1,7 +1,7 @@
 .headerGame {
     display: flex;
     justify-content: space-between;
-    height: 47.14px;
+    height: 40px;
     align-items: center;
     font-size: 30px;
     padding: 0 24px;
@@ -16,13 +16,14 @@
 }
 
 .timeleft {
-    height: 12px;
+    height: 8px;
 }
 
 .Game {
     display: flex;
     flex-direction: column;
     flex: 1;
+    position: relative;
 }
 
 .content {
@@ -75,4 +76,16 @@
 
 .dropdown-toggle::after {
     display: none !important;
+}
+
+.Game .animation-score {
+    position: absolute;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    bottom: 50%;
+    transition: bottom .5s;
 }
