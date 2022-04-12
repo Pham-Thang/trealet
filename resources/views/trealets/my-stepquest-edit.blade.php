@@ -10,7 +10,209 @@
 @stop
 
 @section('content')
-<div class="card">
+<div class="stepquest-container bg-lighter">
+    <div class="d-flex stepquest-header">
+        <ul class="tab" id="step-number">
+            <li class="step-number"><a href="#" class="tablinks active" onclick="chooseStep(event, 'info')">Thông tin</a></li>
+            @foreach($stepquest['items'] as $key =>$val)
+            <li class="step-number">
+                <a href="#" class="tablinks" onclick="chooseStep(event, 'step{{ $key+1 }}'  )">{{ $key+1 }}</a>
+            </li>
+            @endforeach
+            <li class="create-step font-weight-bold"><a href="#" id="new-step" class="tablinks ">+</a></li>
+        </ul>
+    </div>
+    <div class="stepquest-content border border-primary my-scrollbar" id="steps">
+        <div class="step" id="info">
+            <form id="main-form">
+                <div class="d-flex mb-2 px-2">
+                    <div class="text-left w-110 font-500">Tiêu đề</div>
+                    <div class="flex-grow-1">
+                        <input type="text" class="w-100 bg-color form-control" name="title" placeholder="Nhap Tieu De" value="{{ $stepquest['title']?? '' }}">
+                    </div>
+                </div>
+                <div class="d-flex mb-2 px-2">
+                    <div class="text-left w-110 font-500">Mô tả</div>
+                    <div class="flex-grow-1">
+                        <textarea class="w-100 bg-color no-resize form-control" name="des" rows="3">{{ $stepquest['des'] ?? '' }}</textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        @foreach($stepquest['items'] as $key => $val)
+        <div class="step d-none" data-id="{{ $key+1 }}" id="step{{$key+1}}">
+            <input type="hidden" id="key" value="{{ $val['key'] }}">
+            <form>
+                <div class="main-block flex justify-content-between border-bottom border-secondary gap-4">
+                    <div class="box">
+                        <ul class="tab tab-type mt-2" style="min-width: 550px;">
+                            <li><a href="#" @if($val['type']=='Display' ) class="active" @endif onclick="chooseType(event, 'display')">Hiển
+                                    thị</a></li>
+                            <li><a href="#" @if($val['type']=='QR' ) class="active" @endif onclick="chooseType(event, 'qr')">QR</a></li>
+                            <li><a href="#" @if($val['type']=='Quizz' ) class="active" @endif onclick="chooseType(event, 'quizz')">Câu đố</a></li>
+                            <li><a href="#" @if($val['type']=='Audio' ) class="active" @endif onclick="chooseType(event, 'audio')">Âm thanh</a></li>
+                            <li><a href="#" @if($val['type']=='Picture' ) class="active" @endif onclick="chooseType(event, 'picture')">Hình ảnh</a>
+                            </li>
+                        </ul>
+                        <div class="main-data pt-3">
+                            <div class="wrap-type @if($val['type'] == 'Display') d-block @else d-none @endif" id="display">
+                                <h4 class="text-center">Hiển thị</h4>
+                                <div class="p-2">
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Gợi ý</label>
+                                        <input type="text" class="suggest form-control mb-2 ml-2" @if($val['type']=='Display' ) value="{{ $val['title'] ??'' }}" @endif>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Mô tả</label><textarea class="description form-control mb-2 ml-2">@if($val['type'] == 'Display') {{ $val['description']??''  }} @endif</textarea>
+                                    </div>
+                                </div>
+                                <div class="p-2">
+                                    <div class="d-flex">
+                                        <ul id="sortable1" class="flex-grow-1 connectedSortable connectedSortable1 py-2 px-2 list-group border">
+                                            @if($val['type'] == 'Display')
+                                            @foreach($val['image'] ?? [] as $item)
+                                            <li class="item-grab list-group-item ui-state-default text-break" data-id="{{ $item['id'] }}" style="position: relative; left: 0; top: 0;">{{ $item['value'] }}</li>
+                                            @endforeach
+                                            @endif
+                                        </ul>
+                                        <div class="w-100">
+                                            <div class="custom-control custom-radio">
+                                                <p class="mb-0 text-center">Upload</p>
+                                                <input type="file" class="form-control" id="file-display" />
+                                                <img alt="" @if(isset($val['file']) && $val['file']) src="{{ $val['file'] }}" @endif id="picture-display" style="width: 100%;height:100%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-2">
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 60px;text-align:center" for="">Youtube</label><input type="text" class="youtube form-control mb-2 ml-2" @if($val['type']=='Display' ) value="{{ $val['youtube'] ??'' }}" @endif>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2" @if($val['type']=='Display' ) value="{{ $val['score'] ??'' }}" @endif>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2" @if($val['type']=='Display' ) value="{{ $val['time'] ??'' }}" @endif>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wrap-type @if($val['type'] == 'QR') d-block @else d-none @endif" id="qr">
+                                <h4 class="text-center">QR</h4>
+                                <div class="p-2">
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Gợi ý</label><input type="text" class="hint form-control mb-2 ml-2" @if($val['type']=='QR' ) value="{{ $val['hint'] ??'' }}" @endif>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Mã</label><input type="text" class="code form-control mb-2 ml-2" @if($val['type']=='QR' ) value="{{ $val['code'] ??'' }}" @endif>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2" @if($val['type']=='QR' ) value="{{ $val['score']??''  }}" @endif>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Thời gian</label><input type="number" class="time form-control mb-2 ml-2" @if($val['type']=='QR' ) value="{{ $val['time'] ??'' }}" @endif>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wrap-type @if($val['type'] == 'Quizz') d-block @else d-none @endif" id="quizz">
+                                <h4 class="text-center">Câu đố</h4>
+                                <div class="p-2">
+                                    <div class="d-flex">
+                                        <ul id="sortable1" class="flex-grow-1 connectedSortable connectedSortable1 py-2 px-2 list-group border">
+                                            @if($val['type'] == 'Quizz')
+                                            @foreach($val['image'] ?? [] as $item)
+                                            <li class="item-grab list-group-item ui-state-default text-break" data-id="{{ $item['id'] }}" style="position: relative; left: 0; top: 0;">{{ $item['value'] }}</li>
+                                            @endforeach
+                                            @endif
+                                        </ul>
+                                        <div class="w-100">
+                                            <div class="custom-control custom-radio">
+                                                <p class="mb-0 text-center">Upload</p>
+                                                <input type="file" class="form-control" id="file-quizz" />
+                                                <img alt="" @if( isset($val['file']) && $val['file']) src="{{ $val['file'] }}" @endif id="picture-quizz" style="width: 100%;height:100%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column px-2">
+                                    <input type="text" placeholder="Question" class="form-control mb-2" name="question" @if($val['type']=='Quizz' ) value="{{ $val['question'] }}" @endif>
+                                    <div class="form-check answer">
+                                        <input type="radio" class="form-check-input" value="1" id="customCheck1" name="answer" @if($val['type']=='Quizz' && $val['answer']==1) checked @endif>
+                                        <input type="text" name="textAnser1" id="" class="answerText form-control" @if($val['type']=='Quizz' ) value="{{ $val['ListOption'][0]['text'] ??'' }}" @endif>
+                                    </div>
+                                    <div class="form-check answer">
+                                        <input type="radio" class="form-check-input" value="2" id="customCheck2" name="answer" @if($val['type']=='Quizz' && $val['answer']==2) checked @endif>
+                                        <input type="text" name="textAnser2" id="" class="answerText form-control" @if($val['type']=='Quizz' ) value="{{ $val['ListOption'][1]['text'] ??'' }}" @endif>
+                                    </div>
+                                    <div class="form-check answer">
+                                        <input type="radio" class="form-check-input" value="3" id="customCheck3" name="answer" @if($val['type']=='Quizz' && $val['answer']==3) checked @endif>
+                                        <input type="text" name="textAnser3" id="" class="answerText form-control" @if($val['type']=='Quizz' ) value="{{ $val['ListOption'][2]['text']??''  }}" @endif>
+                                    </div>
+                                    <div class="form-check answer">
+                                        <input type="radio" class="form-check-input" value="4" id="customCheck4" name="answer" @if($val['type']=='Quizz' && $val['answer']==4) checked @endif>
+                                        <input type="text" name="textAnser4" id="" class="answerText form-control" @if($val['type']=='Quizz' ) value="{{ $val['ListOption'][3]['text']??'' }}" @endif>
+                                    </div>
+                                </div>
+                                <div class="p-2 d-flex">
+                                    <div class="d-flex flex-1 align-items-center pr-3">
+                                        <label for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2" name="score" @if($val['type']=='Quizz' ) value="{{ $val['score'] ??'' }}" @endif>
+                                    </div>
+                                    <div class="d-flex flex-1 align-items-center pl-3">
+                                        <label for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2" name="time" @if($val['type']=='Quizz' ) value="{{ $val['time']??''  }}" @endif>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wrap-type @if($val['type'] == 'Audio') d-block @else d-none @endif" id="audio">
+                                <h4 class="text-center">Ghi Âm</h4>
+                                <div class="p-2">
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Gợi ý</label><input type="text" class="suggest_audio form-control mb-2 ml-2" @if($val['type']=='Audio' ) value="{{ $val['hint']??'' }}" @endif>
+                                    </div>
+                                </div>
+                                <div class="p-2">
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2" @if($val['type']=='Audio' ) value="{{ $val['score']??'' }}" @endif>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2" @if($val['type']=='Audio' ) value="{{ $val['time']??'' }}" @endif>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wrap-type @if($val['type'] == 'Picture') d-block @else d-none @endif" id="picture">
+                                <h4 class="text-center">Chụp Hình</h4>
+                                <div class="p-2">
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Gợi ý</label><input type="text" class="suggest_picture form-control mb-2 ml-2" @if($val['type']=='Picture' ) value="{{ $val['hint']??'' }}" @endif>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2" @if($val['type']=='Picture' ) value="{{ $val['score']??'' }}" @endif>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <label style="min-width: 40px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2" @if($val['type']=='Picture' ) value="{{ $val['time']??'' }}" @endif>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 5px;position: relative">
+                        <div class="hr-vertical"></div>
+                    </div>
+                    <ul id="sortable2" class="connectedSortable py-2 px-2 list-group">
+                    </ul>
+                    <div id="tree"></div>
+                </div>
+                <div class="d-flex justify-content-center py-2">
+                    <button class="btn btn-secondary btn-sm w-60 delete-step" data-id="step1">Xóa</button>
+                </div>
+            </form>
+        </div>
+        @endforeach
+    </div>
+    <div class="stepquest-footer mt-3 d-flex justify-content-end">
+        <button class="btn btn-secondary btn-sm w-80">Đặt lại</button>
+        <button class="btn btn-primary btn-sm w-80" id="save">Lưu</button>
+    </div>
+</div>
+<!-- <div class="card">
     <div class="card-body">
         <div class="d-flex border border-primary">
             <div class="flex-grow-1 border-left border-secondary">
@@ -231,7 +433,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 @stop
 
 @section('scripts')
@@ -505,12 +707,33 @@
         border-left: 1px solid #e6e6df;
     }
 
-    .step {
-        min-height: 700px;
+    .stepquest-container {
+        margin: -20px 0 0 0;
+        height: calc(100vh-75px);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stepquest-header {
+        height: fit-content;
+        min-height: fit-content;
+    }
+
+    .stepquest-content {
+        height: 100%;
+        padding: 20px;
+        overflow: auto;
+    }
+
+    .stepquest-footer {
+        height: 40px;
+        min-height: fit-content;
     }
 
     .main-block {
-        min-height: 700px;
+        /* display: flex; */
+        min-height: calc(100%-36px);
     }
 
     ul.tab {
@@ -518,12 +741,17 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        min-width: 60px;
     }
 
     ul.tab li {
         float: left;
         background-color: #f1f1f1;
-        margin-left: 10px;
+        /* margin-left: 10px; */
+        height: 40px;
     }
 
     .active {
@@ -533,22 +761,71 @@
     }
 
     ul.tab li a {
-        display: inline-block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         color: black;
         text-align: center;
         padding: 0px 16px;
         text-decoration: none;
         transition: 0.3s;
         font-size: 17px;
+        min-width: 68px;
+        border: 1px solid #f1f1f1;
+        border-bottom: none;
+        height: 100%;
     }
 
     ul.tab li a:hover {
         background-color: #ddd;
     }
 
-    ul.tab li a:focus,
-    .active {
-        background-color: #ccc;
+    ul.tab li a.active {
+        margin-left: 0;
+        border: 1px solid #179970;
+        border-bottom: none;
+        color: #179970;
+        background-color: #fff;
+        font-weight: bold;
+    }
+
+    .step {
+        height: calc(100%-8px);
+    }
+
+    .main-data label {
+        min-width: 96px;
+    }
+
+    .main-data .wrap-type .form-check {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 4px 0;
+    }
+
+    .main-data .wrap-type input[type="radio"] {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+
+    .main-data .wrap-type .question-attachment {
+        height: 40px;
+        border: 1px dashed #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .main-data .wrap-type .question-attachment:hover {
+        border: 1px dashed #179970;
+    }
+
+    .main-data .wrap-type input[type="text"].answerText {
+        margin-left: 8px;
     }
 
     /* Style the tab content */
@@ -572,8 +849,8 @@
         font-weight: 500;
     }
 
-    .w-60 {
-        width: 60px;
+    .w-80 {
+        width: 80px;
     }
 
     .bg-color {
@@ -608,7 +885,7 @@
 
     .connectedSortable {
         width: 100%;
-        min-height: 200px;
+        min-height: 160px;
     }
 
     .hr-vertical {
@@ -629,6 +906,22 @@
         max-width: 400px;
         max-height: 700px;
         overflow-y: auto;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    .box {
+        flex: 1;
+    }
+
+    .box1 {
+        display: flex;
+    }
+
+    .btn {
+        margin: 0 5px;
     }
 </style>
 @stop
