@@ -51,16 +51,25 @@
   border-radius: 10px;
 } */
 .button {
-  
-  
   text-align: center;
 }
+
 .btn-primary {
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
-  
-  
+}
+
+.btn-primary.btn-reverse {
+  color: #0d6efd !important;
+  background-color: #fff !important;
+  border-color: #0d6efd !important;
+}
+
+.btn-primary.btn-reverse:focus,
+.btn-primary.btn-reverse:active {
+  background-color: #0d6efd1b !important;
+  color: #0d6efd;
 }
 
 @media (max-width: 991.98px) {
@@ -88,4 +97,8 @@
 
 .flex-1 {
   flex: 1;
+}
+
+.my-box-shadow {
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
 }

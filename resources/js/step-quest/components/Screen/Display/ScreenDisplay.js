@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./ScreenDisplay.css";
-import Speech from "react-speech";
 
 class ScreenDisplay extends Component {
   constructor(props) {
@@ -13,9 +12,9 @@ class ScreenDisplay extends Component {
       <div className="ScrDisplay">
         <div className="img_Game">
           {this.props.data.youtube && 
-            (<iframe className="display-youtube" width={350} height={200} src={this.props.data.youtube} frameBorder="0" allowFullScreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>) }
+            (<iframe className="display-youtube my-box-shadow" width={350} height={200} src={this.props.data.youtube} frameBorder="0" allowFullScreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>) }
           {this.props.data.file && 
-            (<img className = "display-img" src= {this.props.data.file } />)}
+            (<img className = "display-img my-box-shadow" src= {this.props.data.file } />)}
         </div>
         <div className="name">
           <h4>{this.props.data.title}</h4>

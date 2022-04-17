@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import './ScreenResult.css';
 
@@ -31,9 +31,9 @@ class ScreenResult extends Component{
                 <img className = "resuil_img_img" src= 'https://i.pinimg.com/originals/ab/c8/05/abc805563d75437aa698b7c0df476302.gif' alt={"img"} />
                 </div>
                 <div className = "result-button">
-                    <Button onClick={
-                () => this.replay()
-            }>Chơi Lại</Button>
+                    <Button onClick={() => this.replay()} className="btn-reverse">
+                        Chơi Lại
+                    </Button>
                     <Button href = "/">Trang Chủ</Button>
                 </div>
             </div>

@@ -1,15 +1,16 @@
 .q-answer {
-    padding: 5px 24px 0 24px;
+    padding: 10px 24px 0 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* .img-question {
-    width: 80%;
-    
-    margin-bottom: 24px;
-} */
+.img-question {
+    /* width: 80%;
+    margin-bottom: 24px; */
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+}
+
 .img-question .img-q {
     /* max-width: 100%;
     max-height: 100%;
@@ -21,22 +22,25 @@
     max-width: 92%;
 }
 .question {
-    width: fit-content;
+    /* width: fit-content; */
+    width: 97%;
     text-align: center;
     font-weight: 700;
     padding: 10px;
-    margin-bottom: 24px;
-    background-color: #ff8f0fd1;
+    margin: 20px 0;
+    background-color: #ff8f0fa1;
     border-radius: 6px;
-    max-width: 92%;
+    max-width: 97%;
 }
 
 .answer-text {
     width: 150px;
     height: 150px;
     border-radius: 6px;
-    background-color: #4ba0ff66;
-    color: #000000;
+    /* background-color: #4ba0ff66; */
+    background-color: #fff;
+    /* color: #000000; */
+    color: #fff;
     font-weight: 500;
     text-align: center;
     margin-bottom: 16px;
@@ -45,6 +49,28 @@
     cursor: pointer;
     justify-content: center;
     font-size: 16px;
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+    border: 5px solid;
+}
+
+.answer-text.answer-text-0 {
+    border-color: rgb(226, 27, 60);
+    background-color: rgb(226, 27, 60);
+}
+
+.answer-text.answer-text-1 {
+    border-color: rgb(19, 104, 206);
+    background-color: rgb(19, 104, 206);
+}
+
+.answer-text.answer-text-2 {
+    border-color: rgb(216, 158, 0);
+    background-color: rgb(216, 158, 0);
+}
+
+.answer-text.answer-text-3 {
+    border-color: rgb(38, 137, 12);
+    background-color: rgb(38, 137, 12);
 }
 
 .answer-text:hover {
@@ -56,8 +82,10 @@
 }
 
 .answer-text.disabled {
-    box-shadow: none;
+    /* box-shadow: none; */
     cursor: default;
+    opacity: 0.55;
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px !important;
 }
 
 .list-option {
@@ -68,14 +96,16 @@
     justify-content: center;
 }
 
-.correct {
+.answer-text.correct {
     background-color: rgb(7, 207, 0);
+    border-color: rgb(7, 207, 0);
     color: white;
-    box-shadow: 0 0 1px black;
+    opacity: 1 !important;
 }
 
-.wrong {
+.answer-text.wrong {
     background-color: rgb(233, 0, 0);
+    border-color: rgb(233, 0, 0);
     color: white;
-    box-shadow: 0 0 1px black;
+    opacity: 1 !important;
 }
