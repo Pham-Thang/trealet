@@ -27,7 +27,7 @@ class Answer extends Component {
         this.setState({ isLoading: false });
 
         setTimeout(() => {
-          toast.success("Chính xác ! Chúc mừng bạn", {
+          toast.success("Chính xác! Chúc mừng bạn", {
             position: "top-center",
             autoClose: 3000,
             theme: "colored",
@@ -42,7 +42,7 @@ class Answer extends Component {
         answer.isWrong = true;
         this.setState({ isLoading: false });
         setTimeout(() => {
-          toast.error("Sai rồi ! Hãy cố lên nhé", {
+          toast.error("Sai rồi! Hãy cố lên nhé", {
             position: "top-center",
             autoClose: 3000,
             theme: "colored",
@@ -70,15 +70,15 @@ class Answer extends Component {
       </div>
     ));
     return (
-      <div className="q-answer">
-        {" "}
-        {this.props.data.file ? (
-          <div className="img-question flex-c-m">
-            <img className="img-q" src={this.props.data.file} />{" "}
+      <div className="step--quiz">
+        {this.props.data.file && (
+          <div className="step--quiz__img flex-c-m">
+            <img className="img-q" src={this.props.data.file} />
           </div>
-        ) : undefined}{" "}
-        <div className="question"> {this.props.data.question} </div>{" "}
-        <div className="list-option"> {listItems} </div> <ToastContainer />
+        )}
+        <div className="step--quiz__question game-card game-title"> {this.props.data.question} </div>
+        <div className="step--quiz__options"> {listItems} </div> 
+        <ToastContainer />
       </div>
     );
   }

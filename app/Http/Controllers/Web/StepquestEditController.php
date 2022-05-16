@@ -190,7 +190,7 @@ class StepquestEditController extends Controller
             return $value;
         }, $request->get('items'));
 
-        $stepQuest = ['trealet' => array_merge($request->only('title', 'des'), ['items' => $items])];
+        $stepQuest = ['trealet' => array_merge($request->only('title', 'des', 'minScore', 'gift'), ['items' => $items])];
         DB::insert(
             'insert into au_trealets(id_str, user_id, title, type, json) value(UUID_SHORT(), ?, ?, ?, ?)',
             [

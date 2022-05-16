@@ -1,59 +1,89 @@
+// import { Button } from "react-bootstrap";
 import axios from "axios";
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import Button from "../../common/button/index.js";
+import Loader from "../../common/loader/index";
 import Game from "../../game/Game";
-import { FaAngleLeft } from "react-icons/fa";
-import BtnBack from "./BtnBack";
 import "./GameIntro.css";
+
 class GameIntro extends Component {
   constructor(props) {
     super(props);
     this.state = {
       game: undefined,
       showGameDetail: false,
+      musicStatus: true,
+      loading: true
     };
   }
-  componentDidMount() {
-    this.getProductData();
-  }
-  getProductData() {
+
+  loadGameData = () => {
     if (this.props.match && this.props.match.params) {
       let id = this.props.match.params.id;
       axios
-        .get(`http://127.0.0.1:8000/api/trealets/stepquest/${id}`)
+        .get(`${window.origin}/api/trealets/stepquest/${id}`)
         .then((response) => {
           var data = response.data?.data?.json?.trealet;
-          this.setState({ game: data });
-          this.handleClick()
+          // setTimeout(() => {
+          //   this.setState({ game: data, loading: false });
+          // }, 2000);
+          this.setState({ game: data, loading: false });
         });
     }
   }
-
-  handleClick = () => {
+  startGame = () => {
     this.setState({
       showGameDetail: true,
     });
   };
+  quit = () => {
+    location.replace(`/`);
+  }
+  changeMusicStatus = () => {
+    this.setState({
+      musicStatus: !this.state.musicStatus,
+    });
+  }
+
+  componentDidMount() {
+    this.loadGameData();
+  }
+  
   render() {
     return (
-      <div className="flex-1 introgames">
-        {" "}
-        {!this.state.showGameDetail ? (
-          <div className="game-detail w-full">
-            <div className="d-flex title">
-              <BtnBack />
-              <div> {this.state.game ? this.state.game.title : ""} </div>{" "}
-            </div>{" "}
-            <div className="description">
-              {" "}
-              {this.state.game ? this.state.game.des : ""}{" "}
-            </div>{" "}
-            <Button onClick={this.handleClick}> Bắt đầu </Button>{" "}
-          </div>
-        ) : (
-          <Game data={this.state.game} />
-        )}{" "}
+      <div className="flex-1 game-container">
+        {
+          this.state.loading 
+          ? (
+            <Loader />
+          )
+          : this.state.showGameDetail 
+            ? <Game data={this.state.game} musicStatus={this.state.musicStatus} />
+            : <div className="game-intro w-full">
+                <div className="game-intro__info">
+                  <div className="info__title game-card">
+                    {this.state.game?.title || ""}
+                  </div>
+                  <div class="info__description game-card">
+                    {this.state.game?.des || ""}
+                  </div>
+                </div>
+                <div className="game-intro__options">
+                  <div className="option__row option__sound">
+                    <div className="option__row__title">
+                      Nhạc nền:
+                    </div>
+                    <div className="option__row__value" onClick={this.changeMusicStatus}>
+                      {`<   ${this.state.musicStatus ? "Bật" : "Tắt"}   >`}
+                    </div>
+                  </div>
+                </div>
+                <div className="game-intro__footer">
+                  <Button onClick={this.startGame}> Bắt đầu </Button>
+                  <Button onClick={this.quit} className="secondary"> Thoát </Button>
+                </div>
+              </div>
+        }
       </div>
     );
   }

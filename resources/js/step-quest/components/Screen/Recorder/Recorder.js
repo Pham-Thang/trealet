@@ -1,8 +1,8 @@
+// import AudioReactRecorder, { RecordState } from "audio-react-recorder";
+import "audio-react-recorder/dist/index.css";
 import React from "react";
 import "./Recorder.css";
-import AudioReactRecorder, { RecordState } from "audio-react-recorder";
-import "audio-react-recorder/dist/index.css";
-import { Button } from "react-bootstrap";
+// import { Button } from "react-bootstrap";
 
 class Recorder extends React.Component {
   constructor(props) {
@@ -15,13 +15,13 @@ class Recorder extends React.Component {
   render() {
     var src = `${window.location.origin}/input-audio?tr_id=${this.state.tr_id}&nij=1`;
     return (
-      <div>
-        <div className="mt-4 mb-4 Recoder_title">{this.props.data.hint}</div>
-        <div>
+      <div className="step--recorder">
+        <div className="step--recorder__title game-card game-title">{this.props.data.hint}</div>
+        <div className="step--recorder__content">
           <iframe
-            style={{ position: "relative", height: "300px", width: "80%" }}
+            style={{ position: "relative", height: "340px", width: "90%", margin: "auto", backgroundColor: "#fff" }}
             src={src}
-            title="abc"
+            title="Ghi âm"
             frameBorder="0"
             allow="microphone"
           />

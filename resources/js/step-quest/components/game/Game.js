@@ -5,6 +5,7 @@ import { Dropdown } from "react-bootstrap";
 import { FaBars, FaStar } from "react-icons/fa";
 import ContentGame from "../Home/ContentGame";
 import "./Game.css";
+
 class Game extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +18,8 @@ class Game extends Component {
       interval: null,
       bonusScore: 0,
       showBonusScore: false,
-      bonusScorePositionBottom: "50%"
+      bonusScorePositionBottom: "50%",
+      musicStatus: props.musicStatus
     };
     this.step = 0;
     this.isCheck = false;
@@ -35,6 +37,19 @@ class Game extends Component {
   componentDidMount() {
     this.setState({ sumStep: this.props.data.items.length });
     this.startTime(this.props.data.items[0].time, 0);
+  }
+
+  changemusicStatus = () => {
+    const me = this
+    const audioEle = document.getElementById("backgroundMusic")
+    const currentState = me.state.musicStatus
+
+    if (currentState) {
+      audioEle?.pause()
+    } else {
+      audioEle?.play()
+    }
+    me.setState({musicStatus: !currentState})
   }
 
   startTime(timeOfQuestion, i) {
@@ -134,16 +149,21 @@ class Game extends Component {
   };
 
   render() {
+    const me = this
     const progressStep = (this.state.currentStep * 100) / this.state.sumStep;
     return (
       <div className="h-100 Game">
         <div className="headerGame">
+          <audio id="backgroundMusic" autoPlay={this.props.musicStatus}>
+            <source src="../../assets/audio/wemida-waiting-for-the-end-quizzing-voting-background-music-16575.mp3" type="audio/mp3" />
+          </audio>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
               <FaBars />
             </Dropdown.Toggle>{" "}
             <Dropdown.Menu>
-              <Dropdown.Item href="/"> Thoát Game </Dropdown.Item>{" "}
+              <Dropdown.Item onClick={me.changemusicStatus}> Nhạc: {me.state.musicStatus ? " bật" : " tắt"} </Dropdown.Item>
+              <Dropdown.Item href="/"> Thoát Game </Dropdown.Item>
             </Dropdown.Menu>{" "}
           </Dropdown>{" "}
           <Progress percent={progressStep} />{" "}
@@ -166,6 +186,8 @@ class Game extends Component {
           <ContentGame
             score={{score: this.state.score}}
             data={this.props.data.items}
+            minScore={this.props.data.minScore} 
+            gift={this.props.data.gift}
             handleScoreScreen={this.handleScore}
             isCheckAnswerQuestion={this.checkAnswer}
             clickPrevious={this.handleStepPrevous}

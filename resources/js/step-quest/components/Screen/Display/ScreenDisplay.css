@@ -1,8 +1,8 @@
-.ScrDisplay {
+.step--display {
     overflow: auto;
 }
 
-.img_Game {
+.step--display__media {
     padding-bottom: 16px;
     text-align: center;
     justify-content: center;
@@ -10,28 +10,39 @@
     display: flex;
     flex-wrap: wrap;
 }
-.display-img {
+
+.step--display__media .media--img {
     border-radius: 10px;
     margin-top: 16px;
     max-width: 90%;
 }
-.display-youtube{
+.step--display__media .media--youtube{
     margin-top: 16px;
     max-width: 90%;
 }
 
-.des {
-    font-size: 18px;
-    color: black;
-    margin: auto;
-    max-width: 90%;
+.step--display__title {
+    margin: 12px;
+    width: calc(100% - 2 * 12px);
+    height: auto;
+    text-align: center;
 }
 
-.des p {
+.step--display__des {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: normal;
+    color: black;
+    margin: 12px;
+    width: calc(100% - 2 * 12px);
+    text-align: center;
+}
+
+.step--display__des p {
     text-align: justify;
 }
 
-.name {
+.step--display__name {
     margin: auto;
     font-weight: 500;
 }

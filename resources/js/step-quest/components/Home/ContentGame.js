@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+import Button from "../common/button/index.js";
 import ScreenDisplay from "../Screen/Display/ScreenDisplay";
 import ScreenPicture from "../Screen/Picture/Picture";
 import ScreenQr from "../Screen/Qr/ScreenQr";
@@ -8,7 +8,7 @@ import Answer from "../Screen/Question/Answer";
 import Recorder from "../Screen/Recorder/Recorder";
 import ScreenResult from "../Screen/Result/ScreenResult";
 // import App from "../../App";
-import "./Game.css";
+import "./ContentGame.css";
 class ContentGame extends Component {
   constructor(props) {
     super(props);
@@ -78,27 +78,25 @@ class ContentGame extends Component {
       hienthi = <ScreenPicture data={p} />;
     }
     return (
-      <div className="box">
+      <div className="content-game-container">
         {this.state.result ? (
-          <ScreenResult data={this.props.score} />
+          <ScreenResult data={this.props.score} minScore={this.props.minScore} gift={this.props.gift} />
         ) : (
-          <div className="h-100 d-flex flex-column">
-            {" "}
-            <div className="flex-1"> {hienthi} </div>{" "}
-            <div className="button">
-              {" "}
-              {this.currentIndex == 0 ? undefined : (
-                <Button onClick={this.onClickPrev} className="btn-reverse"> Quay lại </Button>
+          <div className="h-full d-flex flex-column">
+            <div className="flex-1"> {hienthi} </div>
+            <div className="content-game__footer">
+              {this.currentIndex != 0 && (
+                <Button className="flex-1 secondary" onClick={this.onClickPrev}> Quay lại </Button>
               )}
-              {this.currentIndex < this.state.product.length - 1 ? (
-                <Button onClick={this.onClickNext}> Tiếp tục </Button>
-              ) : undefined}{" "}
-              {this.currentIndex == this.state.product.length - 1 ? (
-                <Button onClick={this.showResult}> Tiếp tục </Button>
-              ) : undefined}
-            </div>{" "}
+              {this.currentIndex < this.state.product.length - 1 && (
+                <Button className="flex-1" onClick={this.onClickNext}> Tiếp tục </Button>
+              )}
+              {this.currentIndex == this.state.product.length - 1 && (
+                <Button className="flex-1" onClick={this.showResult}> Tiếp tục </Button>
+              )}
+            </div>
           </div>
-        )}{" "}
+        )}
       </div>
     );
   }

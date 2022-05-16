@@ -12,20 +12,20 @@ class ScreenQr extends Component {
   render() {
     var src = `${window.location.origin}/input-qr?tr_id=${this.state.tr_id}&nij=5`;
     return (
-      <div>
-        <div className="Qr_Title mt-4">
-          <p> {this.props.data.hint} </p>{" "}
-        </div>{" "}
-        <div>
+      <div class="step--qr">
+        <div className="step--qr__title game-card game-title">
+          {this.props.data.hint}
+        </div>
+        <div className="step--qr__content">
           <iframe
-            style={{ position: "relative", height: "300px", width: "80%" }}
+            style={{ position: "relative", height: "340px", width: "90%", margin: "auto" }}
             src={src}
-            title="abc"
+            title="Quét mã QR"
             frameBorder="0"
             allow="microphone"
             className="iframe"
           />
-        </div>{" "}
+        </div>
       </div>
     );
   }

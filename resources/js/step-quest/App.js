@@ -1,10 +1,10 @@
-import './App.css';
-import {
-  BrowserRouter as Router, Link, Route, Switch
-} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ListMuseum from './components/Museum/ListMuseum';
+import {
+  BrowserRouter as Router, Route, Switch
+} from "react-router-dom";
+import './App.css';
 import GameIntro from './components/Screen/AboutGame/GameIntro';
+
 function App() {
   document.getElementsByClassName("content-page")
   return (
@@ -17,7 +17,7 @@ function App() {
           {/* <Route path="/stepquest/game/:id" component = {GameIntro} /> */}
           {/* <Route path="/stepquest" component = {ListMuseum} /> */}
         </Switch>
-    </Router>
+      </Router>
     </div>
   );
 }

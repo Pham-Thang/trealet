@@ -1,3 +1,11 @@
+.step--recorder {
+
+}
+
+.step--recorder__content {
+    display: flex;
+}
+
 .audio-react-recorder__canvas {
     width: 80%;
     border-radius: 8px;
@@ -9,10 +17,10 @@
     margin-bottom: 24px;
     overflow: hidden;
 }
-.Recoder_title{
-    font-weight: 500;
-    font-size: 20px;
-    padding: 0 20px;
+.step--recorder__title{
+    margin: 16px;
+    width: calc(100% - 2 * 16px);
+    text-align: center;
 }
 .recording {
     position: relative;

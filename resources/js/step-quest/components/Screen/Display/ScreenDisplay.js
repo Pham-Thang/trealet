@@ -7,20 +7,21 @@ class ScreenDisplay extends Component {
     this.state = {};
     console.log(this.props);
   }
+  
   render() {
     return (
-      <div className="ScrDisplay">
-        <div className="img_Game">
+      <div className="step--display">
+        <div className="step--display__media">
           {this.props.data.youtube && 
-            (<iframe className="display-youtube my-box-shadow" width={350} height={200} src={this.props.data.youtube} frameBorder="0" allowFullScreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>) }
+            (<iframe className="media--youtube my-box-shadow" width={350} height={200} src={this.props.data.youtube} frameBorder="0" allowFullScreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>) }
           {this.props.data.file && 
-            (<img className = "display-img my-box-shadow" src= {this.props.data.file } />)}
+            (<img className = "media--img my-box-shadow" src= {this.props.data.file } />)}
         </div>
-        <div className="name">
-          <h4>{this.props.data.title}</h4>
+        <div className="step--display__title game-card game-title">
+          {this.props.data.title}
         </div>
-        <div className="des">
-          <p>{this.props.data.description}</p>
+        <div className="step--display__des game-card">
+          {this.props.data.description}
         </div>
       </div>
     );
