@@ -11,8 +11,7 @@ class ScreenResult extends Component{
         location.reload();
     }
     goToHome = () => {
-        history.replace(`/`);
-        location.reload();
+        location.replace(`/`);
     }
 
 
@@ -24,7 +23,7 @@ class ScreenResult extends Component{
                 <div className='game-result__info game-card'>
                     <div className = "result-title">
                         <h5>Chúc mừng bạn đã hoàn thành trò chơi</h5>
-                        <h5>Số điểm của bạn là: {this.props.data.score || "--"}</h5>
+                        <h5>Số điểm của bạn là: {this.props.data.score || 0}</h5>
                     </div>
                     {
                         this.props.data.score >= (this.props.minScore || 0) && 
@@ -40,7 +39,7 @@ class ScreenResult extends Component{
                     <img className = "result_img_img" src= 'https://i.pinimg.com/originals/ab/c8/05/abc805563d75437aa698b7c0df476302.gif' alt={"img"} />
                 </div>
                 <div className = "result-button">
-                    <Button onClick={() => this.replay()} className="btn-reverse flex-1">
+                    <Button onClick={() => this.replay()} className="secondary flex-1">
                         Chơi lại
                     </Button>
                     <Button onClick={me.goToHome} className="flex-1">Trang chủ</Button>

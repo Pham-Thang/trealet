@@ -42,6 +42,10 @@ class InputController extends Controller
 		$type = 'audio';
 		
 		$output = request()->server('DOCUMENT_ROOT').'upload/trealet-data/'.$user_id.'_'.$tr_id.'_'.$oid.$ext;
+		// if (!str_ends_with($output, '/')) {
+		// 	$output = $output."/"
+		// }
+		// $output = $output.'upload/trealet-data/'.$user_id.'_'.$tr_id.'_'.$oid.$ext;
 		$w_output = 'upload/trealet-data/'.$user_id.'_'.$tr_id.'_'.$oid.$ext;
 		move_uploaded_file($from, $output);
 		$affected = UserToTrealet::insert(
@@ -105,8 +109,8 @@ class InputController extends Controller
 		$oid  = uniqid();
 		$type = 'picture';
 		
-		$output_png = request()->server('DOCUMENT_ROOT').'upload/trealet-data/'.$user_id.'_'.$tr_id.'_'.$oid.'.png';
-		$output_jpg = request()->server('DOCUMENT_ROOT').'upload/trealet-data/'.$user_id.'_'.$tr_id.'_'.$oid.'.jpg';
+		$output_png = request()->server('DOCUMENT_ROOT').'/upload/trealet-data/'.$user_id.'_'.$tr_id.'_'.$oid.'.png';
+		$output_jpg = request()->server('DOCUMENT_ROOT').'/upload/trealet-data/'.$user_id.'_'.$tr_id.'_'.$oid.'.jpg';
 		
 		move_uploaded_file($from, $output_png);
 		$this->PNG2JPG($output_png, $output_jpg);

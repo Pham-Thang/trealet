@@ -9,24 +9,25 @@ import "./Game.css";
 class Game extends Component {
   constructor(props) {
     super(props);
+    let self = this
     this.state = {
       score: 0,
-      currentStep: 0,
-      sumStep: 1,
+      currentIndex: 0,
+      sumStep: props.data.items?.length || 0,
       width: 100,
       backgroundColor: "green",
       interval: null,
       bonusScore: 0,
       showBonusScore: false,
+      isShowRemainingTime: true,
       bonusScorePositionBottom: "50%",
       musicStatus: props.musicStatus
     };
-    this.step = 0;
-    this.isCheck = false;
+
+    // remaining time
     this.timeLeft = 10;
     this.allTime = 10;
     this.interval = undefined;
-    let self = this
     setInterval(function() {
       if (localStorage.getItem("current")) {
         clearInterval(self.interval)
@@ -35,11 +36,10 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    this.setState({ sumStep: this.props.data.items.length });
-    this.startTime(this.props.data.items[0].time, 0);
+    this.startTime(this.props.data.items[this.state.currentIndex]);
   }
 
-  changemusicStatus = () => {
+  changeMusicStatus = () => {
     const me = this
     const audioEle = document.getElementById("backgroundMusic")
     const currentState = me.state.musicStatus
@@ -52,35 +52,46 @@ class Game extends Component {
     me.setState({musicStatus: !currentState})
   }
 
-  startTime(timeOfQuestion, i) {
+  startTime(step) {
     var me = this;
-    this.setState({
+
+    me.setState({
       width: 100,
       backgroundColor: "green",
     });
-    this.timeLeft = timeOfQuestion;
-    this.allTime = timeOfQuestion;
-    clearInterval(this.interval);
-    this.interval = setInterval(() => {
-      me.timeLeft = me.timeLeft - 0.1;
-      var width = (me.timeLeft * 100) / me.allTime;
-      if (me.timeLeft < 0) {
-        this.props.data.items[i].fulltime = true;
-      }
+    me.timeLeft = step.time;
+    me.allTime = step.time;
+    step.isTimeUp = false
+    clearInterval(me.interval);
+    if (!step.isUnlimitedTime && !step.isChecked) {
       me.setState({
-        width: width,
-        backgroundColor: width > 50 
-          ? "green" 
-          : width > 25
-            ? "orange"
-            : "red",
-      });
-    }, 100);
+        isShowRemainingTime: true
+      })
+      me.interval = setInterval(() => {
+        me.timeLeft = me.timeLeft - 0.1;
+        var width = (me.timeLeft * 100) / me.allTime;
+        if (me.timeLeft < 0) {
+          step.isTimeUp = true
+        }
+        me.setState({
+          width: width,
+          backgroundColor: width > 50 
+            ? "green" 
+            : width > 25
+              ? "orange"
+              : "red",
+        });
+      }, 100);
+    } else {
+      me.setState({
+        isShowRemainingTime: false
+      })
+    }
   }
 
-  handleScore = (data) => {
+  handleScore = (increaseScore) => {
     var currentScore = this.state.score;
-    this.setState({ score: currentScore + data, showBonusScore: true, bonusScore: data, bonusScorePositionBottom: "50%" });
+    this.setState({ score: currentScore + increaseScore, showBonusScore: true, bonusScore: increaseScore, bonusScorePositionBottom: "50%" });
 
     
     setTimeout(() => {
@@ -90,67 +101,65 @@ class Game extends Component {
       }, 500)
     }, 100);
   };
-  handleStepNext = (data) => {
-    // màn tiếp theo
-    if (this.props.data.items[data] && !this.props.data.items[data].isCheck) {
-      this.isCheck = false;
-      this.props.data.items[data].isCheck = true;
-      // this.startTime(this.props.data.items[data].time, data);
-      this.startTime(parseInt(this.props.data.items[data].time), data);
-    } else {
-      this.isCheck = true;
+
+  checkStepEnable = (step) => {
+    return step && (step.isUnlimitedTime || (!step.isTimeUp && !step.isChecked)) 
+  }
+
+  handleChangeStep = (nextIndexStep) => {
+    if (nextIndexStep < 0 || nextIndexStep >= this.state.sumStep) {
+      return;
     }
 
-    this.step++;
-
-    if (this.step > this.state.currentStep) {
-      var currentScore = this.state.score;
-      let newScore = currentScore
-      let prevQuestion = this.props.data.items[data - 1]
-      if (prevQuestion && !prevQuestion.fulltime) {
-        let anwser = localStorage.getItem("current")
-        console.log(anwser, prevQuestion)
-        if (prevQuestion.type == "QR") {
-          if(anwser == prevQuestion.code) {
-            newScore =
-              Number(currentScore) +
-              Number(prevQuestion.score);  
-          }
-        }else if (prevQuestion.type == "Audio" || prevQuestion.type == "Picture") {
-          if(anwser == 1) {
-            newScore =
-              Number(currentScore) +
-              Number(prevQuestion.score);
-          }
-        }else if (prevQuestion.type == "Display") {
-          newScore =
-            Number(currentScore) +
-            Number(prevQuestion.score);
+    const nextStep = this.props.data.items[nextIndexStep]
+    let currentStep = this.props.data.items[this.state.currentIndex]
+    let increaseScore = null
+    
+    if (this.checkStepEnable()) {
+      let answer = localStorage.getItem("current")
+      
+      if (prevQuestion.type == "QR") {
+        if(answer == prevQuestion.code) {
+          increaseScore = currentScore + Number(prevQuestion.score);  
         }
-      }
-      localStorage.removeItem("current")
-
-      this.setState({
-        currentStep: this.step,
-      });
-      if (newScore !== currentScore) {
-        this.handleScore(newScore - currentScore)
+      } else if (prevQuestion.type == "Audio" || prevQuestion.type == "Picture") {
+        if(answer == 1) {
+          increaseScore = currentScore + Number(prevQuestion.score);
+        }
+      } else if (prevQuestion.type == "Display") {
+        increaseScore = currentScore + Number(prevQuestion.score);
       }
     }
+    if (!(currentStep.isUnlimitedTime && currentStep.type === "Quizz")) {
+      currentStep.isChecked = true
+    }
+    localStorage.removeItem("current")
+    this.startTime(nextStep);
+    this.setState({
+      currentIndex: nextIndexStep,
+    });
+    if (increaseScore) {
+      this.handleScore(increaseScore)
+    }
+  }
+  
+  handleStepNext = () => {
+    this.handleChangeStep(this.state.currentIndex + 1)
   };
-  handleStepPrevous = () => {
-    this.isCheck = true;
-    this.step--;
+  
+  handleStepPrevious = () => {
+    this.handleChangeStep(this.state.currentIndex - 1)
   };
 
   checkAnswer = () => {
-    this.isCheck = true;
+    this.props.data.items[this.state.currentIndex].isChecked = true;
     clearInterval(this.interval);
   };
 
   render() {
     const me = this
-    const progressStep = (this.state.currentStep * 100) / this.state.sumStep;
+    const progressStep = (this.state.currentIndex * 100) / this.state.sumStep;
+    
     return (
       <div className="h-100 Game">
         <div className="headerGame">
@@ -162,7 +171,7 @@ class Game extends Component {
               <FaBars />
             </Dropdown.Toggle>{" "}
             <Dropdown.Menu>
-              <Dropdown.Item onClick={me.changemusicStatus}> Nhạc: {me.state.musicStatus ? " bật" : " tắt"} </Dropdown.Item>
+              <Dropdown.Item onClick={me.changeMusicStatus}> Nhạc: {me.state.musicStatus ? " bật" : " tắt"} </Dropdown.Item>
               <Dropdown.Item href="/"> Thoát Game </Dropdown.Item>
             </Dropdown.Menu>{" "}
           </Dropdown>{" "}
@@ -171,8 +180,7 @@ class Game extends Component {
           <FaStar className="star" />
         </div>{" "}
         <div className="time">
-          {" "}
-          {!this.isCheck ? (
+          {this.state.isShowRemainingTime ? (
             <div
               className="timeleft"
               style={{
@@ -180,20 +188,21 @@ class Game extends Component {
                 background: this.state.backgroundColor,
               }}
             ></div>
-          ) : null}{" "}
-        </div>{" "}
+          ) : ''}
+        </div>
         <div className="content">
           <ContentGame
-            score={{score: this.state.score}}
-            data={this.props.data.items}
+            steps={this.props.data.items}
+            score={this.state.score}
             minScore={this.props.data.minScore} 
             gift={this.props.data.gift}
-            handleScoreScreen={this.handleScore}
-            isCheckAnswerQuestion={this.checkAnswer}
-            clickPrevious={this.handleStepPrevous}
+            currentIndex={this.state.currentIndex}
+            handleScore={this.handleScore}
+            checkAnswer={this.checkAnswer}
+            clickPrevious={this.handleStepPrevious}
             clickNext={this.handleStepNext}
-          />{" "}
-        </div>{" "}
+          />
+        </div>
         {
           this.state.showBonusScore ? 
           <div className="animation-score" id="bonus-score" style={{bottom: this.state.bonusScorePositionBottom}}>

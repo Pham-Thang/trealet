@@ -1,6 +1,6 @@
 import './index.scss';
 
-export default function (props) {
+export default function button (props) {
   const time = 300 // ms
   const delayOnClick = 200 // ms
   const animateButton = function(e) {

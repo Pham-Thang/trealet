@@ -94,9 +94,9 @@
                                         </ul>
                                         <div class="w-100">
                                             <div class="custom-control custom-radio">
-                                                <label class="upload-field" for="file-display">Upload</label>
-                                                <input type="file" class="form-control d-none" id="file-display" />
-                                                <img alt="" id="picture-display" style="width: 100%;height:100%">
+                                                <label class="upload-field upload-field-label" for="upload-field">Upload</label>
+                                                <input type="file" class="form-control d-none upload-field-input" id="upload-field" />
+                                                <img alt="" class="upload-field-preview" id="file-preview" style="width: 100%;height:100%">
                                             </div>
                                         </div>
                                     </div>
@@ -104,14 +104,6 @@
                                 <div class="p-2">
                                     <div class="d-flex align-items-center">
                                         <label style="min-width: 60px;text-align:center" for="">Youtube</label><input type="text" class="youtube form-control mb-2 ml-2">
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2">
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -124,14 +116,6 @@
                                     <div class="d-flex align-items-center">
                                         <label style="min-width: 60px;text-align:center" for="">Mã</label><input type="text" class="code form-control mb-2 ml-2">
                                     </div>
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Thời gian</label><input type="number" class="time form-control mb-2 ml-2">
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="wrap-type d-none" id="quizz">
@@ -142,9 +126,9 @@
                                         </ul>
                                         <div class="w-100">
                                             <div class="custom-control custom-radio">
-                                                <label class="upload-field" for="file-quizz">Upload</label>
-                                                <input type="file" class="form-control d-none" id="file-quizz" />
-                                                <img alt="" id="picture-quizz" style="width: 100%;height:100%">
+                                                <label class="upload-field upload-field-label" for="upload-field">Upload</label>
+                                                <input type="file" class="form-control d-none upload-field-input" id="upload-field" />
+                                                <img class="upload-field-preview" alt="" id="file-preview" style="width: 100%;height:100%">
                                             </div>
                                         </div>
                                     </div>
@@ -155,33 +139,44 @@
                                             <label style="min-width: 60px;text-align:center" for="">Câu hỏi</label>
                                             <input type="text" placeholder="Question" class="form-control mb-2" name="question">
                                         </div>
-                                        <div class="form-check mb-1 answer">
-                                            <input type="radio" class="form-check-input" value="1" name="answer">
+                                        <div class="form-check mb-1 answer d-flex align-items-center">
+                                            <input type="radio" style="width: 16px; height: 16px;" class="form-check-input mr-2" value="1" name="answer">
                                             <input type="text" name="textAnser1" id="" class="answerText form-control">
+                                            <button class="btn btn-secondary btn-circle ml-2" onclick="deleteAnswer(event)">
+                                                Xóa
+                                            </button>
                                         </div>
-                                        <div class="form-check mb-1 answer">
-                                            <input type="radio" class="form-check-input" value="2" name="answer">
+                                        <div class="form-check mb-1 answer d-flex align-items-center">
+                                            <input type="radio" style="width: 16px; height: 16px;" class="form-check-input mr-2" value="2" name="answer">
                                             <input type="text" name="textAnser2" id="" class="answerText form-control">
+                                            <button class="btn btn-secondary btn-circle ml-2" onclick="deleteAnswer(event)">
+                                                Xóa
+                                            </button>
                                         </div>
-                                        <div class="form-check mb-1 answer">
-                                            <input type="radio" class="form-check-input" value="3" name="answer">
+                                        <div class="form-check mb-1 answer d-flex align-items-center">
+                                            <input type="radio" style="width: 16px; height: 16px;" class="form-check-input mr-2" value="3" name="answer">
                                             <input type="text" name="textAnser3" id="" class="answerText form-control">
+                                            <button class="btn btn-secondary btn-circle ml-2" onclick="deleteAnswer(event)">
+                                                Xóa
+                                            </button>
+                                        </div>
+                                        <div class="form-check mb-1 answer d-flex align-items-center">
+                                            <input type="radio" style="width: 16px; height: 16px;" class="form-check-input mr-2" value="4" name="answer">
+                                            <input type="text" name="textAnser4" id="" class="answerText form-control">
+                                            <button class="btn btn-secondary btn-circle ml-2" onclick="deleteAnswer(event)">
+                                                Xóa
+                                            </button>
                                         </div>
                                         <div class="form-check mb-1 answer">
-                                            <input type="radio" class="form-check-input" value="4" name="answer">
-                                            <input type="text" name="textAnser4" id="" class="answerText form-control">
+                                            <div class="add-answer" onclick="addAnswer(event)">
+                                                Thêm câu trả lời
+                                            </div>
                                         </div>
                                         <p class="text-danger error-answer d-none mb-0"></p>
                                     </div>
-                                </div>
-                                <div class="p-2">
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2">
-                                        </div>
+                                    <div class="d-flex align-items-center mt-3">
+                                        <label style="min-width: 60px;text-align:center" for="">Giải thích</label>
+                                        <input type="text" class="hint form-control mb-2 ml-2">
                                     </div>
                                 </div>
                             </div>
@@ -192,16 +187,6 @@
                                         <label style="min-width: 60px;text-align:center" for="">Gợi ý</label><input type="text" class="suggest_audio form-control mb-2 ml-2">
                                     </div>
                                 </div>
-                                <div class="p-2">
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2">
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="wrap-type d-none" id="picture">
                                 <h4 class="text-center">Chụp Hình</h4>
@@ -210,14 +195,19 @@
                                         <label style="min-width: 60px;text-align:center" for="">Gợi ý</label><input type="text" class="suggest_picture form-control mb-2 ml-2">
                                     </div>
                                 </div>
-                                <div class="p-2">
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
+                            </div>
+                            <div class="p-2">
+                                <div class="d-flex align-items-center">
+                                    <label style="min-width: 60px;text-align:center" for="">Điểm</label><input type="number" class="score form-control mb-2 ml-2">
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <label style="min-width: 60px;text-align:center" for="">Thời Gian</label>
+                                    <div>
+                                        <div class="d-flex py-1 pl-2">
+                                            <input type="checkbox" class="form-control isUnlimitedTime" onchange="onChangeTimeLimit(event)">
+                                            <span class="pl-2" style="line-height: 16px;">Không giới hạn thời gian</span>
                                         </div>
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Thời Gian</label><input type="number" class="time form-control mb-2 ml-2">
-                                        </div>
+                                        <input type="number" class="time form-control mb-2 ml-2">
                                     </div>
                                 </div>
                             </div>
@@ -362,6 +352,37 @@
         }).catch(() => {})
     }
 
+    function onChangeTimeLimit(e) {
+        const timeInputEle = e.target.parentElement.parentElement.querySelector(".time")
+
+        if (e.target.checked) {
+            timeInputEle.value = ''
+            timeInputEle.setAttribute("disabled", true)
+        } else {
+            timeInputEle.removeAttribute("disabled")
+        }
+    }
+
+    function addAnswer(e) {
+        const addAnswerContainerEle = e.target.parentElement
+
+        $(
+            `
+            <div class="form-check mb-1 answer d-flex align-items-center">
+                <input type="radio" style="width: 16px; height: 16px;" class="form-check-input mr-2" value="1" name="answer">
+                <input type="text" name="textAnswer" id="" class="answerText form-control">
+                <button class="btn btn-secondary btn-circle ml-2" onclick="deleteAnswer(event)">
+                    Xóa
+                </button>
+            </div>
+            `
+        ).insertBefore(addAnswerContainerEle)
+    }
+
+    function deleteAnswer(e) {
+        e.target.parentElement.remove()
+    }
+
     $(document).on('click', '#step-number #new-step', function(e) {
         e.preventDefault();
         const currentStepsText = $('#step-number li:not(:first-child):not(:last-child)').length;
@@ -400,6 +421,10 @@
         element.find('.answer-box').find('.error-answer').addClass('d-none').text('');
         element.find('#picture-display').removeAttr('src');
         element.find('#picture-quizz').removeAttr('src');
+        const newIdUploadField = Math.random().toString()
+        element.find('.upload-field-input').attr('id', newIdUploadField)
+        element.find('.upload-field-label').attr('for', newIdUploadField)
+        element.find('.upload-field-preview').attr('id', newIdUploadField + '-preview')
         element.appendTo('#steps');
         $.ajax({
             url: "{{ route('stepquest-edit.tree-folder') }}",
@@ -419,11 +444,8 @@
             cursor: "grabbing",
         }).disableSelection();
 
-        $(document).on('change', `#step${currentSteps + 1} #file-quizz`, async function() {
-            $(`#step${currentSteps + 1} #picture-quizz`).attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
-        });
-        $(document).on('change', `#step${currentSteps + 1} #file-display`, async function() {
-            $(`#step${currentSteps + 1} #picture-display`).attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
+        $(document).on('change', `#step${currentSteps + 1} .upload-field-input`, async function() {
+            $(`#step${currentSteps + 1} .upload-field-preview`).attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
         });
     });
 
@@ -450,14 +472,9 @@
         $(this).closest('.answer-box').find('.error-answer').addClass('d-none').text('');
     });
 
-    $(document).on('change', '#step1 #file-quizz', async function() {
+    $(document).on('change', '#step1 .upload-field-input', async function() {
         console.log(URL.createObjectURL(this.files[this.files.length - 1]));
-        $('#step1 #picture-quizz').attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
-    });
-
-    $(document).on('change', '#step1 #file-display', async function() {
-        console.log(URL.createObjectURL(this.files[this.files.length - 1]));
-        $('#step1 #picture-display').attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
+        $('#step1 .upload-field-preview').attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
     });
 
     function convertFileToBase64(file) {
@@ -502,16 +519,19 @@
                         break;
                     }
                     case 'quizz': {
-                        let answer = $(step).find('input[name=answer]').filter(':checked').first().val();
+                        const answersEle = $(step).find('input[name=answer]').get().forEach((ele, indexAnswer) => {
+                            ele.value = (indexAnswer + 1) + '' 
+                        })
+                        const answer = $(step).find('input[name=answer]').filter(':checked').first().val()
                         formData.append(`${index}`, $(step).find('#file-quizz')[0].files[0]);
                         formData.append(`items[${index}][index]`, index);
                         formData.append(`items[${index}][type]`, 'Quizz');
                         formData.append(`items[${index}][question]`, $(step).find('input[name=question]').val().replace(/"/g, "'"));
-                        formData.append(`items[${index}][answer]`, $(step).find('input[name=answer]').filter(':checked').first().val());
                         $(item).find('.answer .answerText').get().forEach(function(item, i) {
                             formData.append(`items[${index}][ListOption][${i}][id]`, i + 1);
                             formData.append(`items[${index}][ListOption][${i}][text]`, $(item).val().replace(/"/g, "'"));
                         });
+                        formData.append(`items[${index}][answer]`, answer);
                         if (answer) {
                             $(step).find('.answer-box').removeClass('border border-danger');
                             $(step).find('.answer-box').find('.error-answer').addClass('d-none').text('');
@@ -521,6 +541,7 @@
                             $(step).find('.answer-box').find('.error-answer').removeClass('d-none').text('Chọn câu trả lời');
                             validData = false;
                         }
+                        formData.append(`items[${index}][hint]`, ($(step).find('.hint').first().val() || '').replace(/"/g, "'"));
                         break;
                     }
                     case 'audio': {
@@ -537,8 +558,9 @@
                     }
                 }
                 formData.append(`items[${index}][key]`, Date.now());
-                formData.append(`items[${index}][score]`, $(step).find('.score').first().val().replace(/"/g, "'"));
-                formData.append(`items[${index}][time]`, $(step).find('.time').first().val().replace(/"/g, "'"));
+                formData.append(`items[${index}][score]`, $(step).parent().find('.score').first().val().replace(/"/g, "'"));
+                formData.append(`items[${index}][time]`, ($(step).parent().find('.time').first().val() || '0').replace(/"/g, "'"));
+                formData.append(`items[${index}][isUnlimitedTime]`, ($(step).parent().find('.isUnlimitedTime') || [])[0]?.checked || '');
                 $(step).find('#sortable1 li').each(function(i, el) {
                     formData.append(`items[${index}][image][${i}][id]`, Number($(el).attr('data-id')));
                     formData.append(`items[${index}][image][${i}][value]`, $(el).text().replace(/"/g, "'"));
@@ -846,9 +868,10 @@
         color: var(--primary);
     }
 
-    .question--toolbar button.btn-circle {
+    button.btn-circle {
         height: 32px;
         width: 32px;
+        min-width: 32px;
         border-radius: 50%;
         padding: 0;
         display: flex;
@@ -861,7 +884,27 @@
         min-width: 550px;
     }
 
+    .form-control[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+    }
 
+    .add-answer {
+        width: 100%;
+        height: 40px;
+        border: 1px dashed var(--dark);
+        color: var(--dark);
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .add-answer:hover {
+        color: var(--primary);
+        border-color: var(--primary);
+    }
 
 .h-full {
     height: 100%;

@@ -115,16 +115,6 @@
                                         <label style="min-width: 60px;text-align:center" for="">Youtube</label>
                                         <input type="text" class="youtube form-control mb-2 ml-2" @if($val['type']=='Display' ) value="{{ $val['youtube'] ??'' }}" @endif>
                                     </div>
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label>
-                                            <input type="number" class="score form-control mb-2 ml-2" @if($val['type']=='Display' ) value="{{ $val['score'] ??'' }}" @endif>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Thời Gian</label>
-                                            <input type="number" class="time form-control mb-2 ml-2" @if($val['type']=='Display' ) value="{{ $val['time'] ??'' }}" @endif>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="wrap-type @if($val['type'] == 'QR') d-block @else d-none @endif" id="qr">
@@ -137,16 +127,6 @@
                                     <div class="d-flex align-items-center">
                                         <label style="min-width: 60px;text-align:center" for="">Mã</label>
                                         <input type="text" class="code form-control mb-2 ml-2" @if($val['type']=='QR' ) value="{{ $val['code'] ??'' }}" @endif>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label>
-                                            <input type="number" class="score form-control mb-2 ml-2" @if($val['type']=='QR' ) value="{{ $val['score'] ??'' }}" @endif>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Thời gian</label>
-                                            <input type="number" class="time form-control mb-2 ml-2" @if($val['type']=='QR' ) value="{{ $val['time'] ??'' }}" @endif>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -176,35 +156,22 @@
                                             <label style="min-width: 60px;text-align:center" for="">Câu hỏi</label>
                                             <input type="text" placeholder="Question" class="form-control mb-2" name="question" @if($val['type']=='Quizz' ) value="{{ $val['question'] }}" @endif>
                                         </div>
-                                        <div class="form-check mb-1 answer">
-                                            <input type="radio" class="form-check-input" value="1" name="answer" @if($val['type']=='Quizz' && $val['answer']==1) checked @endif>
-                                            <input type="text" name="textAnser1" id="" class="answerText form-control" @if($val['type']=='Quizz' ) value="{{ $val['ListOption'][0]['text'] ??'' }}" @endif>
+                                        
+                                        @foreach($val['ListOption'] ?? [] as $indexAnswer => $answerItem)
+                                        <div class="form-check mb-1 answer d-flex align-items-center">
+                                            <input type="radio" style="width: 16px; height: 16px;" class="form-check-input mr-2" @if($val['type']=='Quizz' ) value="{{ $indexAnswer + 1 }}" @endif name="answer" @if($val['type']=='Quizz' && $val['answer']==$indexAnswer+1) checked @endif>
+                                            <input type="text" name="textAnser3" id="" class="answerText form-control" @if($val['type']=='Quizz' ) value="{{ $answerItem['text'] ??'' }}" @endif>
+                                            <button class="btn btn-secondary btn-circle ml-2" onclick="deleteAnswer(event)">
+                                                Xóa
+                                            </button>
                                         </div>
+                                        @endforeach
                                         <div class="form-check mb-1 answer">
-                                            <input type="radio" class="form-check-input" value="2" name="answer" @if($val['type']=='Quizz' && $val['answer']==2) checked @endif>
-                                            <input type="text" name="textAnser2" id="" class="answerText form-control" @if($val['type']=='Quizz' ) value="{{ $val['ListOption'][1]['text'] ??'' }}" @endif>
-                                        </div>
-                                        <div class="form-check mb-1 answer">
-                                            <input type="radio" class="form-check-input" value="3" name="answer" @if($val['type']=='Quizz' && $val['answer']==3) checked @endif>
-                                            <input type="text" name="textAnser3" id="" class="answerText form-control" @if($val['type']=='Quizz' ) value="{{ $val['ListOption'][2]['text'] ??'' }}" @endif>
-                                        </div>
-                                        <div class="form-check mb-1 answer">
-                                            <input type="radio" class="form-check-input" value="4" name="answer" @if($val['type']=='Quizz' && $val['answer']==4) checked @endif>
-                                            <input type="text" name="textAnser4" id="" class="answerText form-control" @if($val['type']=='Quizz' ) value="{{ $val['ListOption'][3]['text'] ??'' }}" @endif>
+                                            <div class="add-answer" onclick="addAnswer(event)">
+                                                Thêm câu trả lời
+                                            </div>
                                         </div>
                                         <p class="text-danger error-answer d-none mb-0"></p>
-                                    </div>
-                                </div>
-                                <div class="p-2">
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label>
-                                            <input type="number" class="score form-control mb-2 ml-2" @if($val['type']=='Quizz' ) value="{{ $val['score'] ??'' }}" @endif>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Thời Gian</label>
-                                            <input type="number" class="time form-control mb-2 ml-2" @if($val['type']=='Quizz' ) value="{{ $val['time'] ??'' }}" @endif>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -216,18 +183,6 @@
                                         <input type="text" class="suggest_audio form-control mb-2 ml-2" @if($val['type']=='Audio' ) value="{{ $val['hint']??'' }}" @endif>
                                     </div>
                                 </div>
-                                <div class="p-2">
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label>
-                                            <input type="number" class="score form-control mb-2 ml-2" @if($val['type']=='Audio' ) value="{{ $val['score']??'' }}" @endif>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Thời Gian</label>
-                                            <input type="number" class="time form-control mb-2 ml-2" @if($val['type']=='Audio' ) value="{{ $val['time']??'' }}" @endif>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="wrap-type @if($val['type'] == 'Picture') d-block @else d-none @endif" id="picture">
                                 <h4 class="text-center">Chụp Hình</h4>
@@ -237,16 +192,20 @@
                                         <input type="text" class="suggest_picture form-control mb-2 ml-2" @if($val['type']=='Picture' ) value="{{ $val['hint']??'' }}" @endif>
                                     </div>
                                 </div>
-                                <div class="p-2">
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Điểm</label>
-                                            <input type="number" class="score form-control mb-2 ml-2" @if($val['type']=='Picture' ) value="{{ $val['score']??'' }}" @endif>
+                            </div>
+                            <div class="p-2">
+                                <div class="d-flex align-items-center">
+                                    <label style="min-width: 60px;text-align:center" for="">Điểm</label>
+                                    <input type="number" class="score form-control mb-2 ml-2" value="{{ $val['score']??'' }}">
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <label style="min-width: 60px;text-align:center" for="">Thời Gian</label>
+                                    <div>
+                                        <div class="d-flex py-1 pl-2">
+                                            <input type="checkbox" class="form-control isUnlimitedTime" onchange="onChangeTimeLimit(event)" @if($val['isUnlimitedTime']) checked @endif>
+                                            <span class="pl-2" style="line-height: 16px;">Không giới hạn thời gian</span>
                                         </div>
-                                        <div class="d-flex align-items-center">
-                                            <label style="min-width: 60px;text-align:center" for="">Thời Gian</label>
-                                            <input type="number" class="time form-control mb-2 ml-2" @if($val['type']=='Picture' ) value="{{ $val['time']??'' }}" @endif>
-                                        </div>
+                                        <input type="number" class="time form-control mb-2 ml-2" value="{{ $val['time']??'' }}">
                                     </div>
                                 </div>
                             </div>
@@ -464,6 +423,38 @@
         }).catch(() => {})
     }
 
+    function onChangeTimeLimit(e) {
+        const timeInputEle = e.target.parentElement.parentElement.querySelector(".time")
+
+        if (e.target.checked) {
+            timeInputEle.value = ''
+            timeInputEle.setAttribute("disabled", true)
+        } else {
+            timeInputEle.removeAttribute("disabled")
+        }
+    }
+
+    function addAnswer(e) {
+        const addAnswerContainerEle = e.target.parentElement
+
+        $(
+            `
+            <div class="form-check mb-1 answer d-flex align-items-center">
+                <input type="radio" style="width: 16px; height: 16px;" class="form-check-input mr-2" value="1" name="answer">
+                <input type="text" name="textAnswer" id="" class="answerText form-control">
+                <button class="btn btn-secondary btn-circle ml-2" onclick="deleteAnswer(event)">
+                    Xóa
+                </button>
+            </div>
+            `
+        ).insertBefore(addAnswerContainerEle)
+    }
+
+    function deleteAnswer(e) {
+        e.target.parentElement.remove()
+    }
+
+
     $(document).on('click', '.delete-step', onDeleteStep);
 
     $(document).on('click', '#reset', function(e) {
@@ -516,7 +507,10 @@
                         break;
                     }
                     case 'quizz': {
-                        let answer = $(step).find('input[name=answer]').filter(':checked').first().val();
+                        const answersEle = $(step).find('input[name=answer]').get().forEach((ele, indexAnswer) => {
+                            ele.value = (indexAnswer + 1) + '' 
+                        })
+                        const answer = $(step).find('input[name=answer]').filter(':checked').first().val()
                         if ($(step).find('#file-quizz')[0].files[0])
                             formData.append(`${index}`, $(step).find('#file-quizz')[0].files[0]);
                         formData.append(`items[${index}][index]`, index);
@@ -527,6 +521,7 @@
                             formData.append(`items[${index}][ListOption][${i}][id]`, i + 1);
                             formData.append(`items[${index}][ListOption][${i}][text]`, $(item).val().replace(/"/g, "'"));
                         });
+                        formData.append(`items[${index}][answer]`, answer);
                         if (answer) {
                             $(step).find('.answer-box').removeClass('border border-danger');
                             $(step).find('.answer-box').find('.error-answer').addClass('d-none').text('');
@@ -536,6 +531,7 @@
                             $(step).find('.answer-box').find('.error-answer').removeClass('d-none').text('Chọn câu trả lời');
                             validData = false;
                         }
+                        formData.append(`items[${index}][hint]`, ($(step).find('.hint').first().val() || '').replace(/"/g, "'"));
                         break;
                     }
                     case 'audio': {
@@ -552,8 +548,9 @@
                     }
                 }
                 formData.append(`items[${index}][key]`, $(item).find('#key').first().val() ?? Date.now());
-                formData.append(`items[${index}][score]`, $(step).find('.score').first().val().replace(/"/g, "'"));
-                formData.append(`items[${index}][time]`, $(step).find('.time').first().val().replace(/"/g, "'"));
+                formData.append(`items[${index}][score]`, $(step).parent().find('.score').first().val().replace(/"/g, "'"));
+                formData.append(`items[${index}][time]`, ($(step).parent().find('.time').first().val() || '0').replace(/"/g, "'"));
+                formData.append(`items[${index}][isUnlimitedTime]`, ($(step).parent().find('.isUnlimitedTime') || [])[0]?.checked || '');
                 $(step).find('#sortable1 li').each(function(i, el) {
                     formData.append(`items[${index}][image][${i}][id]`, Number($(el).attr('data-id')));
                     formData.append(`items[${index}][image][${i}][value]`, $(el).text().replace(/"/g, "'"));
@@ -860,14 +857,37 @@
         color: var(--primary);
     }
 
-    .question--toolbar button.btn-circle {
+    button.btn-circle {
         height: 32px;
         width: 32px;
+        min-width: 32px;
         border-radius: 50%;
         padding: 0;
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .form-control[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+    }
+
+    .add-answer {
+        width: 100%;
+        height: 40px;
+        border: 1px dashed var(--dark);
+        color: var(--dark);
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .add-answer:hover {
+        color: var(--primary);
+        border-color: var(--primary);
     }
 
     .stepquest-composer__content .form-wrap {

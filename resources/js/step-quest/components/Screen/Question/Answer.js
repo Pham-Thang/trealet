@@ -1,72 +1,69 @@
 import React, { Component } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Answer.css";
 class Answer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false,
+      isLoading: false
     };
   }
+  
   checkAnswer(answer) {
     if (
       answer &&
-      !this.props.data.IsCheck &&
-      !this.state.isLoading &&
-      !this.props.data.fulltime
+      !this.props.data.isChecked &&
+      !this.props.data.isTimeUp
     ) {
       this.setState({ isLoading: true });
-      this.props.data.IsCheck = true;
-      this.props.isCheckAnswer();
+      this.props.data.isChecked = true;
+      this.props.checkAnswer();
       if (this.props.data.answer == answer.id) {
         answer.isCorrect = true;
-        // tăng điểm khi trả lời đúng
-        // this.props.handleScore(this.props.data.score);
         this.props.handleScore(parseInt(this.props.data.score));
-        this.setState({ isLoading: false });
 
-        setTimeout(() => {
-          toast.success("Chính xác! Chúc mừng bạn", {
-            position: "top-center",
-            autoClose: 3000,
-            theme: "colored",
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }, 300);
+        // setTimeout(() => {
+        //   toast.success("Chính xác! Chúc mừng bạn", {
+        //     position: "top-center",
+        //     autoClose: 3000,
+        //     theme: "colored",
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        //     progress: undefined,
+        //   });
+        // }, 300);
       } else {
         answer.isWrong = true;
-        this.setState({ isLoading: false });
-        setTimeout(() => {
-          toast.error("Sai rồi! Hãy cố lên nhé", {
-            position: "top-center",
-            autoClose: 3000,
-            theme: "colored",
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }, 300);
+        // setTimeout(() => {
+        //   toast.error("Sai rồi! Hãy cố lên nhé", {
+        //     position: "top-center",
+        //     autoClose: 3000,
+        //     theme: "colored",
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        //     progress: undefined,
+        //   });
+        // }, 300);
       }
+      this.setState({ isLoading: false });
     }
   }
+  
   render() {
     const listItems = this.props.data.ListOption.map((answer, index) => (
       <div
         key={answer.id}
         className={`answer-text answer-text-${index} ${answer.isCorrect ? "correct" : ""} ${
           answer.isWrong ? "wrong" : ""
-        } ${this.props.data.fulltime || this.props.data.IsCheck ? "disabled" : ''}`}
+        } ${this.props.data.isTimeUp || this.props.data.isChecked ? "disabled" : ''}`}
         onClick={() => this.checkAnswer(answer)}
       >
-        {" "}
-        {answer.text}{" "}
+        {answer.text}
       </div>
     ));
     return (
@@ -77,7 +74,37 @@ class Answer extends Component {
           </div>
         )}
         <div className="step--quiz__question game-card game-title"> {this.props.data.question} </div>
-        <div className="step--quiz__options"> {listItems} </div> 
+        <div className="step--quiz__options"> {listItems} </div>
+        {
+          this.props.data.isChecked
+          ? (this.props.data.ListOption?.some(item => item.isCorrect)
+              ? <div className="step--quiz__result game-card">
+                <div className="text-success">
+                  <b>Chính xác! Chúc mừng bạn.</b>
+                </div>
+                <div className="text-left">
+                {`Giải thích: ${this.props.data.hint || '---'}`}
+                </div>
+              </div>
+              : (this.props.data.ListOption?.some(item => item.isWrong) && 
+                <div className="step--quiz__result game-card">
+                  <div className="text-wrong">
+                    <b>Sai rồi! Hãy cố lên nhé</b>
+                  </div>
+                  <div className="text-left">
+                    {`Giải thích: ${this.props.data.hint || '---'}`}
+                  </div>
+                </div>)
+            )
+          : (
+              this.props.data.isTimeUp && 
+              <div className="step--quiz__result game-card">
+                <div className="">
+                  Đã hết thời gian trả lời!
+                </div>
+              </div>
+            )
+        }
         <ToastContainer />
       </div>
     );

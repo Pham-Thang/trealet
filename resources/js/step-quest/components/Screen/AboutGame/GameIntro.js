@@ -24,9 +24,6 @@ class GameIntro extends Component {
         .get(`${window.origin}/api/trealets/stepquest/${id}`)
         .then((response) => {
           var data = response.data?.data?.json?.trealet;
-          // setTimeout(() => {
-          //   this.setState({ game: data, loading: false });
-          // }, 2000);
           this.setState({ game: data, loading: false });
         });
     }
@@ -60,22 +57,19 @@ class GameIntro extends Component {
           : this.state.showGameDetail 
             ? <Game data={this.state.game} musicStatus={this.state.musicStatus} />
             : <div className="game-intro w-full">
+                <div className="game-intro__options">
+                  <div className="option__row option__sound">
+                    <Button onClick={this.changeMusicStatus} className="button-icon">
+                      <img width={24} height={24} src={`${window.origin}/assets/images/volume-${this.state.musicStatus ? 'on' : 'off'}.svg`}></img>
+                    </Button>
+                  </div>
+                </div>
                 <div className="game-intro__info">
                   <div className="info__title game-card">
                     {this.state.game?.title || ""}
                   </div>
-                  <div class="info__description game-card">
+                  <div className="info__description game-card">
                     {this.state.game?.des || ""}
-                  </div>
-                </div>
-                <div className="game-intro__options">
-                  <div className="option__row option__sound">
-                    <div className="option__row__title">
-                      Nhạc nền:
-                    </div>
-                    <div className="option__row__value" onClick={this.changeMusicStatus}>
-                      {`<   ${this.state.musicStatus ? "Bật" : "Tắt"}   >`}
-                    </div>
                   </div>
                 </div>
                 <div className="game-intro__footer">
