@@ -103,9 +103,9 @@
                                         </ul>
                                         <div class="w-100">
                                             <div class="custom-control custom-radio">
-                                                <label class="upload-field" for="file-display">Upload</label>
-                                                <input type="file" class="form-control d-none" id="file-display" />
-                                                <img alt="" @if(isset($val['file']) && $val['file']) src="{{ $val['file'] }}" @endif id="picture-display" style="width: 100%;height:100%">
+                                                <label class="upload-field upload-field-label" for="file-display-{{ $key+1 }}">Upload</label>
+                                                <input type="file" class="form-control d-none upload-field-input" id="file-display-{{ $key+1 }}" />
+                                                <img class="upload-field-preview" alt="" @if(isset($val['file']) && $val['file']) src="{{ $val['file'] }}" @endif id="picture-display-{{ $key+1 }}" style="width: 100%;height:100%">
                                             </div>
                                         </div>
                                     </div>
@@ -143,9 +143,9 @@
                                         </ul>
                                         <div class="w-100">
                                             <div class="custom-control custom-radio">
-                                                <label class="upload-field" for="file-quizz">Upload</label>
-                                                <input type="file" class="form-control d-none" id="file-quizz" />
-                                                <img alt="" @if( isset($val['file']) && $val['file']) src="{{ $val['file'] }}" @endif id="picture-quizz" style="width: 100%;height:100%">
+                                                <label class="upload-field upload-field-label" for="file-quizz">Upload</label>
+                                                <input type="file" class="form-control d-none upload-field-input" id="file-quizz" />
+                                                <img class="upload-field-preview" alt="" @if( isset($val['file']) && $val['file']) src="{{ $val['file'] }}" @endif id="picture-quizz" style="width: 100%;height:100%">
                                             </div>
                                         </div>
                                     </div>
@@ -368,8 +368,12 @@
         element.find('#sortable2, #sortable1').empty();
         element.find('.answer-box').removeClass('border border-danger');
         element.find('.answer-box').find('.error-answer').addClass('d-none').text('');
-        element.find('#picture-display').removeAttr('src');
-        element.find('#picture-quizz').removeAttr('src');
+        const newIdUploadField = Math.random().toString()
+        element.find('.upload-field-input').attr('id', newIdUploadField)
+        element.find('.upload-field-label').attr('for', newIdUploadField)
+        element.find('.upload-field-preview').attr('id', newIdUploadField + '-preview')
+        element.find('.upload-field-preview').removeAttr('src');
+        element.find('.isUnlimitedTime').removeAttr('checked')
         element.appendTo('#steps');
         $.ajax({
             url: "{{ route('stepquest-edit.tree-folder') }}",
@@ -389,11 +393,8 @@
             cursor: "grabbing",
         }).disableSelection();
 
-        $(document).on('change', `#step${currentSteps + 1} #file-quizz`, async function() {
-            $(`#step${currentSteps + 1} #picture-quizz`).attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
-        });
-        $(document).on('change', `#step${currentSteps + 1} #file-display`, async function() {
-            $(`#step${currentSteps + 1} #picture-display`).attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
+        $(document).on('change', `#step${currentSteps + 1} .upload-field-input`, async function() {
+            $(`#step${currentSteps + 1} .upload-field-preview`).attr('src', URL.createObjectURL(this.files[this.files.length - 1]))
         });
     });
 
@@ -495,8 +496,8 @@
                         formData.append(`items[${index}][title]`, $(step).find('.suggest').val().replace(/"/g, "'"));
                         formData.append(`items[${index}][description]`, $(step).find('.description').val().replace(/"/g, "'"));
                         formData.append(`items[${index}][youtube]`, $(step).find('.youtube').val().replace(/"/g, "'"));
-                        if ($(step).find('#file-display')[0].files[0])
-                            formData.append(`${index}`, $(step).find('#file-display')[0].files[0]);
+                        if ($(step).find('.upload-field-input')[0]?.files[0])
+                            formData.append(`${index}`, $(step).find('.upload-field-input')[0].files[0]);
                         break;
                     }
                     case 'qr': {
@@ -511,8 +512,8 @@
                             ele.value = (indexAnswer + 1) + '' 
                         })
                         const answer = $(step).find('input[name=answer]').filter(':checked').first().val()
-                        if ($(step).find('#file-quizz')[0].files[0])
-                            formData.append(`${index}`, $(step).find('#file-quizz')[0].files[0]);
+                        if ($(step).find('.upload-field-input')[1]?.files[0])
+                            formData.append(`${index}`, $(step).find('.upload-field-input')[1].files[0]);
                         formData.append(`items[${index}][index]`, index);
                         formData.append(`items[${index}][type]`, 'Quizz');
                         formData.append(`items[${index}][question]`, $(step).find('input[name=question]').val().replace(/"/g, "'"));

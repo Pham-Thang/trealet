@@ -90,6 +90,7 @@ class Game extends Component {
   }
 
   handleScore = (increaseScore) => {
+    increaseScore = Number(increaseScore) || 0
     var currentScore = this.state.score;
     this.setState({ score: currentScore + increaseScore, showBonusScore: true, bonusScore: increaseScore, bonusScorePositionBottom: "50%" });
 
@@ -115,19 +116,19 @@ class Game extends Component {
     let currentStep = this.props.data.items[this.state.currentIndex]
     let increaseScore = null
     
-    if (this.checkStepEnable()) {
+    if (this.checkStepEnable(currentStep)) {
       let answer = localStorage.getItem("current")
       
-      if (prevQuestion.type == "QR") {
-        if(answer == prevQuestion.code) {
-          increaseScore = currentScore + Number(prevQuestion.score);  
+      if (currentStep.type == "QR") {
+        if(answer == currentStep.code) {
+          increaseScore = Number(currentStep.score);  
         }
-      } else if (prevQuestion.type == "Audio" || prevQuestion.type == "Picture") {
+      } else if (currentStep.type == "Audio" || currentStep.type == "Picture") {
         if(answer == 1) {
-          increaseScore = currentScore + Number(prevQuestion.score);
+          increaseScore = Number(currentStep.score);
         }
-      } else if (prevQuestion.type == "Display") {
-        increaseScore = currentScore + Number(prevQuestion.score);
+      } else if (currentStep.type == "Display") {
+        increaseScore = Number(currentStep.score);
       }
     }
     if (!(currentStep.isUnlimitedTime && currentStep.type === "Quizz")) {
@@ -158,7 +159,7 @@ class Game extends Component {
 
   render() {
     const me = this
-    const progressStep = (this.state.currentIndex * 100) / this.state.sumStep;
+    const progressStep = ((this.state.currentIndex) * 100) / this.state.sumStep;
     
     return (
       <div className="h-100 Game">

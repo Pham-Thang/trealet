@@ -419,12 +419,12 @@
         element.find('#sortable2, #sortable1').empty();
         element.find('.answer-box').removeClass('border border-danger');
         element.find('.answer-box').find('.error-answer').addClass('d-none').text('');
-        element.find('#picture-display').removeAttr('src');
-        element.find('#picture-quizz').removeAttr('src');
+        element.find('.upload-field-preview').removeAttr('src');
         const newIdUploadField = Math.random().toString()
         element.find('.upload-field-input').attr('id', newIdUploadField)
         element.find('.upload-field-label').attr('for', newIdUploadField)
         element.find('.upload-field-preview').attr('id', newIdUploadField + '-preview')
+        element.find('.isUnlimitedTime').removeAttr('checked')
         element.appendTo('#steps');
         $.ajax({
             url: "{{ route('stepquest-edit.tree-folder') }}",
@@ -508,7 +508,7 @@
                         formData.append(`items[${index}][title]`, $(step).find('.suggest').val().replace(/"/g, "'"));
                         formData.append(`items[${index}][description]`, $(step).find('.description').val().replace(/"/g, "'"));
                         formData.append(`items[${index}][youtube]`, $(step).find('.youtube').val().replace(/"/g, "'"));
-                        formData.append(`${index}`, $(step).find('#file-display')[0].files[0]);
+                        formData.append(`${index}`, $(step).find('.upload-field-input')[0]?.files[0]);
                         break;
                     }
                     case 'qr': {
@@ -523,7 +523,7 @@
                             ele.value = (indexAnswer + 1) + '' 
                         })
                         const answer = $(step).find('input[name=answer]').filter(':checked').first().val()
-                        formData.append(`${index}`, $(step).find('#file-quizz')[0].files[0]);
+                        formData.append(`${index}`, $(step).find('.field-upload-input')[0].files[0]);
                         formData.append(`items[${index}][index]`, index);
                         formData.append(`items[${index}][type]`, 'Quizz');
                         formData.append(`items[${index}][question]`, $(step).find('input[name=question]').val().replace(/"/g, "'"));
