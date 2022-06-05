@@ -264,7 +264,7 @@
                             <div class="dialog__title">${option.title}</div>    
                             <div class="dialog__content">${option.message}</div> 
                             <div class="dialog__footer">
-                                <button class="btn-secondary">${option.buttonCancel}</button> 
+                                ${!option.hideButtonCancel ? `<button class="btn-secondary">${option.buttonCancel}</button>` : ""} 
                                 <button class="btn-primary">${option.buttonConfirm}</button> 
                             </div>  
                     </div>
@@ -274,8 +274,14 @@
                 $('body')[0].removeChild(div)
                 callback && callback()
             }
-            div.querySelector('button.btn-primary').onclick = () => close(() => resolve(true))
-            div.querySelector('button.btn-secondary').onclick = () => close(() => reject(true))
+            const eleButtonPrimary = div.querySelector('button.btn-primary')
+            if (eleButtonPrimary) {
+                eleButtonPrimary.onclick = () => close(() => resolve(true))
+            }
+            const eleButtonSecondary = div.querySelector('button.btn-secondary')
+            if (eleButtonSecondary) {
+                eleButtonSecondary.onclick = () => close(() => reject(true))
+            }
             $('body')[0].appendChild(div)
         })
     }
@@ -329,7 +335,12 @@
     function onDeleteStep(e) {
         const currentSteps = $('#step-number li').length - 1;
         if (Number(currentSteps) == 2) {
-            alert('Không thể xóa!');
+            showMessageBox({
+                title: 'Không thể xóa',
+                message: `Không thể xóa câu. Bạn cần có ít nhất một câu.`,
+                buttonConfirm: 'Đồng ý',
+                hideButtonCancel: true,
+            })
             return false;
         }
         showMessageBox({
@@ -425,6 +436,46 @@
         element.find('.upload-field-label').attr('for', newIdUploadField)
         element.find('.upload-field-preview').attr('id', newIdUploadField + '-preview')
         element.find('.isUnlimitedTime').removeAttr('checked')
+        element.find('#quizz .answer-box').html(`
+            <div class="d-flex align-items-center">
+                <label style="min-width: 60px;text-align:center" for="">Câu hỏi</label>
+                <input type="text" placeholder="Question" class="form-control mb-2" name="question">
+            </div>
+            <div class="form-check mb-1 answer d-flex align-items-center">
+                <input type="radio" style="width: 16px; height: 16px;" class="form-check-input mr-2" value="1" name="answer">
+                <input type="text" name="textAnser1" id="" class="answerText form-control">
+                <button class="btn btn-secondary btn-circle ml-2" onclick="deleteAnswer(event)">
+                    Xóa
+                </button>
+            </div>
+            <div class="form-check mb-1 answer d-flex align-items-center">
+                <input type="radio" style="width: 16px; height: 16px;" class="form-check-input mr-2" value="2" name="answer">
+                <input type="text" name="textAnser2" id="" class="answerText form-control">
+                <button class="btn btn-secondary btn-circle ml-2" onclick="deleteAnswer(event)">
+                    Xóa
+                </button>
+            </div>
+            <div class="form-check mb-1 answer d-flex align-items-center">
+                <input type="radio" style="width: 16px; height: 16px;" class="form-check-input mr-2" value="3" name="answer">
+                <input type="text" name="textAnser3" id="" class="answerText form-control">
+                <button class="btn btn-secondary btn-circle ml-2" onclick="deleteAnswer(event)">
+                    Xóa
+                </button>
+            </div>
+            <div class="form-check mb-1 answer d-flex align-items-center">
+                <input type="radio" style="width: 16px; height: 16px;" class="form-check-input mr-2" value="4" name="answer">
+                <input type="text" name="textAnser4" id="" class="answerText form-control">
+                <button class="btn btn-secondary btn-circle ml-2" onclick="deleteAnswer(event)">
+                    Xóa
+                </button>
+            </div>
+            <div class="form-check mb-1 answer">
+                <div class="add-answer" onclick="addAnswer(event)">
+                    Thêm câu trả lời
+                </div>
+            </div>
+            <p class="text-danger error-answer d-none mb-0"></p>
+        `)
         element.appendTo('#steps');
         $.ajax({
             url: "{{ route('stepquest-edit.tree-folder') }}",

@@ -103,9 +103,9 @@
                                         </ul>
                                         <div class="w-100">
                                             <div class="custom-control custom-radio">
-                                                <label class="upload-field upload-field-label" for="file-display-{{ $key+1 }}">Upload</label>
-                                                <input type="file" class="form-control d-none upload-field-input" id="file-display-{{ $key+1 }}" />
-                                                <img class="upload-field-preview" alt="" @if(isset($val['file']) && $val['file']) src="{{ $val['file'] }}" @endif id="picture-display-{{ $key+1 }}" style="width: 100%;height:100%">
+                                                <label class="upload-field upload-field-label" for="upload-field-{{ $key+1 }}">Upload</label>
+                                                <input type="file" class="form-control d-none upload-field-input" id="upload-field-{{ $key+1 }}" />
+                                                <img class="upload-field-preview" alt="" @if(isset($val['file']) && $val['file']) src="{{ $val['file'] }}" @endif style="width: 100%;height:100%">
                                             </div>
                                         </div>
                                     </div>
@@ -143,9 +143,9 @@
                                         </ul>
                                         <div class="w-100">
                                             <div class="custom-control custom-radio">
-                                                <label class="upload-field upload-field-label" for="file-quizz">Upload</label>
-                                                <input type="file" class="form-control d-none upload-field-input" id="file-quizz" />
-                                                <img class="upload-field-preview" alt="" @if( isset($val['file']) && $val['file']) src="{{ $val['file'] }}" @endif id="picture-quizz" style="width: 100%;height:100%">
+                                                <label class="upload-field upload-field-label" for="upload-field-{{$key+1}}">Upload</label>
+                                                <input type="file" class="form-control d-none upload-field-input" id="upload-field-{{$key + 1}}" />
+                                                <img class="upload-field-preview" alt="" @if( isset($val['file']) && $val['file']) src="{{ $val['file'] }}" @endif style="width: 100%;height:100%">
                                             </div>
                                         </div>
                                     </div>
@@ -154,7 +154,7 @@
                                     <div class="answer-box">
                                         <div class="d-flex align-items-center">
                                             <label style="min-width: 60px;text-align:center" for="">Câu hỏi</label>
-                                            <input type="text" placeholder="Question" class="form-control mb-2" name="question" @if($val['type']=='Quizz' ) value="{{ $val['question'] }}" @endif>
+                                            <input type="text" placeholder="Question" class="form-control mb-2" name="question" @if($val['type']=='Quizz') value="{{ $val['question'] }}" @endif>
                                         </div>
                                         
                                         @foreach($val['ListOption'] ?? [] as $indexAnswer => $answerItem)
